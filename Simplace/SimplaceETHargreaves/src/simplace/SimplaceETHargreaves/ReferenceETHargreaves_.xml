@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//SIMPLACE/DTD GRP 1.0//EN" "http://simplace.net/dtd/GroupComponent.dtd">
+<configuration class="net.simplace.sim.components.SimplaceETHargreaves.ReferenceETHargreaves_">
+    <simgroup>
+        <simcomponent id="ReferenceETHargreaves" class="net.simplace.sim.components.SimplaceETHargreaves.ReferenceETHargreaves">
+            <input id="iTMax" source="ReferenceETHargreaves_.iTMax"/>
+            <input id="iSolarRadiation" source="ReferenceETHargreaves_.iSolarRadiation"/>
+            <input id="iTMin" source="ReferenceETHargreaves_.iTMin"/>
+            <input id="cConvertLeByTemp" source="ReferenceETHargreaves_.cConvertLeByTemp"/>
+            <output id="ReferenceCropEvapotranspiration" destination="ReferenceETHargreaves_.ReferenceCropEvapotranspiration"/></simcomponent></simgroup></configuration>

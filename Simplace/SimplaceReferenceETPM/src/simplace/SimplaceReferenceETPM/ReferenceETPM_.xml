@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//SIMPLACE/DTD GRP 1.0//EN" "http://simplace.net/dtd/GroupComponent.dtd">
+<configuration class="net.simplace.sim.components.SimplaceReferenceETPM.ReferenceETPM_">
+    <simgroup>
+        <simcomponent id="ReferenceETPM" class="net.simplace.sim.components.SimplaceReferenceETPM.ReferenceETPM">
+            <input id="iNetRadiation" source="ReferenceETPM_.iNetRadiation"/>
+            <input id="cAltitude" source="ReferenceETPM_.cAltitude"/>
+            <input id="iActualVapourPressure" source="ReferenceETPM_.iActualVapourPressure"/>
+            <input id="iTMax" source="ReferenceETPM_.iTMax"/>
+            <input id="iTMin" source="ReferenceETPM_.iTMin"/>
+            <input id="iWindspeed" source="ReferenceETPM_.iWindspeed"/>
+            <output id="ReferenceCropEvapotranspiration" destination="ReferenceETPM_.ReferenceCropEvapotranspiration"/></simcomponent></simgroup></configuration>

@@ -1,0 +1,13 @@
+#pragma once
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <iostream>
+#include <vector>
+#include <string>
+
+namespace SimplaceReferenceETPriestleyTaylor {
+struct ReferenceETPriestleyTaylor_Auxiliary
+{
+    double ReferenceCropEvapotranspiration{0.0};
+};
+}

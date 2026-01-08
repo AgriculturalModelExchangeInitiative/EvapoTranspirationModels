@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModelComposition PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelComposition.dtd">
+<ModelComposition name="ReferenceETPM_" id="Simplace_.ReferenceETPM_" version="001" timestep="1">
+    <Description>
+        <Title>ReferenceETPM_ model</Title>
+        <Authors>Gunther Krauss</Authors>
+        <Institution>INRES Pflanzenbau, Uni Bonn</Institution>
+        <Reference>(&apos;http://www.simplace.net/doc/simplace_modules/&apos;,)</Reference>
+        <ExtendedDescription>as given in the documentation</ExtendedDescription>
+        <ShortDescription></ShortDescription></Description>
+    <Composition>
+        <Model name="ReferenceETPM" id="Simplace_.ReferenceETPM" filename="unit.ReferenceETPM.xml"/>
+        <Links>
+            <InputLink target="ReferenceETPM.iNetRadiation" source="iNetRadiation"/>
+            <InputLink target="ReferenceETPM.cAltitude" source="cAltitude"/>
+            <InputLink target="ReferenceETPM.iActualVapourPressure" source="iActualVapourPressure"/>
+            <InputLink target="ReferenceETPM.iTMax" source="iTMax"/>
+            <InputLink target="ReferenceETPM.iTMin" source="iTMin"/>
+            <InputLink target="ReferenceETPM.iWindspeed" source="iWindspeed"/>
+            <OutputLink target="ReferenceCropEvapotranspiration" source="ReferenceETPM.ReferenceCropEvapotranspiration"/></Links></Composition></ModelComposition>

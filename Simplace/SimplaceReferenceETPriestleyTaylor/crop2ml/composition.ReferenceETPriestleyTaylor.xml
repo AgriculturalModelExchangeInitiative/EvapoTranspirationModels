@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModelComposition PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelComposition.dtd">
+<ModelComposition name="ReferenceETPriestleyTaylor_" id="Simplace_.ReferenceETPriestleyTaylor_" version="001" timestep="1">
+    <Description>
+        <Title>ReferenceETPriestleyTaylor_ model</Title>
+        <Authors>Gunther Krauss</Authors>
+        <Institution>INRES Pflanzenbau, Uni Bonn</Institution>
+        <Reference>(&apos;http://www.simplace.net/doc/simplace_modules/&apos;,)</Reference>
+        <ExtendedDescription>as given in the documentation</ExtendedDescription>
+        <ShortDescription></ShortDescription></Description>
+    <Composition>
+        <Model name="ReferenceETPriestleyTaylor" id="Simplace_.ReferenceETPriestleyTaylor" filename="unit.ReferenceETPriestleyTaylor.xml"/>
+        <Links>
+            <InputLink target="ReferenceETPriestleyTaylor.iTMin" source="iTMin"/>
+            <InputLink target="ReferenceETPriestleyTaylor.cAlphaPT" source="cAlphaPT"/>
+            <InputLink target="ReferenceETPriestleyTaylor.iNetRadiation" source="iNetRadiation"/>
+            <InputLink target="ReferenceETPriestleyTaylor.iTMax" source="iTMax"/>
+            <InputLink target="ReferenceETPriestleyTaylor.cAltitude" source="cAltitude"/>
+            <OutputLink target="ReferenceCropEvapotranspiration" source="ReferenceETPriestleyTaylor.ReferenceCropEvapotranspiration"/></Links></Composition></ModelComposition>

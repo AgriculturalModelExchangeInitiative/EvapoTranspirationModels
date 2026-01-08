@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModelComposition PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelComposition.dtd">
+<ModelComposition name="ReferenceETHargreaves_" id="Simplace_.ReferenceETHargreaves_" version="001" timestep="1">
+    <Description>
+        <Title>ReferenceETHargreaves_ model</Title>
+        <Authors>Gunther Krauss</Authors>
+        <Institution>INRES Pflanzenbau, Uni Bonn</Institution>
+        <Reference>(&apos;http://www.simplace.net/doc/simplace_modules/&apos;,)</Reference>
+        <ExtendedDescription>as given in the documentation</ExtendedDescription>
+        <ShortDescription></ShortDescription></Description>
+    <Composition>
+        <Model name="ReferenceETHargreaves" id="Simplace_.ReferenceETHargreaves" filename="unit.ReferenceETHargreaves.xml"/>
+        <Links>
+            <InputLink target="ReferenceETHargreaves.iTMax" source="iTMax"/>
+            <InputLink target="ReferenceETHargreaves.iSolarRadiation" source="iSolarRadiation"/>
+            <InputLink target="ReferenceETHargreaves.iTMin" source="iTMin"/>
+            <InputLink target="ReferenceETHargreaves.cConvertLeByTemp" source="cConvertLeByTemp"/>
+            <OutputLink target="ReferenceCropEvapotranspiration" source="ReferenceETHargreaves.ReferenceCropEvapotranspiration"/></Links></Composition></ModelComposition>

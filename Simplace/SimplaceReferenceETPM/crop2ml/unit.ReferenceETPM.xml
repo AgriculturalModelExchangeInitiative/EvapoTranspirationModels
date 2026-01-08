@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModelUnit PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelUnit.dtd">
+<ModelUnit modelid="Simplace.SoilTemp.ReferenceETPM" name="ReferenceETPM" timestep="1" version="001">
+    <Description>
+        <Title>ReferenceETPM model</Title>
+        <Authors>Gunther Krauss</Authors>
+        <Institution>INRES Pflanzenbau, Uni Bonn</Institution>
+        <URI>http://www.simplace.net/doc/simplace_modules/</URI>
+        <Reference>(&apos;http://www.simplace.net/doc/simplace_modules/&apos;,)</Reference>
+        <ExtendedDescription>as given in the documentation</ExtendedDescription>
+        <ShortDescription></ShortDescription></Description>
+    <Inputs>
+        <Input name="cAltitude" description="elevation above sea level" inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/metre"/>
+        <Input name="iTMax" description="maximum daily temperature" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/degree_Celsius"/>
+        <Input name="iTMin" description="minimum daily temperature" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/degree_Celsius"/>
+        <Input name="iActualVapourPressure" description="actual vapour pressure" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/kilopascal"/>
+        <Input name="iNetRadiation" description="net radiation" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/megajoule_per_square_metre_day"/>
+        <Input name="iWindspeed" description="wind speed at 2m height" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/metre_per_second-time"/></Inputs>
+    <Outputs>
+        <Output name="ReferenceCropEvapotranspiration" description="reference evapotranspiration (ET0)" datatype="DOUBLE" variablecategory="auxiliary" max="" min="" unit="http://www.wurvoc.org/vocabularies/om-1.8/millimetre_per_day"/></Outputs>
+    <Function name="MeanSaturatedVapourPressure" description="" language="cyml" type="external" filename="algo/pyx/MeanSaturatedVapourPressure.pyx"/>
+    <Function name="ReferenceEvapotranspiration" description="" language="cyml" type="external" filename="algo/pyx/ReferenceEvapotranspiration.pyx"/>
+    <Algorithm language="cyml" platform="" filename="algo/pyx/ReferenceETPM.pyx"/>
+    <Parametersets/>
+    <Testsets/></ModelUnit>

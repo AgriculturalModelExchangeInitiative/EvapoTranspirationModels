@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModelUnit PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelUnit.dtd">
+<ModelUnit modelid="Simplace.SoilTemp.ReferenceETPriestleyTaylor" name="ReferenceETPriestleyTaylor" timestep="1" version="001">
+    <Description>
+        <Title>ReferenceETPriestleyTaylor model</Title>
+        <Authors>Gunther Krauss</Authors>
+        <Institution>INRES Pflanzenbau, Uni Bonn</Institution>
+        <URI>http://www.simplace.net/doc/simplace_modules/</URI>
+        <Reference>(&apos;http://www.simplace.net/doc/simplace_modules/&apos;,)</Reference>
+        <ExtendedDescription>as given in the documentation</ExtendedDescription>
+        <ShortDescription></ShortDescription></Description>
+    <Inputs>
+        <Input name="cAltitude" description="altitude" inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/metre"/>
+        <Input name="cAlphaPT" description="Priestley-Taylor coefficient" inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="" min="0.0" default="1.26" unit="http://www.wurvoc.org/vocabularies/om-1.8/one"/>
+        <Input name="iTMax" description="maximum daily temperature" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/degree_Celsius"/>
+        <Input name="iTMin" description="minimum daily temperature" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/degree_Celsius"/>
+        <Input name="iNetRadiation" description="net radiation" inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="" min="" default="0.0" unit="http://www.wurvoc.org/vocabularies/om-1.8/megajoule_per_square_metre_day"/></Inputs>
+    <Outputs>
+        <Output name="ReferenceCropEvapotranspiration" description="reference evapotranspiration (ET0)" datatype="DOUBLE" variablecategory="auxiliary" max="" min="" unit="http://www.wurvoc.org/vocabularies/om-1.8/millimetre_per_day"/></Outputs>
+    <Function name="SlopeOfSaturationVapPressureCurve" description="" language="cyml" type="external" filename="algo/pyx/SlopeOfSaturationVapPressureCurve.pyx"/>
+    <Function name="AtmosphericPressure" description="" language="cyml" type="external" filename="algo/pyx/AtmosphericPressure.pyx"/>
+    <Function name="PsychrometricConstant" description="" language="cyml" type="external" filename="algo/pyx/PsychrometricConstant.pyx"/>
+    <Algorithm language="cyml" platform="" filename="algo/pyx/ReferenceETPriestleyTaylor.pyx"/>
+    <Parametersets/>
+    <Testsets/></ModelUnit>
