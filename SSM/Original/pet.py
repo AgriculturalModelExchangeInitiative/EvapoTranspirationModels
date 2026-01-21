@@ -33,7 +33,7 @@ CALB is fairly constant at a value of 0.23.
 """
 from math import exp
 
-def potential_evapotranspiration(tmax, tmin, srad, albedo):
+def potential_evapotranspiration(tmax, tmin, srad, etlai, ket=0.5, calb=0.23, salb=0.13):
     """
     Calculate Potential Evapotranspiration (PET) using a simplified Penman equation.
 
@@ -41,7 +41,11 @@ def potential_evapotranspiration(tmax, tmin, srad, albedo):
     tmax (float): Daily maximum temperature (°C).
     tmin (float): Daily minimum temperature (°C).
     srad (float): Daily solar radiation (MJ m-2 day-1).
-    albedo (float): Surface albedo.
+    etlai (float): Leaf Area Index effective in evapotranspiration (m2 m-2).
+    ket (float): Extinction coefficient (default is 0.5).
+    calb (float): Crop albedo (default is 0.23).
+    salb (float): Soil albedo (default is 0.13).
+
 
     Returns:
     float: Potential Evapotranspiration (PET) in mm day-1.
@@ -49,8 +53,13 @@ def potential_evapotranspiration(tmax, tmin, srad, albedo):
     # Calculate average daily temperature TD
     td = 0.6 * tmax + 0.4 * tmin
 
+    # Calculate surface albedo based on crop and soil albedos
+    fraction_nrj_soil = exp(-ket*etlai)
+    albedo = calb * (1 - fraction_nrj_soil) + salb * fraction_nrj_soil
+
     # Calculate equilibrium evaporation EEQ
     eeq = srad * (0.004876 - 0.004374 * albedo) * (td + 29)
+
 
     # Calculate PET based on TMAX
     if 5 < tmax < 34:
@@ -58,26 +67,11 @@ def potential_evapotranspiration(tmax, tmin, srad, albedo):
     elif tmax >= 34:
         pet = eeq * ((tmax - 34) * 0.05 + 1.1)
     else:  # tmax <= 5
-        pet = eeq * 0.01 * pow(2.71828, (0.18 * (tmax + 20)))
+        pet = eeq * 0.01 * exp(0.18 * (tmax + 20))
 
     return pet  
 
-def albedo(etlai, ket=0.5, calb=0.23, salb=0.13):
-    """
-    Calculate surface albedo based on crop and soil albedos.
 
-    Parameters:
-    etlai (float): Leaf Area Index.
-    ket (float): Extinction coefficient.
-    calb (float): Crop albedo (default is 0.23).
-    salb (float): Soil albedo (default is 0.17).
-
-    Returns:
-    float: Surface albedo.
-    """
-    fraction_soil = exp(-ket*etlai)
-    surface_albedo = calb * (1 - fraction_soil) + salb * fraction_soil
-    return surface_albedo
 
 
 if __name__ == "__main__":
@@ -87,6 +81,6 @@ if __name__ == "__main__":
 
     LAI = 2.
 
-    albedo_value = albedo(LAI)
-    pet_value = potential_evapotranspiration(TMAX, TMIN, SRAD, albedo_value)
+
+    pet_value = potential_evapotranspiration(TMAX, TMIN, SRAD, LAI)
     print(f"Calculated PET: {pet_value:.2f} mm/day")
