@@ -33,7 +33,7 @@ CALB is fairly constant at a value of 0.23.
 """
 from math import exp
 
-def potential_evapotranspiration(tmax, tmin, srad, etlai, ket=0.5, calb=0.23, salb=0.13):
+def potential_evapotranspiration(tmax, tmin, srad, albedo: float=1):
     """
     Calculate Potential Evapotranspiration (PET) using a simplified Penman equation.
 
@@ -41,10 +41,7 @@ def potential_evapotranspiration(tmax, tmin, srad, etlai, ket=0.5, calb=0.23, sa
     tmax (float): Daily maximum temperature (°C).
     tmin (float): Daily minimum temperature (°C).
     srad (float): Daily solar radiation (MJ m-2 day-1).
-    etlai (float): Leaf Area Index effective in evapotranspiration (m2 m-2).
-    ket (float): Extinction coefficient (default is 0.5).
-    calb (float): Crop albedo (default is 0.23).
-    salb (float): Soil albedo (default is 0.13).
+    albedo (float): Surface Albedo.
 
 
     Returns:
@@ -54,8 +51,8 @@ def potential_evapotranspiration(tmax, tmin, srad, etlai, ket=0.5, calb=0.23, sa
     td = 0.6 * tmax + 0.4 * tmin
 
     # Calculate surface albedo based on crop and soil albedos
-    fraction_nrj_soil = exp(-ket*etlai)
-    albedo = calb * (1 - fraction_nrj_soil) + salb * fraction_nrj_soil
+    #fraction_nrj_soil = exp(-ket*etlai)
+    #albedo = calb * (1 - fraction_nrj_soil) + salb * fraction_nrj_soil
 
     # Calculate equilibrium evaporation EEQ
     eeq = srad * (0.004876 - 0.004374 * albedo) * (td + 29)
@@ -80,7 +77,13 @@ if __name__ == "__main__":
     TMIN = 1.
 
     LAI = 2.
+    ket=0.5
+    calb=0.23
+    salb=0.13
 
-
-    pet_value = potential_evapotranspiration(TMAX, TMIN, SRAD, LAI)
+    fraction_nrj_soil = exp(-ket*LAI)
+    albedo = calb * (1 - fraction_nrj_soil) + salb * fraction_nrj_soil
+    #albedo = 0.20
+    
+    pet_value = potential_evapotranspiration(TMAX, TMIN, SRAD, albedo)
     print(f"Calculated PET: {pet_value:.2f} mm/day")
