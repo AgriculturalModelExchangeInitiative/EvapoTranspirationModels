@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 cdef float clear_sky_solar_radiation
 clear_sky_solar_radiation = (0.75 + 0.00002 * height_nn) * extraterrestrial_radiation
 

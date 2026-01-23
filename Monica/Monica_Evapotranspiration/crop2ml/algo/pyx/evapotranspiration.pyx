@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 cdef float evaporated_from_intercept
 if developmental_stage > 0:
     evaporated_from_intercept = crop_evaporated_from_intercepted
