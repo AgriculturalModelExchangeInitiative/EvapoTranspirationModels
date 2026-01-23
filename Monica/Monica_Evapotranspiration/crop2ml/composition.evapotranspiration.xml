@@ -211,6 +211,10 @@
             <InternalLink source="UseExtVaporPressure.vapor_pressure"
                           target="NetRadiation.vapor_pressure"/>
 
+            <!-- NetRadiation to ReferenceEvapotranspiration -->
+            <InternalLink source="NetRadiation.net_radiation"
+                          target="ReferenceEvapotranspiration.net_radiation"/>
+
             <!-- UseExtVaporPressure to SaturationVaporPressureDeficit -->
             <InternalLink source="UseExtVaporPressure.vapor_pressure"
                           target="SaturationVaporPressureDeficit.vapor_pressure"/>
