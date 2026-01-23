@@ -1,0 +1,44 @@
+
+            #region//Evapotranspiration
+            double m_ETp;   //Crop potential evapotranspiration
+            double Albedo;
+            double Kt;
+            double m_ETpRe; //Reference crop potential evapotranspiration
+            double m_ESp;   //Soil potential evaporation
+            double m_Tp;    //Crop potential transpiration
+            double m_Ea;    //Soil actual evaporation
+            double m_ETa;   //Actual total evapotranspiration
+            double m_Ta = 0;//Actual crop transpiration (root water uptake)
+            #region//Albedo
+            if (YearAndDay < wheatInfo.EmergenceYearAndDay)
+            {
+                //Pre-emergence
+                Albedo = wheatInfo.M_InputSoilAlbedo;
+            }
+            else if (YearAndDay < wheatInfo.JointingYearAndDay)
+            {
+                //From emergence to jointing
+                Albedo = 0.23 - (0.23 - wheatInfo.M_InputSoilAlbedo) * Math.Exp(-0.75 * LAI);
+            }
+            else
+            //Post-jointing stage
+            {
+                Albedo = 0.23 + Math.Pow(LAI, 2) / 160;
+            }
+            #endregion
+            #region//ETpRe
+            //Kt calculation
+            if (Tmax < 5)
+            {
+                Kt = 0.01 * Math.Exp(0.18*(Tmax+20));
+            }
+            else if (Tmax <= 24)
+            {
+                Kt = 1.1;
+            }
+            else
+            {
+                Kt = 0.05 * (Tmax - 24) + 1.1;
+            }
+            double Td = 0.6 * Tmax + 0.4 * Tmin;
+            m_ETpRe = Kt * Solrad * (0.00488 - 0.00437 * Albedo)*(Td + 29);
