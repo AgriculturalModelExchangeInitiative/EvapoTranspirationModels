@@ -1,3 +1,11 @@
 Source,Target,Weight
-ReferenceEvapotranspiration,PotentialEvapotranspiration,1
+Radiation,NetRadiation,1
+StomataResistance,ReferenceEvapotranspiration,1
+ReferenceEvapotranspiration,UseExtET0,1
+SaturatedVaporPressure,UseExtVaporPressure,1
+SaturatedVaporPressure,SaturationVaporPressureDeficit,1
+UseExtVaporPressure,NetRadiation,1
+UseExtVaporPressure,SaturationVaporPressureDeficit,1
+SaturationVaporPressureDeficit,StomataResistance,1
+UseExtET0,PotentialEvapotranspiration,1
 PotentialEvapotranspiration,Evapotranspiration,1

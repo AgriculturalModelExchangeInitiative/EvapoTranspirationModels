@@ -7,8 +7,6 @@
 namespace Monica_Evapotranspiration {
 struct ETState
 {
-    double net_radiation{0};
-    double potential_evapotranspiration{0};
     double surface_water_storage{0};
     double evaporated_from_surface{0};
     double actual_evaporation{0};
@@ -18,6 +16,5 @@ struct ETState
     std::vector<double> transpiration;
     std::vector<double> evapotranspiration;
     double actual_evapotranspiration{0};
-    double reference_evapotranspiration{0.0};
 };
 }

@@ -22,6 +22,7 @@ if potential_evapotranspiration > 0.0:
         evaporation_from_surface = True
 
         # Water surface evaporates with Kc = 1.1.
+        # / kc_factor -> ET0 and then back * 1.1 to potET
         potential_evapotranspiration = potential_evapotranspiration * 1.1 / kc_factor
 
         # If a snow layer is present no water evaporates from surface water sources
@@ -34,7 +35,9 @@ if potential_evapotranspiration > 0.0:
         else:
             surface_water_storage -= potential_evapotranspiration
             evaporated_from_surface = potential_evapotranspiration
-            potential_evapotranspiration = 0.0;
+            potential_evapotranspiration = 0.0
+
+        # / 1.1 -> ET0 and then back * kc_factor to potET
         potential_evapotranspiration = potential_evapotranspiration * kc_factor / 1.1
 
     # Evaporation from soil

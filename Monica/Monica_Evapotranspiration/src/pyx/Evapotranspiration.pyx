@@ -16,7 +16,6 @@ def init_evapotranspiration(float evaporation_zeta,
                             float crop_transpiration[no_of_soil_moisture_layers],
                             float crop_evaporated_from_intercepted,
                             float percentage_soil_coverage):
-    cdef float potential_evapotranspiration = 0.0
     cdef float surface_water_storage = 0.0
     cdef float evaporated_from_surface = 0.0
     cdef float actual_evaporation = 0.0
@@ -31,7 +30,7 @@ def init_evapotranspiration(float evaporation_zeta,
     transpiration = array('f', [0.0]*no_of_soil_moisture_layers)
     evapotranspiration = array('f', [0.0]*no_of_soil_moisture_layers)
 
-    return  potential_evapotranspiration, surface_water_storage, evaporated_from_surface, actual_evaporation, actual_transpiration, soil_moisture, evaporation, transpiration, evapotranspiration, actual_evapotranspiration
+    return  surface_water_storage, evaporated_from_surface, actual_evaporation, actual_transpiration, soil_moisture, evaporation, transpiration, evapotranspiration, actual_evapotranspiration
 
 def model_evapotranspiration(float evaporation_zeta,
                              float maximum_evaporation_impact_depth,
@@ -87,6 +86,7 @@ def model_evapotranspiration(float evaporation_zeta,
         if surface_water_storage > 0.0:
             evaporation_from_surface = True
             # Water surface evaporates with Kc = 1.1.
+            # / kc_factor -> ET0 and then back * 1.1 to potET
             potential_evapotranspiration = potential_evapotranspiration * 1.1 / kc_factor
             # If a snow layer is present no water evaporates from surface water sources
             if has_snow_cover:
@@ -98,7 +98,8 @@ def model_evapotranspiration(float evaporation_zeta,
             else:
                 surface_water_storage -= potential_evapotranspiration
                 evaporated_from_surface = potential_evapotranspiration
-                potential_evapotranspiration = 0.0;
+                potential_evapotranspiration = 0.0
+            # / 1.1 -> ET0 and then back * kc_factor to potET
             potential_evapotranspiration = potential_evapotranspiration * kc_factor / 1.1
         # Evaporation from soil
         if potential_evapotranspiration > 0.0:
