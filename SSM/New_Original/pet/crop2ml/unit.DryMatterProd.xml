@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<ModelUnit modelid="pet.DryMatterProd" name="DryMatterProd" timestep="1" version="-">
+	<Description>
+		<Title>DryMatterProd</Title>
+		<Authors>-</Authors>
+		<Institution>-</Institution>
+		<URI>-</URI>
+		<Reference>-</Reference>
+		<ExtendedDescription>Python implementation of an SSM Potential Dry Matter Production model that computes daily dry matter (g m-2 day-1) from daily solar radiation, LAI, and a temperature-adjusted Radiation Use Efficiency (RUE); uses Beer-Lambert extinction (fint = 1 - exp(-kpar * LAI)) to estimate intercepted PAR (assumes PAR = 0.48 * srad) and a piecewise linear temperature response for RUE with defaults for wheat (kpar=0.65, RUE=2.2 g MJ-1, TBRUE=0, TP1RUE=15, TP2RUE=22, TCRUE=35).</ExtendedDescription>
+		<ShortDescription>Daily dry matter production from intercepted PAR and temperature-modified RUE (Python).</ShortDescription>
+	</Description>
+	<Inputs>
+		<Input name="tmax" description="Daily maximum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="-" min="-" default="" unit="degC" uri="-"/>
+		<Input name="tmin" description="Daily minimum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="-" min="-" default="" unit="degC" uri="-"/>
+		<Input name="srad" description="Daily solar radiation." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="-" min="-" default="" unit="MJ m-2 day-1" uri="-"/>
+		<Input name="lai" description="Leaf Area Index." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="-" min="-" default="" unit="m2 m-2" uri="-"/>
+		<Input name="kpar" description="Canopy extinction coefficient." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="0.65" unit="-" uri="-"/>
+		<Input name="RUE" description="Potential radiation use efficiency at optimal temperature." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="2.2" unit="g MJ-1" uri="-"/>
+		<Input name="TBRUE" description="Base temperature for RUE adjustment." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="0.0" unit="degC" uri="-"/>
+		<Input name="TP1RUE" description="Lower optimal temperature for RUE adjustment." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="15.0" unit="degC" uri="-"/>
+		<Input name="TP2RUE" description="Upper optimal temperature for RUE adjustment." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="22.0" unit="degC" uri="-"/>
+		<Input name="TCRUE" description="Ceiling temperature for RUE adjustment." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="35.0" unit="degC" uri="-"/>
+	</Inputs>
+	<Outputs>
+		<Output name="DDMP" description="Dry matter production rate." variablecategory="state" datatype="DOUBLE" max="-" min="-" unit="g m-2 day-1" uri="-"/>
+	</Outputs>
+	<Algorithm language="cyml" platform="" filename="algo/pyx/DryMatterProd.pyx"/>
+	<Parametersets/>
+	<Testsets/>
+</ModelUnit>

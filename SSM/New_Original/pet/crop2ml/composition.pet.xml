@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<ModelComposition name="pet" id="pet.pet" version="-" timestep="1">
+	<Description>
+		<Title>pet</Title>
+		<Authors>-</Authors>
+		<Institution>-</Institution>
+		<Reference/>
+		<ExtendedDescription>Composite of three Python/Cython model units: PotentialEvapotranspiration — simplified Penman-style PET (EEQ from srad, tmax, tmin with albedo and Tmax adjustments; cites Sultani &amp; Sinclair 2012), DryMatterProd — SSM potential dry matter production from intercepted PAR with temperature-modified RUE (outputs DDMP, g m-2 day-1), and PotentialTranspiration — VPD-based potential transpiration using temperatures and daily dry matter (ddmp) scaled by VPDF and TEC.</ExtendedDescription>
+		<ShortDescription>Composite of simplified Penman PET, RUE-based dry matter production (DDMP), and VPD/TEC-based potential transpiration (TR).</ShortDescription>
+	</Description>
+	<Composition>
+		<Model name="PotentialEvapotranspiration" id="pet.PotentialEvapotranspiration" filename="unit.PotentialEvapotranspiration.xml"/>
+		<Model name="PotentialTranspiration" id="pet.PotentialTranspiration" filename="unit.PotentialTranspiration.xml"/>
+		<Model name="DryMatterProd" id="pet.DryMatterProd" filename="unit.DryMatterProd.xml"/>
+		<Links>
+			<InputLink target="PotentialEvapotranspiration.tmax" source="tmax"/>
+			<InputLink target="PotentialEvapotranspiration.tmin" source="tmin"/>
+			<InputLink target="PotentialEvapotranspiration.srad" source="srad"/>
+			<InputLink target="PotentialEvapotranspiration.albedo" source="albedo"/>
+			<InputLink target="PotentialTranspiration.tmax" source="tmax"/>
+			<InputLink target="PotentialTranspiration.tmin" source="tmin"/>
+			<InputLink target="PotentialTranspiration.ddmp" source="ddmp"/>
+			<InputLink target="PotentialTranspiration.TEC" source="TEC"/>
+			<InputLink target="PotentialTranspiration.VPDF" source="VPDF"/>
+			<InputLink target="DryMatterProd.tmax" source="tmax"/>
+			<InputLink target="DryMatterProd.tmin" source="tmin"/>
+			<InputLink target="DryMatterProd.srad" source="srad"/>
+			<InputLink target="DryMatterProd.lai" source="lai"/>
+			<InputLink target="DryMatterProd.kpar" source="kpar"/>
+			<InputLink target="DryMatterProd.RUE" source="RUE"/>
+			<InputLink target="DryMatterProd.TBRUE" source="TBRUE"/>
+			<InputLink target="DryMatterProd.TP1RUE" source="TP1RUE"/>
+			<InputLink target="DryMatterProd.TP2RUE" source="TP2RUE"/>
+			<InputLink target="DryMatterProd.TCRUE" source="TCRUE"/>
+			<InternalLink target="PotentialTranspiration.ddmp" source="DryMatterProd.DDMP"/>
+			<OutputLink target="pet" source="PotentialEvapotranspiration.pet"/>
+			<OutputLink target="TR" source="PotentialTranspiration.TR"/>
+			<OutputLink target="DDMP" source="DryMatterProd.DDMP"/>
+		</Links>
+	</Composition>
+</ModelComposition>
