@@ -8,12 +8,12 @@
 #include <map>
 #include <set>
 #include <tuple>
-#include "UseExtET0.h"
+#include "CalcStomataResistance.h"
 using namespace Monica_Evapotranspiration;
-UseExtET0::UseExtET0() {}
-void UseExtET0::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ETAuxiliary &a, ETExogenous &ex)
+CalcStomataResistance::CalcStomataResistance() {}
+void CalcStomataResistance::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ETAuxiliary &a, ETExogenous &ex)
 {
-    //- Name: UseExtET0 -Version: 1, -Time step: 1
+    //- Name: CalcStomataResistance -Version: 1, -Time step: 1
     //- Description:
     //            * Title: If Else unit 
     //            * Authors: Michael Berg-Mohnicke
@@ -22,43 +22,43 @@ void UseExtET0::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ETAuxiliary 
     //            * ExtendedDescription: None
     //            * ShortDescription: switches between two input values 
     //- inputs:
-    //            * name: use_external_et0
+    //            * name: calc_stomata_resistance
     //                          ** description : boolean condition to be met
     //                          ** inputtype : variable
     //                          ** variablecategory : auxiliary
     //                          ** datatype : BOOLEAN
     //                          ** default : false
     //                          ** unit : 
-    //            * name: external_et0
+    //            * name: calculated_stomata_resistance
     //                          ** description : value to be returned if condition is true
     //                          ** inputtype : variable
     //                          ** variablecategory : auxiliary
     //                          ** datatype : DOUBLE
-    //                          ** max : 
+    //                          ** max : 10000
     //                          ** min : 0
-    //                          ** default : 0
-    //                          ** unit : mm
-    //            * name: internal_et0
+    //                          ** default : 100
+    //                          ** unit : s/m
+    //            * name: fixed_stomata_resistance
     //                          ** description : value to be returned if condition is false
     //                          ** inputtype : variable
     //                          ** variablecategory : auxiliary
     //                          ** datatype : DOUBLE
-    //                          ** max : 
+    //                          ** max : 10000
     //                          ** min : 0
-    //                          ** default : 0
-    //                          ** unit : mm
+    //                          ** default : 100
+    //                          ** unit : s/m
     //- outputs:
-    //            * name: et0
+    //            * name: stomata_resistance
     //                          ** description : the output value
     //                          ** variablecategory : auxiliary
     //                          ** datatype : DOUBLE
-    //                          ** max : 
+    //                          ** max : 10000
     //                          ** min : 0
-    //                          ** unit : mm
-    if (a.use_external_et0) {
-        a.et0 = a.external_et0;
+    //                          ** unit : s/m
+    if (a.calc_stomata_resistance) {
+        a.stomata_resistance = a.calculated_stomata_resistance;
     }
     else {
-        a.et0 = a.internal_et0;
+        a.stomata_resistance = a.fixed_stomata_resistance;
     }
 }

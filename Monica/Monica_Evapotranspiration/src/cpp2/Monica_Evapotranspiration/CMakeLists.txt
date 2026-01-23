@@ -72,6 +72,8 @@ find_package(Threads REQUIRED)
 
 # create Monica_Evapotranspiration_lib
 add_library(Monica_Evapotranspiration_lib
+	CalcStomataResistance.h
+	CalcStomataResistance.cpp
 	ETAuxiliary.h
 	ETComponent.h
 	ETComponent.cpp

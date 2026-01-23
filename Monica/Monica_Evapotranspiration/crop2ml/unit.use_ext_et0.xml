@@ -17,7 +17,7 @@
         <!-- auxiliary -->
         <Input name="use_external_et0" description="boolean condition to be met"
                inputtype="variable" variablecategory="auxiliary"
-               datatype="DOUBLE" max="" min="0" default="0" unit="mm"/>
+               datatype="BOOLEAN" default="false" unit=""/>
         <Input name="external_et0" description="value to be returned if condition is true"
                inputtype="variable" variablecategory="auxiliary"
                datatype="DOUBLE" max="" min="0" default="0" unit="mm"/>

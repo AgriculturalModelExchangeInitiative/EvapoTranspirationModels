@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ModelUnit PUBLIC " "
         "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelUnit.dtd">
-<ModelUnit modelid="Monica_Evapotranspiration.UseExtVaporPressure"
-           name="UseExtVaporPressure"
+<ModelUnit modelid="Monica_Evapotranspiration.CalcStomataResistance"
+           name="CalcStomataResistance"
            timestep="1" version="1">
     <Description>
         <Title>If Else unit </Title>
@@ -15,26 +15,26 @@
     </Description>
     <Inputs>
         <!-- auxiliary -->
-        <Input name="use_external_vapor_pressure" description="boolean condition to be met"
+        <Input name="calc_stomata_resistance" description="boolean condition to be met"
                inputtype="variable" variablecategory="auxiliary"
-               datatype="BOOLEAN" default="false" unit="mm"/>
-        <Input name="external_vapor_pressure" description="value to be returned if condition is true"
+               datatype="BOOLEAN" default="false" unit=""/>
+        <Input name="calculated_stomata_resistance" description="value to be returned if condition is true"
                inputtype="variable" variablecategory="auxiliary"
-               datatype="DOUBLE" max="" min="0" default="0" unit="kPa"/>
-        <Input name="internal_vapor_pressure" description="value to be returned if condition is false"
+               datatype="DOUBLE" max="10000" min="0" default="100" unit="s/m"/>
+        <Input name="fixed_stomata_resistance" description="value to be returned if condition is false"
                inputtype="variable" variablecategory="auxiliary"
-               datatype="DOUBLE" max="" min="0" default="0" unit="kPa"/>
+               datatype="DOUBLE" max="10000" min="0" default="100" unit="s/m"/>
     </Inputs>
     <Outputs>
-        <Output name="vapor_pressure" description="the output value"
+        <Output name="stomata_resistance" description="the output value"
                 variablecategory="auxiliary"
-                datatype="DOUBLE" max="" min="0" unit="mm"/>
+                datatype="DOUBLE" max="10000" min="0" unit="s/m"/>
     </Outputs>
     <!-- if there is no state, there is no need for an initialization function -->
 <!--    <Initialization name="init_potential_evapotranspiration" language="cyml"-->
 <!--                    filename="algo/pyx/init_potential_evapotranspiration.pyx"/>-->
     <Algorithm language="cyml" platform=""
-               filename="algo/pyx/use_ext_vapor_pressure.pyx"/>
+               filename="algo/pyx/calc_stomata_resistance.pyx"/>
     <Parametersets/>
     <Testsets/>
 </ModelUnit>

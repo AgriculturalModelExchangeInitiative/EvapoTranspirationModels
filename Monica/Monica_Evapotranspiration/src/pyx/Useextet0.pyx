@@ -1,7 +1,7 @@
 import numpy
 from math import *
 
-def model_useextet0(float use_external_et0,
+def model_useextet0(bool use_external_et0,
                     float external_et0,
                     float internal_et0):
     """

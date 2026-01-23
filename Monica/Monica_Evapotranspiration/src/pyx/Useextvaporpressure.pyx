@@ -1,7 +1,7 @@
 import numpy
 from math import *
 
-def model_useextvaporpressure(float use_external_vapor_pressure,
+def model_useextvaporpressure(bool use_external_vapor_pressure,
                               float external_vapor_pressure,
                               float internal_vapor_pressure):
     """
