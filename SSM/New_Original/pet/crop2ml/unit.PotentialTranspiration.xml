@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<ModelUnit modelid="pet.PotentialTranspiration" name="PotentialTranspiration" timestep="1" version="-">
+	<Description>
+		<Title>PotentialTranspiration</Title>
+		<Authors>-</Authors>
+		<Institution>-</Institution>
+		<URI>-</URI>
+		<Reference>-</Reference>
+		<ExtendedDescription>Calculates daily potential transpiration (mm/day) from daily maximum and minimum temperatures and daily dry matter production using vapor pressure deficit computed from saturation vapor pressures (Tetens formula) and scaled by a Vapor Pressure Deficit Factor (VPDF) and a Transpiration Efficiency Coefficient (TEC).</ExtendedDescription>
+		<ShortDescription>Compute daily potential transpiration from temperatures and dry matter via VPD, TEC and VPDF.</ShortDescription>
+	</Description>
+	<Inputs>
+		<Input name="tmax" description="Daily maximum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="-" min="-" default="" unit="°C" uri="-"/>
+		<Input name="tmin" description="Daily minimum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="-" min="-" default="" unit="°C" uri="-"/>
+		<Input name="ddmp" description="Daily dry matter production." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="-" min="-" default="" unit="g m-2 day-1" uri="-"/>
+		<Input name="TEC" description="Transpiration efficiency coefficient." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="5.8" unit="g mm-1" uri="-"/>
+		<Input name="VPDF" description="Vapor pressure deficit factor." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="-" min="-" default="0.75" unit="-" uri="-"/>
+	</Inputs>
+	<Outputs>
+		<Output name="TR" description="Potential transpiration." variablecategory="state" datatype="DOUBLE" max="-" min="-" unit="mm day-1" uri="-"/>
+	</Outputs>
+	<Algorithm language="cyml" platform="" filename="algo/pyx/PotentialTranspiration.pyx"/>
+	<Parametersets/>
+	<Testsets/>
+</ModelUnit>
