@@ -15,8 +15,9 @@ From TSG to crop harvest maturity:
 """
 from math import exp
 
-def dry_matter_prod(tmax: float, tmin: float, srad: float, lai: float, kpar: float=0.65, 
-                    RUE: float =2.2, 
+def dry_matter_prod(tmax: float, tmin: float, srad: float, lai: float, 
+                    kpar: float=0.65, # parameter
+                    RUE: float =2.2, # parameter for wheat
                     TBRUE: float=0., TP1RUE: float=15, TP2RUE: float=22, TCRUE: float=35,
                     ):
     """
