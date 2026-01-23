@@ -5,7 +5,10 @@ SSM model for Potential Transpiration .
 """
 from math import exp
 
-def potential_transpiration(tmax: float, tmin: float, ddmp:float, TEC: float= 5.8, VPDF: float=0.75):
+def potential_transpiration(tmax: float, tmin: float, ddmp:float, 
+                            TEC: float= 5.8, # parameter
+                            VPDF: float=0.75, # parameter
+                            ):
     """
     Calculate dry matter production at daily time step.
 
