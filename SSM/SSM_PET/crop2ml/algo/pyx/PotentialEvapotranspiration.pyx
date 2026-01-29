@@ -1,6 +1,6 @@
 cdef float td
 cdef float eeq
-#cdef float pet
+# cdef float pet
 
 td = 0.6 * tmax + 0.4 * tmin
 eeq = srad * (0.004876 - 0.004374 * albedo) * (td + 29.0)

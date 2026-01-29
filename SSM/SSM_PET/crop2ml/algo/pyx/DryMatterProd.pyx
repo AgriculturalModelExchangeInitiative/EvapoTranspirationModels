@@ -2,7 +2,7 @@ cdef float tmp
 cdef float coeff_RUE
 cdef float actual_RUE
 cdef float fint
-#cdef float DDMP
+# cdef float ddmp
 
 tmp = tmax + 0.4 * tmin
 
@@ -17,4 +17,4 @@ else:
 
 actual_RUE = RUE * coeff_RUE
 fint = 1.0 - exp(-kpar * lai)
-DDMP = srad * 0.48 * fint * actual_RUE
+ddmp = srad * 0.48 * fint * actual_RUE
