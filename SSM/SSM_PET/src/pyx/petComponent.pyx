@@ -19,9 +19,8 @@ def model_pet(float tmax,
       float TCRUE):
     cdef float pet
     cdef float TR
-    cdef float DDMP
-    DDMP = model_drymatterprod(tmax,tmin,srad,lai,kpar,RUE,TBRUE,TP1RUE,TP2RUE,TCRUE)
-    ddmp = DDMP
+    cdef float ddmp
+    ddmp = model_drymatterprod(tmax,tmin,srad,lai,kpar,RUE,TBRUE,TP1RUE,TP2RUE,TCRUE)
     TR = model_potentialtranspiration(tmax,tmin,ddmp,TEC,VPDF)
 
     return pet, TR, DDMP
