@@ -3,6 +3,7 @@ from math import *
 from Monica_Evapotranspiration.radiation import model_radiation
 from Monica_Evapotranspiration.netradiation import model_netradiation
 from Monica_Evapotranspiration.stomataresistance import model_stomataresistance
+from Monica_Evapotranspiration.calcstomataresistance import model_calcstomataresistance
 from Monica_Evapotranspiration.saturatedvaporpressure import model_saturatedvaporpressure
 from Monica_Evapotranspiration.saturationvaporpressuredeficit import model_saturationvaporpressuredeficit
 from Monica_Evapotranspiration.referenceevapotranspiration import model_referenceevapotranspiration
@@ -18,9 +19,11 @@ def model_et(float latitude,
       float height_nn,
       float max_air_temperature,
       float min_air_temperature,
-      float use_external_vapor_pressure,
+      bool use_external_vapor_pressure,
       float external_vapor_pressure,
       float relative_humidity,
+      bool calc_stomata_resistance,
+      float fixed_stomata_resistance,
       float saturation_beta,
       float stomata_conductance_alpha,
       int carboxylation_pathway,
@@ -56,7 +59,7 @@ def model_et(float latitude,
       float transpiration[no_of_soil_moisture_layers],
       float evapotranspiration[no_of_soil_moisture_layers],
       float actual_evapotranspiration,
-      float use_external_et0,
+      bool use_external_et0,
       float external_et0):
     cdef float declination
     cdef float astronomic_daylength
@@ -69,6 +72,7 @@ def model_et(float latitude,
     cdef float phot_act_radiation_mean
     cdef float vapor_pressure
     cdef float saturation_vapor_pressure_deficit
+    cdef float calculated_stomata_resistance
     cdef float saturated_vapor_pressure
     cdef float reference_evapotranspiration
     cdef float potential_evapotranspiration_cap
@@ -83,6 +87,8 @@ def model_et(float latitude,
     net_radiation = model_netradiation(height_nn,reference_albedo,global_radiation,max_air_temperature,min_air_temperature,extraterrestrial_radiation,vapor_pressure)
     saturation_vapor_pressure_deficit = model_saturationvaporpressuredeficit(saturated_vapor_pressure,vapor_pressure)
     stomata_resistance = model_stomataresistance(saturation_beta,stomata_conductance_alpha,carboxylation_pathway,atmospheric_co2_concentration,saturation_vapor_pressure_deficit,gross_photosynthesis_reference_mol)
+    calculated_stomata_resistance = stomata_resistance
+    stomata_resistance = model_calcstomataresistance(calc_stomata_resistance,calculated_stomata_resistance,fixed_stomata_resistance)
     reference_evapotranspiration = model_referenceevapotranspiration(height_nn,mean_air_temperature,wind_speed,wind_speed_height,net_radiation,stomata_resistance,saturation_vapor_pressure_deficit)
     internal_et0 = reference_evapotranspiration
     et0 = model_useextet0(use_external_et0,external_et0,internal_et0)

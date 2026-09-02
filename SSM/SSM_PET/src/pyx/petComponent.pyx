@@ -1,14 +1,26 @@
 from datetime import datetime
 from math import *
-from SSM_PET.potentialevapotranspiration import model_potentialevapotranspiration
+from pet.potentialevapotranspiration import model_potentialevapotranspiration
+from pet.potentialtranspiration import model_potentialtranspiration
+from pet.drymatterprod import model_drymatterprod
 def model_pet(float tmax,
       float tmin,
       float srad,
-      float etlai,
-      float ket,
-      float calb,
-      float salb):
+      float albedo,
+      float ddmp,
+      float TEC,
+      float VPDF,
+      float lai,
+      float kpar,
+      float RUE,
+      float TBRUE,
+      float TP1RUE,
+      float TP2RUE,
+      float TCRUE):
     cdef float pet
-    pet = model_potentialevapotranspiration(tmax,tmin,srad,etlai,ket,calb,salb)
+    cdef float TR
+    cdef float ddmp
+    ddmp = model_drymatterprod(tmax,tmin,srad,lai,kpar,RUE,TBRUE,TP1RUE,TP2RUE,TCRUE)
+    TR = model_potentialtranspiration(tmax,tmin,ddmp,TEC,VPDF)
 
-    return (pet)
+    return pet, TR, DDMP

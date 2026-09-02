@@ -26,10 +26,8 @@ void UseExtVaporPressure::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ET
     //                          ** description : boolean condition to be met
     //                          ** inputtype : variable
     //                          ** variablecategory : auxiliary
-    //                          ** datatype : DOUBLE
-    //                          ** max : 
-    //                          ** min : 0
-    //                          ** default : 0
+    //                          ** datatype : BOOLEAN
+    //                          ** default : false
     //                          ** unit : mm
     //            * name: external_vapor_pressure
     //                          ** description : value to be returned if condition is true
@@ -39,7 +37,7 @@ void UseExtVaporPressure::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ET
     //                          ** max : 
     //                          ** min : 0
     //                          ** default : 0
-    //                          ** unit : mm
+    //                          ** unit : kPa
     //            * name: internal_vapor_pressure
     //                          ** description : value to be returned if condition is false
     //                          ** inputtype : variable
@@ -48,7 +46,7 @@ void UseExtVaporPressure::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ET
     //                          ** max : 
     //                          ** min : 0
     //                          ** default : 0
-    //                          ** unit : mm
+    //                          ** unit : kPa
     //- outputs:
     //            * name: vapor_pressure
     //                          ** description : the output value

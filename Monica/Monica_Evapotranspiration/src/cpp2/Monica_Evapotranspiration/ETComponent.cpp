@@ -92,6 +92,8 @@ void ETComponent::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ETAuxiliar
     _NetRadiation.Calculate_Model(s, s1, r, a, ex);
     _SaturationVaporPressureDeficit.Calculate_Model(s, s1, r, a, ex);
     _StomataResistance.Calculate_Model(s, s1, r, a, ex);
+    a.calculated_stomata_resistance = a.stomata_resistance;
+    _CalcStomataResistance.Calculate_Model(s, s1, r, a, ex);
     _ReferenceEvapotranspiration.Calculate_Model(s, s1, r, a, ex);
     a.internal_et0 = a.reference_evapotranspiration;
     _UseExtET0.Calculate_Model(s, s1, r, a, ex);

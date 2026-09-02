@@ -8,12 +8,14 @@
 namespace Monica_Evapotranspiration {
 struct ETAuxiliary
 {
-    double use_external_vapor_pressure{0};
+    bool use_external_vapor_pressure{false};
     double external_vapor_pressure{0};
+    bool calc_stomata_resistance{false};
+    double fixed_stomata_resistance{100};
     double gross_photosynthesis_reference_mol{-1};
     double stomata_resistance{100};
     double net_radiation{0.0};
-    double use_external_et0{0};
+    bool use_external_et0{false};
     double external_et0{0};
     double declination{0.0};
     double astronomic_daylength{0.0};
@@ -31,6 +33,7 @@ struct ETAuxiliary
     double internal_et0{0};
     double saturated_vapor_pressure{0.0};
     double saturation_vapor_pressure_deficit{0.0};
+    double calculated_stomata_resistance{100};
     double et0{0.0};
 };
 }

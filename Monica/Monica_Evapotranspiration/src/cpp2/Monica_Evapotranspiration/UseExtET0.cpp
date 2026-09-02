@@ -26,11 +26,9 @@ void UseExtET0::Calculate_Model(ETState &s, ETState &s1, ETRate &r, ETAuxiliary 
     //                          ** description : boolean condition to be met
     //                          ** inputtype : variable
     //                          ** variablecategory : auxiliary
-    //                          ** datatype : DOUBLE
-    //                          ** max : 
-    //                          ** min : 0
-    //                          ** default : 0
-    //                          ** unit : mm
+    //                          ** datatype : BOOLEAN
+    //                          ** default : false
+    //                          ** unit : 
     //            * name: external_et0
     //                          ** description : value to be returned if condition is true
     //                          ** inputtype : variable

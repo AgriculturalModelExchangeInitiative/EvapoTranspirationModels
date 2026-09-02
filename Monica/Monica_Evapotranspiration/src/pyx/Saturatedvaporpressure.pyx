@@ -17,7 +17,10 @@ def model_saturatedvaporpressure(float max_air_temperature,
 
     cdef float saturated_vapor_pressure
     cdef float vapor_pressure
-    # Calc. of saturated water vapor pressure at daily max temperature [kPA]
+    # This Source Code Form is subject to the terms of the Mozilla Public
+    # License, v. 2.0. If a copy of the MPL was not distributed with this
+    # file, You can obtain one at https://mozilla.org/MPL/2.0/.
+    #Calc. of saturated water vapor pressure at daily max temperature [kPA]
     cdef float saturated_vapor_pressure_max
     saturated_vapor_pressure_max = 0.6108 * exp((17.27 * max_air_temperature) / (237.3 + max_air_temperature))
     # Calc. of saturated water vapor pressure at daily min temperature [kPA]

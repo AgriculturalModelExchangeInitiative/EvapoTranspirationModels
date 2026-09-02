@@ -29,7 +29,9 @@ def init_evapotranspiration(float evaporation_zeta,
     evaporation = array('f', [0.0]*no_of_soil_moisture_layers)
     transpiration = array('f', [0.0]*no_of_soil_moisture_layers)
     evapotranspiration = array('f', [0.0]*no_of_soil_moisture_layers)
-
+    # This Source Code Form is subject to the terms of the Mozilla Public
+    # License, v. 2.0. If a copy of the MPL was not distributed with this
+    # file, You can obtain one at https://mozilla.org/MPL/2.0/.
     return  surface_water_storage, evaporated_from_surface, actual_evaporation, actual_transpiration, soil_moisture, evaporation, transpiration, evapotranspiration, actual_evapotranspiration
 
 def model_evapotranspiration(float evaporation_zeta,
@@ -66,6 +68,9 @@ def model_evapotranspiration(float evaporation_zeta,
     ShortDescription: Calculates the MONICA evapotranspiration
     """
 
+    # This Source Code Form is subject to the terms of the Mozilla Public
+    # License, v. 2.0. If a copy of the MPL was not distributed with this
+    # file, You can obtain one at https://mozilla.org/MPL/2.0/.
     cdef float evaporated_from_intercept
     if developmental_stage > 0:
         evaporated_from_intercept = crop_evaporated_from_intercepted

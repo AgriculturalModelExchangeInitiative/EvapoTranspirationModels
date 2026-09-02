@@ -17,13 +17,13 @@
         <!-- auxiliary -->
         <Input name="use_external_vapor_pressure" description="boolean condition to be met"
                inputtype="variable" variablecategory="auxiliary"
-               datatype="DOUBLE" max="" min="0" default="0" unit="mm"/>
+               datatype="BOOLEAN" default="false" unit="mm"/>
         <Input name="external_vapor_pressure" description="value to be returned if condition is true"
                inputtype="variable" variablecategory="auxiliary"
-               datatype="DOUBLE" max="" min="0" default="0" unit="mm"/>
+               datatype="DOUBLE" max="" min="0" default="0" unit="kPa"/>
         <Input name="internal_vapor_pressure" description="value to be returned if condition is false"
                inputtype="variable" variablecategory="auxiliary"
-               datatype="DOUBLE" max="" min="0" default="0" unit="mm"/>
+               datatype="DOUBLE" max="" min="0" default="0" unit="kPa"/>
     </Inputs>
     <Outputs>
         <Output name="vapor_pressure" description="the output value"

@@ -1,6 +1,7 @@
 #include "Radiation.h"
 #include "NetRadiation.h"
 #include "StomataResistance.h"
+#include "CalcStomataResistance.h"
 #include "SaturatedVaporPressure.h"
 #include "SaturationVaporPressureDeficit.h"
 #include "ReferenceEvapotranspiration.h"
@@ -85,6 +86,7 @@ public:
     Radiation _Radiation;
     NetRadiation _NetRadiation;
     StomataResistance _StomataResistance;
+    CalcStomataResistance _CalcStomataResistance;
     SaturatedVaporPressure _SaturatedVaporPressure;
     SaturationVaporPressureDeficit _SaturationVaporPressureDeficit;
     ReferenceEvapotranspiration _ReferenceEvapotranspiration;
