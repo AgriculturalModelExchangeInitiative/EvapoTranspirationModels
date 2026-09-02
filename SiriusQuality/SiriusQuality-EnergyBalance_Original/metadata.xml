@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Package PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/package.dtd">
+<!-- crop2mlversion : used to specify which version of crop2ml DTD models are conformed to-->
+<Package name="SQ.EnergyBalance" version="3.0" license="MIT" crop2mlVersion="1.0.0">
+    <Authors>
+        <FirstAndLastName>Peter D. Jamieson
+Glen S. Francis
+Derick R. Wilson
+Robert J. Martin</FirstAndLastName>
+        <Institution> /
+        </Institution>
+    </Authors>
+    <Encoders>
+        <FirstAndLastName>Teiki RAIHAUTI</FirstAndLastName>
+        <Institution> INRAE Montplellier</Institution>  
+        <Email> teiki.raihauti@inrae.fr </Email>
+    </Encoders>
+    <Features>
+        <TypeOfModel type="Modular"/>
+        <IsPartOfLargerModel YesOrNo="Yes" name = "SiriusQuality" />
+        <ValidatedWithCropMStudio YesOrNo="No" />
+        <SourceRepository src="" />
+    </Features>
+    <Doc>
+        <file></file>
+    </Doc>
+    <Transformation path="/src">
+        <Languages>
+            <pyx />
+            <py />
+            <cs />
+            <java />
+            <f90 />                
+            <cpp />
+            <r />
+        </Languages>
+        <Platforms>
+			<apsim />
+            <bioma />
+            <simplace/>
+            <dssat />
+            <stics />
+            <sirius />            
+        </Platforms>
+    </Transformation>
+</Package>

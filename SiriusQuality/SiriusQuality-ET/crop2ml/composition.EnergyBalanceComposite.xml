@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModelComposition PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelComposition.dtd">
+<ModelComposition name="PotentialET" id="SiriusQuality_EnergyBalance.PotentialET" version="1.0" timestep="1">
+    <Description>
+        <Title>PotentialET Component</Title>
+        <Authors>SQ</Authors>
+        <Institution>INRAE</Institution>
+        <Reference>None</Reference>
+        <ExtendedDescription>https://pimlday26.sciencesconf.org/program?lang=en</ExtendedDescription>
+        <ShortDescription>Potential ET (based on Penman and Priestly-Taylor)</ShortDescription></Description>
+    <Composition>
+        <Model name="NetRadiation" id="SiriusQuality_EnergyBalance.NetRadiation" filename="unit.NetRadiation.xml"/>
+        <Model name="Conductance" id="SiriusQuality_EnergyBalance.Conductance" filename="unit.Conductance.xml"/>
+        <Model name="NetRadiationEquivalentEvaporation" id="SiriusQuality_EnergyBalance.NetRadiationEquivalentEvaporation" filename="unit.NetRadiationEquivalentEvaporation.xml"/>
+        <Model name="PriestlyTaylor" id="SiriusQuality_EnergyBalance.PriestlyTaylor" filename="unit.PriestlyTaylor.xml"/>
+        <Model name="Penman" id="SiriusQuality_EnergyBalance.Penman" filename="unit.Penman.xml"/>
+        <Links>
+            <InputLink target="NetRadiation.albedoCoefficient" source="albedoCoefficient"/>
+            <InputLink target="NetRadiation.maxTair" source="maxTair"/>
+            <InputLink target="NetRadiation.minTair" source="minTair"/>
+            <InputLink target="NetRadiation.vaporPressure" source="vaporPressure"/>
+            <InputLink target="NetRadiation.ih" source="ih"/>
+            <InputLink target="NetRadiation.extraSolarRadiation" source="extraSolarRadiation"/>
+            <InputLink target="NetRadiation.solarRadiation" source="solarRadiation"/>
+            <InputLink target="NetRadiation.tau" source="tau"/>
+            <InputLink target="NetRadiation.elevation" source="elevation"/>
+            <InputLink target="NetRadiation.stefanBoltzman" source="stefanBoltzman"/>
+            <InputLink target="NetRadiation.albedoCoefficientCan" source="albedoCoefficientCan"/>
+            <InputLink target="Conductance.d" source="d"/>
+            <InputLink target="Conductance.heightWeatherMeasurements" source="heightWeatherMeasurements"/>
+            <InputLink target="Conductance.plantHeight" source="plantHeight"/>
+            <InputLink target="Conductance.zh" source="zh"/>
+            <InputLink target="Conductance.zm" source="zm"/>
+            <InputLink target="Conductance.vonKarman" source="vonKarman"/>
+            <InputLink target="Conductance.ih" source="ih"/>
+            <InputLink target="Conductance.wind" source="wind"/>
+            <InputLink target="NetRadiationEquivalentEvaporation.lambdaV" source="lambdaV"/>
+            <InputLink target="PriestlyTaylor.psychrometricConstant" source="psychrometricConstant"/>
+            <InputLink target="PriestlyTaylor.Alpha" source="Alpha"/>
+            <InputLink target="PriestlyTaylor.solarRadiation" source="solarRadiation"/>
+            <InputLink target="PriestlyTaylor.hslope" source="hslope"/>
+            <InputLink target="PriestlyTaylor.ih" source="ih"/>
+            <InputLink target="Penman.VPDair" source="VPDair"/>
+            <InputLink target="Penman.specificHeatCapacityAir" source="specificHeatCapacityAir"/>
+            <InputLink target="Penman.psychrometricConstant" source="psychrometricConstant"/>
+            <InputLink target="Penman.rhoDensityAir" source="rhoDensityAir"/>
+            <InputLink target="Penman.Alpha" source="Alpha"/>
+            <InputLink target="Penman.lambdaV" source="lambdaV"/>
+            <InputLink target="Penman.hslope" source="hslope"/>
+            
+            <InternalLink target="NetRadiationEquivalentEvaporation.netRadiation" source="NetRadiation.netRadiation"/>
+            <InternalLink target="PriestlyTaylor.netRadiationEquivalentEvaporation" source="NetRadiationEquivalentEvaporation.netRadiationEquivalentEvaporation"/>
+            <InternalLink target="Penman.evapoTranspirationPriestlyTaylor" source="PriestlyTaylor.evapoTranspirationPriestlyTaylor"/>
+            <InternalLink target="Penman.conductance" source="Conductance.conductance"/>
+            
+            <OutputLink target="netOutGoingLongWaveRadiation" source="NetRadiation.netOutGoingLongWaveRadiation"/>
+            <OutputLink target="conductance" source="Conductance.conductance"/>
+			<OutputLink target="netRadiation" source="NetRadiation.netRadiation"/>
+            <OutputLink target="evapoTranspirationPriestlyTaylor" source="PriestlyTaylor.evapoTranspirationPriestlyTaylor"/>
+            <OutputLink target="evapoTranspirationPenman" source="Penman.evapoTranspirationPenman"/>
+
+			</Links>
+			</Composition>
+			</ModelComposition>

@@ -1,0 +1,5 @@
+Source,Target,Weight
+NetRadiation,NetRadiationEquivalentEvaporation,1
+NetRadiationEquivalentEvaporation,PriestlyTaylor,1
+Conductance,Penman,1
+PriestlyTaylor,Penman,1
