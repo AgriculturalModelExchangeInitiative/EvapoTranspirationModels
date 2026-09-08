@@ -1,4 +1,4 @@
-package net.simplace.sim.components.SiriusQuality-ET;
+package net.simplace.sim.components.SiriusQuality-EnergyBalance_Original;
 import  java.io.*;
 import  java.util.*;
 import java.text.ParseException;
