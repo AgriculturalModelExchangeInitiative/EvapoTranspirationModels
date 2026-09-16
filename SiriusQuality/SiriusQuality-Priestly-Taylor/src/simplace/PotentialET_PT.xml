@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//SIMPLACE/DTD GRP 1.0//EN" "http://simplace.net/dtd/GroupComponent.dtd">
+<configuration class="net.simplace.sim.components.SiriusQuality-Priestly-Taylor.PotentialET_PT">
+    <simgroup>
+        <simcomponent id="PriestlyTaylor" class="net.simplace.sim.components.SiriusQuality-Priestly-Taylor.PriestlyTaylor">
+            <input id="lambdaV" source="PotentialET_PT.lambdaV"/>
+            <input id="psychrometricConstant" source="PotentialET_PT.psychrometricConstant"/>
+            <input id="Alpha" source="PotentialET_PT.Alpha"/>
+            <input id="solarRadiation" source="PotentialET_PT.solarRadiation"/>
+            <input id="hslope" source="PotentialET_PT.hslope"/>
+            <input id="ih" source="PotentialET_PT.ih"/>
+            <input id="netRadiation" source="PotentialET_PT.netRadiation"/>
+            <output id="evapoTranspirationPriestlyTaylor" destination="PotentialET_PT.evapoTranspirationPriestlyTaylor"/></simcomponent></simgroup></configuration>

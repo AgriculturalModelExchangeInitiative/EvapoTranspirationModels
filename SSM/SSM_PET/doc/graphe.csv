@@ -1,2 +1,2 @@
 Source,Target,Weight
-DryMatterProd,PotentialTranspiration,1
+PotentialEvapotranspiration,PotentialEvapotranspiration,0

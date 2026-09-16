@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ModelComposition PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelComposition.dtd">
+<ModelComposition name="PotentialET_PT" id="SiriusQuality_EnergyBalance.PotentialET-PT" version="1.0" timestep="1">
+    <Description>
+        <Title>PotentialET Component</Title>
+        <Authors>SQ</Authors>
+        <Institution>INRAE</Institution>
+        <Reference>None</Reference>
+        <ExtendedDescription>https://pimlday26.sciencesconf.org/program?lang=en</ExtendedDescription>
+        <ShortDescription>Potential ET (based on Penman and Priestly-Taylor)</ShortDescription></Description>
+    <Composition>
+        <Model name="PriestlyTaylor" id="SiriusQuality_EnergyBalance.PriestlyTaylor" filename="unit.PriestlyTaylor.xml"/>
+        <Links>
+            <InputLink target="PriestlyTaylor.lambdaV" source="lambdaV"/>
+            <InputLink target="PriestlyTaylor.psychrometricConstant" source="psychrometricConstant"/>
+            <InputLink target="PriestlyTaylor.Alpha" source="Alpha"/>
+            <InputLink target="PriestlyTaylor.solarRadiation" source="solarRadiation"/>
+            <InputLink target="PriestlyTaylor.hslope" source="hslope"/>
+            <InputLink target="PriestlyTaylor.ih" source="ih"/>
+            <InputLink target="PriestlyTaylor.netRadiation" source="netRadiation"/>
+            
+            <OutputLink target="evapoTranspirationPriestlyTaylor" source="PriestlyTaylor.evapoTranspirationPriestlyTaylor"/>
+
+			</Links>
+			</Composition>
+			</ModelComposition>

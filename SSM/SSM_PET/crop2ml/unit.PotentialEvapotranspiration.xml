@@ -10,13 +10,13 @@
 		<ShortDescription>Simplified Penman-based PET calculator using EEQ, Tmax adjustments, and optional Beer–Lambert uncovered-soil albedo weighting.</ShortDescription>
 	</Description>
 	<Inputs>
-		<Input name="tmax" description="Daily maximum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="60" min="-60" default="" unit="°C" uri="-"/>
-		<Input name="tmin" description="Daily minimum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="60" min="-60" default="" unit="°C" uri="-"/>
-		<Input name="srad" description="Daily solar radiation." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="120" min="0" default="" unit="MJ m-2 day-1" uri="-"/>
-		<Input name="albedo" description="Surface albedo." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="10" min="0" default="1" unit="-" uri="-"/>
+		<Input name="tmax" description="Daily maximum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="60.0" min="-60.0" default="" unit="°C" uri="-"/>
+		<Input name="tmin" description="Daily minimum temperature." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="60.0" min="-60.0" default="" unit="°C" uri="-"/>
+		<Input name="srad" description="Daily solar radiation." inputtype="variable" variablecategory="exogenous" datatype="DOUBLE" max="120.0" min="0.0" default="" unit="MJ m-2 day-1" uri="-"/>
+		<Input name="albedo" description="Surface albedo." inputtype="parameter" parametercategory="constant" datatype="DOUBLE" max="10.0" min="0.0" default="1.0" unit="-" uri="-"/>
 	</Inputs>
 	<Outputs>
-		<Output name="pet" description="Potential evapotranspiration." variablecategory="state" datatype="DOUBLE" max="-" min="-" unit="mm day-1" uri="-"/>
+		<Output name="pet" description="Potential evapotranspiration." variablecategory="state" datatype="DOUBLE" max="" min="" unit="mm day-1" uri="-"/>
 	</Outputs>
 	<Algorithm language="cyml" platform="" filename="algo/pyx/PotentialEvapotranspiration.pyx"/>
 	<Parametersets/>
