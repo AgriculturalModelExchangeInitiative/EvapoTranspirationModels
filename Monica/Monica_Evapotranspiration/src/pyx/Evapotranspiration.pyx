@@ -92,7 +92,7 @@ def model_evapotranspiration(float evaporation_zeta,
             evaporation_from_surface = True
             # Water surface evaporates with Kc = 1.1.
             # / kc_factor -> ET0 and then back * 1.1 to potET
-            potential_evapotranspiration = potential_evapotranspiration * 1.1 / kc_factor
+            potential_evapotranspiration = potential_evapotranspiration * (1.1 / kc_factor)
             # If a snow layer is present no water evaporates from surface water sources
             if has_snow_cover:
                 evaporated_from_surface = 0.0
@@ -105,7 +105,7 @@ def model_evapotranspiration(float evaporation_zeta,
                 evaporated_from_surface = potential_evapotranspiration
                 potential_evapotranspiration = 0.0
             # / 1.1 -> ET0 and then back * kc_factor to potET
-            potential_evapotranspiration = potential_evapotranspiration * kc_factor / 1.1
+            potential_evapotranspiration = potential_evapotranspiration * (kc_factor / 1.1)
         # Evaporation from soil
         if potential_evapotranspiration > 0.0:
             for i in range(no_of_soil_layers):
@@ -150,7 +150,7 @@ def model_evapotranspiration(float evaporation_zeta,
                         evaporation[i] = 0.0
                     else:
                         evaporation[i] = potential_evapotranspiration * eReducer
-                        transpiration[i] = 0.0
+                    transpiration[i] = 0.0
                 evapotranspiration[i] = evaporation[i] + transpiration[i]
                 soil_moisture[i] -= evapotranspiration[i] / 1000.0 / layer_thickness[i]
                 # general restriction of soil moisture reduction due to evaporation
@@ -163,6 +163,10 @@ def model_evapotranspiration(float evaporation_zeta,
 
 
 
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 def bound(float lower, float value, float upper):
     if value < lower:
         return lower
@@ -170,6 +174,22 @@ def bound(float lower, float value, float upper):
         return upper
     return value
 
+
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+from math import *
+
+# PET deprivation distribution (factor as function of depth).
+# The PET is spread over the deprivation depth. This function computes
+# the factor/weight for a given layer/depth[dm] (layer_no).
+# @return deprivation_factor
+# @param layer_no [1..NLAYER]
+# @param deprivation_depth [dm] maximum deprivation depth
+# @param zeta [0..40] shape factor
+# @param layer_thickness
 def get_deprivation_factor(int layer_no, float deprivation_depth, float zeta, float layer_thickness):
     # factor f(depth) to distribute the PET along the soil profil/rooting zone
 
@@ -198,7 +218,6 @@ def get_deprivation_factor(int layer_no, float deprivation_depth, float zeta, fl
 # @param percentageSoilCoverage
 # @param referenceEvapotranspiration
 # @return Value for evaporation reduction by soil moisture content
-
 def e_reducer_1(float pwp,
                 float fc,
                 float sm,
@@ -250,4 +269,6 @@ def e_reducer_1(float pwp,
             e_reduction_factor = 0.05 - (0.05 * (0.2 - relative_evaporable_water) / 0.2)
 
     return e_reduction_factor
+
+
 

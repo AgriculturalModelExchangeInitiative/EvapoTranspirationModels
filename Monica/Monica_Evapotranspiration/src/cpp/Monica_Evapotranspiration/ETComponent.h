@@ -1,0 +1,81 @@
+#include "Radiation.h"
+#include "NetRadiation.h"
+#include "StomataResistance.h"
+#include "CalcStomataResistance.h"
+#include "SaturatedVaporPressure.h"
+#include "SaturationVaporPressureDeficit.h"
+#include "ReferenceEvapotranspiration.h"
+#include "PotentialEvapotranspiration.h"
+#include "Evapotranspiration.h"
+#include "UseExtET0.h"
+#include "UseExtVaporPressure.h"
+
+namespace Monica_Evapotranspiration {
+class ETComponent
+{
+    private:
+        double latitude ;
+        double reference_albedo ;
+        double height_nn ;
+        double saturation_beta ;
+        double stomata_conductance_alpha ;
+        int carboxylation_pathway ;
+        double evaporation_zeta ;
+        double maximum_evaporation_impact_depth ;
+        int evaporation_reduction_method ;
+        double xsa_critical_soil_moisture ;
+        int no_of_soil_layers ;
+        int no_of_soil_moisture_layers ;
+        std::vector<double> layer_thickness ;
+        std::vector<double> permanent_wilting_point ;
+        std::vector<double> field_capacity ;
+    public:
+        ETComponent();
+        ETComponent(ETComponent& copy);
+        void Calculate_Model(ETState &s, ETState &s1, ETRate &r, ETAuxiliary &a, ETExogenous &ex);
+        void Init(ETState &s, ETState &s1, ETRate &r, ETAuxiliary &a, ETExogenous &ex);
+        double getlatitude();
+        void setlatitude(double _latitude);
+        double getreference_albedo();
+        void setreference_albedo(double _reference_albedo);
+        double getheight_nn();
+        void setheight_nn(double _height_nn);
+        double getsaturation_beta();
+        void setsaturation_beta(double _saturation_beta);
+        double getstomata_conductance_alpha();
+        void setstomata_conductance_alpha(double _stomata_conductance_alpha);
+        int getcarboxylation_pathway();
+        void setcarboxylation_pathway(int _carboxylation_pathway);
+        double getevaporation_zeta();
+        void setevaporation_zeta(double _evaporation_zeta);
+        double getmaximum_evaporation_impact_depth();
+        void setmaximum_evaporation_impact_depth(double _maximum_evaporation_impact_depth);
+        int getevaporation_reduction_method();
+        void setevaporation_reduction_method(int _evaporation_reduction_method);
+        double getxsa_critical_soil_moisture();
+        void setxsa_critical_soil_moisture(double _xsa_critical_soil_moisture);
+        int getno_of_soil_layers();
+        void setno_of_soil_layers(int _no_of_soil_layers);
+        int getno_of_soil_moisture_layers();
+        void setno_of_soil_moisture_layers(int _no_of_soil_moisture_layers);
+        std::vector<double> & getlayer_thickness();
+        void setlayer_thickness(const std::vector<double> &  _layer_thickness);
+        std::vector<double> & getpermanent_wilting_point();
+        void setpermanent_wilting_point(const std::vector<double> &  _permanent_wilting_point);
+        std::vector<double> & getfield_capacity();
+        void setfield_capacity(const std::vector<double> &  _field_capacity);
+
+        Radiation _Radiation;
+        NetRadiation _NetRadiation;
+        StomataResistance _StomataResistance;
+        CalcStomataResistance _CalcStomataResistance;
+        SaturatedVaporPressure _SaturatedVaporPressure;
+        SaturationVaporPressureDeficit _SaturationVaporPressureDeficit;
+        ReferenceEvapotranspiration _ReferenceEvapotranspiration;
+        PotentialEvapotranspiration _PotentialEvapotranspiration;
+        Evapotranspiration _Evapotranspiration;
+        UseExtET0 _UseExtET0;
+        UseExtVaporPressure _UseExtVaporPressure;
+
+};
+}

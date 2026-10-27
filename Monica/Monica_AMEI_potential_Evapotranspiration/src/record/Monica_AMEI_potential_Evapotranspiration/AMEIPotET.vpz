@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE vle_project PUBLIC "-//VLE TEAM//DTD Strict//EN" "https://raw.githubusercontent.com/vle-forge/vle/master/share/dtd/vle-2.1.dtd">
+<vle_project version="0.5" date="Mon, 27 Dec 2010" author="Gauthier Quesnel">
+    <structures>
+        <model name="top" type="coupled" width="">
+            <in>
+                <port name="vapor_pressure"/>
+                <port name="saturated_vapor_pressure"/>
+                <port name="mean_air_temperature"/>
+                <port name="wind_speed"/>
+                <port name="wind_speed_height"/>
+                <port name="stomata_resistance"/>
+                <port name="net_radiation"/>
+                <port name="kc_factor"/>
+                <port name="developmental_stage"/>
+                <port name="crop_remaining_evapotranspiration"/></in>
+            <out>
+                <port name="reference_evapotranspiration"/>
+                <port name="potential_evapotranspiration"/></out>
+            <submodels>
+                <model width=" " height=" " x=" " y=" " dynamics="Saturation_vapor_pressure_deficit" name="SaturationVaporPressureDeficit" type="atomic">
+                    <in>
+                        <port name="saturated_vapor_pressure"/>
+                        <port name="vapor_pressure"/></in>
+                    <out>
+                        <port name="saturation_vapor_pressure_deficit"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Reference_evapotranspiration" name="ReferenceEvapotranspiration" type="atomic">
+                    <in>
+                        <port name="mean_air_temperature"/>
+                        <port name="wind_speed"/>
+                        <port name="wind_speed_height"/>
+                        <port name="net_radiation"/>
+                        <port name="stomata_resistance"/>
+                        <port name="saturation_vapor_pressure_deficit"/></in>
+                    <out>
+                        <port name="reference_evapotranspiration"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Potential_evapotranspiration" name="PotentialEvapotranspiration" type="atomic">
+                    <in>
+                        <port name="kc_factor"/>
+                        <port name="developmental_stage"/>
+                        <port name="crop_remaining_evapotranspiration"/>
+                        <port name="reference_evapotranspiration"/></in>
+                    <out>
+                        <port name="potential_evapotranspiration"/></out></model></submodels>
+            <connections>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="vapor_pressure"/>
+                    <destination model="SaturationVaporPressureDeficit" port="vapor_pressure"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="saturated_vapor_pressure"/>
+                    <destination model="SaturationVaporPressureDeficit" port="saturated_vapor_pressure"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="mean_air_temperature"/>
+                    <destination model="ReferenceEvapotranspiration" port="mean_air_temperature"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="wind_speed"/>
+                    <destination model="ReferenceEvapotranspiration" port="wind_speed"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="wind_speed_height"/>
+                    <destination model="ReferenceEvapotranspiration" port="wind_speed_height"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="stomata_resistance"/>
+                    <destination model="ReferenceEvapotranspiration" port="stomata_resistance"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="net_radiation"/>
+                    <destination model="ReferenceEvapotranspiration" port="net_radiation"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="kc_factor"/>
+                    <destination model="PotentialEvapotranspiration" port="kc_factor"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="developmental_stage"/>
+                    <destination model="PotentialEvapotranspiration" port="developmental_stage"/></connection>
+                <connection type="input">
+                    <origin model="AMEIPotET" port="crop_remaining_evapotranspiration"/>
+                    <destination model="PotentialEvapotranspiration" port="crop_remaining_evapotranspiration"/></connection>
+                <connection type="internal">
+                    <origin model="AMEIPotET" port="SaturationVaporPressureDeficit.saturation_vapor_pressure_deficit"/>
+                    <destination model="ReferenceEvapotranspiration" port="saturation_vapor_pressure_deficit"/></connection>
+                <connection type="internal">
+                    <origin model="AMEIPotET" port="ReferenceEvapotranspiration.reference_evapotranspiration"/>
+                    <destination model="PotentialEvapotranspiration" port="reference_evapotranspiration"/></connection></connections></model></structures>
+    <dynamics>
+        <dynamic library="Saturationvaporpressuredeficit" package="AMEIPotET" name="Saturationvaporpressuredeficit"/>
+        <dynamic library="Referenceevapotranspiration" package="AMEIPotET" name="Referenceevapotranspiration"/>
+        <dynamic library="Potentialevapotranspiration" package="AMEIPotET" name="Potentialevapotranspiration"/></dynamics>
+    <experiment name=""/></vle_project>

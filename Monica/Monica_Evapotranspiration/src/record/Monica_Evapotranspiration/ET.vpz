@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE vle_project PUBLIC "-//VLE TEAM//DTD Strict//EN" "https://raw.githubusercontent.com/vle-forge/vle/master/share/dtd/vle-2.1.dtd">
+<vle_project version="0.5" date="Mon, 27 Dec 2010" author="Gauthier Quesnel">
+    <structures>
+        <model name="top" type="coupled" width="">
+            <in>
+                <port name="global_radiation"/>
+                <port name="julian_day"/>
+                <port name="sunshine_hours"/>
+                <port name="max_air_temperature"/>
+                <port name="minair_temperature"/>
+                <port name="use_external_vapor_pressure"/>
+                <port name="external_vapor_pressure"/>
+                <port name="relative_humidity"/>
+                <port name="calc_stomata_resistance"/>
+                <port name="fixed_stomata_resistance"/>
+                <port name="gross_photosynthesis_reference_mol"/>
+                <port name="atmospheric_co2_concentration"/>
+                <port name="mean_air_temperature"/>
+                <port name="wind_speed"/>
+                <port name="wind_speed_height"/>
+                <port name="stomata_resistance"/>
+                <port name="net_radiation"/>
+                <port name="kc_factor"/>
+                <port name="developmental_stage"/>
+                <port name="crop_remaining_evapotranspiration"/>
+                <port name="has_snow_cover"/>
+                <port name="crop_transpiration"/>
+                <port name="crop_evaporated_from_intercepted"/>
+                <port name="percentage_soil_coverage"/>
+                <port name="surface_water_storage"/>
+                <port name="evaporated_from_surface"/>
+                <port name="actual_evaporation"/>
+                <port name="actual_transpiration"/>
+                <port name="soil_moisture"/>
+                <port name="evaporation"/>
+                <port name="transpiration"/>
+                <port name="evapotranspiration"/>
+                <port name="actual_evapotranspiration"/>
+                <port name="use_external_et0"/>
+                <port name="external_et0"/></in>
+            <out>
+                <port name="declination"/>
+                <port name="astronomic_daylength"/>
+                <port name="effective_daylength"/>
+                <port name="photoperiodic_daylength"/>
+                <port name="sunshine_hours_global_radiation"/>
+                <port name="extraterrestrial_radiation"/>
+                <port name="clear_day_radiation"/>
+                <port name="overcast_day_radiation"/>
+                <port name="phot_act_radiation_mean"/>
+                <port name="reference_evapotranspiration"/>
+                <port name="potential_evapotranspiration"/></out>
+            <submodels>
+                <model width=" " height=" " x=" " y=" " dynamics="Radiation" name="Radiation" type="atomic">
+                    <in>
+                        <port name="global_radiation"/>
+                        <port name="julian_day"/>
+                        <port name="sunshine_hours"/></in>
+                    <out>
+                        <port name="declination"/>
+                        <port name="astronomic_daylength"/>
+                        <port name="effective_daylength"/>
+                        <port name="photoperiodic_daylength"/>
+                        <port name="sunshine_hours_global_radiation"/>
+                        <port name="extraterrestrial_radiation"/>
+                        <port name="clear_day_radiation"/>
+                        <port name="overcast_day_radiation"/>
+                        <port name="phot_act_radiation_mean"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Net_radiation" name="NetRadiation" type="atomic">
+                    <in>
+                        <port name="global_radiation"/>
+                        <port name="max_air_temperature"/>
+                        <port name="minair_temperature"/>
+                        <port name="extraterrestrial_radiation"/>
+                        <port name="vapor_pressure"/></in>
+                    <out>
+                        <port name="net_radiation"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Stomata_resistance" name="StomataResistance" type="atomic">
+                    <in>
+                        <port name="atmospheric_co2_concentration"/>
+                        <port name="saturation_vapor_pressure_deficit"/>
+                        <port name="gross_photosynthesis_reference_mol"/></in>
+                    <out>
+                        <port name="stomata_resistance"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Calc_stomata_resistance" name="CalcStomataResistance" type="atomic">
+                    <in>
+                        <port name="calc_stomata_resistance"/>
+                        <port name="calculated_stomata_resistance"/>
+                        <port name="fixed_stomata_resistance"/></in>
+                    <out>
+                        <port name="stomata_resistance"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Saturated_vapor_pressure" name="SaturatedVaporPressure" type="atomic">
+                    <in>
+                        <port name="max_air_temperature"/>
+                        <port name="minair_temperature"/>
+                        <port name="relative_humidity"/></in>
+                    <out>
+                        <port name="saturated_vapor_pressure"/>
+                        <port name="vapor_pressure"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Saturation_vapor_pressure_deficit" name="SaturationVaporPressureDeficit" type="atomic">
+                    <in>
+                        <port name="saturated_vapor_pressure"/>
+                        <port name="vapor_pressure"/></in>
+                    <out>
+                        <port name="saturation_vapor_pressure_deficit"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Reference_evapotranspiration" name="ReferenceEvapotranspiration" type="atomic">
+                    <in>
+                        <port name="mean_air_temperature"/>
+                        <port name="wind_speed"/>
+                        <port name="wind_speed_height"/>
+                        <port name="net_radiation"/>
+                        <port name="stomata_resistance"/>
+                        <port name="saturation_vapor_pressure_deficit"/></in>
+                    <out>
+                        <port name="reference_evapotranspiration"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Potential_evapotranspiration" name="PotentialEvapotranspiration" type="atomic">
+                    <in>
+                        <port name="kc_factor"/>
+                        <port name="developmental_stage"/>
+                        <port name="crop_remaining_evapotranspiration"/>
+                        <port name="reference_evapotranspiration"/></in>
+                    <out>
+                        <port name="potential_evapotranspiration"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Evapotranspiration" name="Evapotranspiration" type="atomic">
+                    <in>
+                        <port name="kc_factor"/>
+                        <port name="has_snow_cover"/>
+                        <port name="developmental_stage"/>
+                        <port name="crop_transpiration"/>
+                        <port name="crop_evaporated_from_intercepted"/>
+                        <port name="percentage_soil_coverage"/>
+                        <port name="potential_evapotranspiration"/>
+                        <port name="surface_water_storage"/>
+                        <port name="evaporated_from_surface"/>
+                        <port name="actual_evaporation"/>
+                        <port name="actual_transpiration"/>
+                        <port name="soil_moisture"/>
+                        <port name="evaporation"/>
+                        <port name="transpiration"/>
+                        <port name="evapotranspiration"/>
+                        <port name="actual_evapotranspiration"/></in>
+                    <out>
+                        <port name="evaporated_from_surface"/>
+                        <port name="actual_evapotranspiration"/>
+                        <port name="actual_evaporation"/>
+                        <port name="actual_transpiration"/>
+                        <port name="surface_water_storage"/>
+                        <port name="soil_moisture"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Use_ext_et0" name="UseExtET0" type="atomic">
+                    <in>
+                        <port name="use_external_et0"/>
+                        <port name="external_et0"/>
+                        <port name="internal_et0"/></in>
+                    <out>
+                        <port name="et0"/></out></model>
+                <model width=" " height=" " x=" " y=" " dynamics="Use_ext_vapor_pressure" name="UseExtVaporPressure" type="atomic">
+                    <in>
+                        <port name="use_external_vapor_pressure"/>
+                        <port name="external_vapor_pressure"/>
+                        <port name="internal_vapor_pressure"/></in>
+                    <out>
+                        <port name="vapor_pressure"/></out></model></submodels>
+            <connections>
+                <connection type="input">
+                    <origin model="ET" port="global_radiation"/>
+                    <destination model="Radiation" port="global_radiation"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="julian_day"/>
+                    <destination model="Radiation" port="julian_day"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="sunshine_hours"/>
+                    <destination model="Radiation" port="sunshine_hours"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="max_air_temperature"/>
+                    <destination model="NetRadiation" port="max_air_temperature"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="minair_temperature"/>
+                    <destination model="NetRadiation" port="minair_temperature"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="global_radiation"/>
+                    <destination model="NetRadiation" port="global_radiation"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="use_external_vapor_pressure"/>
+                    <destination model="UseExtVaporPressure" port="use_external_vapor_pressure"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="external_vapor_pressure"/>
+                    <destination model="UseExtVaporPressure" port="external_vapor_pressure"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="max_air_temperature"/>
+                    <destination model="SaturatedVaporPressure" port="max_air_temperature"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="minair_temperature"/>
+                    <destination model="SaturatedVaporPressure" port="minair_temperature"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="relative_humidity"/>
+                    <destination model="SaturatedVaporPressure" port="relative_humidity"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="calc_stomata_resistance"/>
+                    <destination model="CalcStomataResistance" port="calc_stomata_resistance"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="fixed_stomata_resistance"/>
+                    <destination model="CalcStomataResistance" port="fixed_stomata_resistance"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="gross_photosynthesis_reference_mol"/>
+                    <destination model="StomataResistance" port="gross_photosynthesis_reference_mol"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="atmospheric_co2_concentration"/>
+                    <destination model="StomataResistance" port="atmospheric_co2_concentration"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="mean_air_temperature"/>
+                    <destination model="ReferenceEvapotranspiration" port="mean_air_temperature"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="wind_speed"/>
+                    <destination model="ReferenceEvapotranspiration" port="wind_speed"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="wind_speed_height"/>
+                    <destination model="ReferenceEvapotranspiration" port="wind_speed_height"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="stomata_resistance"/>
+                    <destination model="ReferenceEvapotranspiration" port="stomata_resistance"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="net_radiation"/>
+                    <destination model="ReferenceEvapotranspiration" port="net_radiation"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="kc_factor"/>
+                    <destination model="PotentialEvapotranspiration" port="kc_factor"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="developmental_stage"/>
+                    <destination model="PotentialEvapotranspiration" port="developmental_stage"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="crop_remaining_evapotranspiration"/>
+                    <destination model="PotentialEvapotranspiration" port="crop_remaining_evapotranspiration"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="kc_factor"/>
+                    <destination model="Evapotranspiration" port="kc_factor"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="has_snow_cover"/>
+                    <destination model="Evapotranspiration" port="has_snow_cover"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="developmental_stage"/>
+                    <destination model="Evapotranspiration" port="developmental_stage"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="crop_transpiration"/>
+                    <destination model="Evapotranspiration" port="crop_transpiration"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="crop_evaporated_from_intercepted"/>
+                    <destination model="Evapotranspiration" port="crop_evaporated_from_intercepted"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="percentage_soil_coverage"/>
+                    <destination model="Evapotranspiration" port="percentage_soil_coverage"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="surface_water_storage"/>
+                    <destination model="Evapotranspiration" port="surface_water_storage"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="evaporated_from_surface"/>
+                    <destination model="Evapotranspiration" port="evaporated_from_surface"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="actual_evaporation"/>
+                    <destination model="Evapotranspiration" port="actual_evaporation"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="actual_transpiration"/>
+                    <destination model="Evapotranspiration" port="actual_transpiration"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="soil_moisture"/>
+                    <destination model="Evapotranspiration" port="soil_moisture"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="evaporation"/>
+                    <destination model="Evapotranspiration" port="evaporation"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="transpiration"/>
+                    <destination model="Evapotranspiration" port="transpiration"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="evapotranspiration"/>
+                    <destination model="Evapotranspiration" port="evapotranspiration"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="actual_evapotranspiration"/>
+                    <destination model="Evapotranspiration" port="actual_evapotranspiration"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="use_external_et0"/>
+                    <destination model="UseExtET0" port="use_external_et0"/></connection>
+                <connection type="input">
+                    <origin model="ET" port="external_et0"/>
+                    <destination model="UseExtET0" port="external_et0"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="SaturatedVaporPressure.vapor_pressure"/>
+                    <destination model="UseExtVaporPressure" port="internal_vapor_pressure"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="ReferenceEvapotranspiration.reference_evapotranspiration"/>
+                    <destination model="UseExtET0" port="internal_et0"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="Radiation.extraterrestrial_radiation"/>
+                    <destination model="NetRadiation" port="extraterrestrial_radiation"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="SaturatedVaporPressure.saturated_vapor_pressure"/>
+                    <destination model="SaturationVaporPressureDeficit" port="saturated_vapor_pressure"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="SaturationVaporPressureDeficit.saturation_vapor_pressure_deficit"/>
+                    <destination model="StomataResistance" port="saturation_vapor_pressure_deficit"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="StomataResistance.stomata_resistance"/>
+                    <destination model="CalcStomataResistance" port="calculated_stomata_resistance"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="CalcStomataResistance.stomata_resistance"/>
+                    <destination model="ReferenceEvapotranspiration" port="stomata_resistance"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="UseExtVaporPressure.vapor_pressure"/>
+                    <destination model="NetRadiation" port="vapor_pressure"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="NetRadiation.net_radiation"/>
+                    <destination model="ReferenceEvapotranspiration" port="net_radiation"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="UseExtVaporPressure.vapor_pressure"/>
+                    <destination model="SaturationVaporPressureDeficit" port="vapor_pressure"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="UseExtET0.et0"/>
+                    <destination model="PotentialEvapotranspiration" port="reference_evapotranspiration"/></connection>
+                <connection type="internal">
+                    <origin model="ET" port="PotentialEvapotranspiration.potential_evapotranspiration"/>
+                    <destination model="Evapotranspiration" port="potential_evapotranspiration"/></connection></connections></model></structures>
+    <dynamics>
+        <dynamic library="Radiation" package="ET" name="Radiation"/>
+        <dynamic library="Netradiation" package="ET" name="Netradiation"/>
+        <dynamic library="Stomataresistance" package="ET" name="Stomataresistance"/>
+        <dynamic library="Calcstomataresistance" package="ET" name="Calcstomataresistance"/>
+        <dynamic library="Saturatedvaporpressure" package="ET" name="Saturatedvaporpressure"/>
+        <dynamic library="Saturationvaporpressuredeficit" package="ET" name="Saturationvaporpressuredeficit"/>
+        <dynamic library="Referenceevapotranspiration" package="ET" name="Referenceevapotranspiration"/>
+        <dynamic library="Potentialevapotranspiration" package="ET" name="Potentialevapotranspiration"/>
+        <dynamic library="Evapotranspiration" package="ET" name="Evapotranspiration"/>
+        <dynamic library="Useextet0" package="ET" name="Useextet0"/>
+        <dynamic library="Useextvaporpressure" package="ET" name="Useextvaporpressure"/></dynamics>
+    <experiment name=""/></vle_project>

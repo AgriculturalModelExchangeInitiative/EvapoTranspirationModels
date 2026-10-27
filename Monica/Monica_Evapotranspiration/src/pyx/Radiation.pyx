@@ -71,12 +71,24 @@ def model_radiation(float latitude,
 
 
 
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 def bound(float lower, float value, float upper):
     if value < lower:
         return lower
     if value > upper:
         return upper
     return value
+
+
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+from math import *
 
 def calc_declinations(float latitude, int julian_day):
   # calculation of declination - old DEC
@@ -92,7 +104,6 @@ def calc_declinations(float latitude, int julian_day):
   decl_cos = cos(declination * pi / 180.0) * cos(latitude * pi / 180.0)
 
   return declination, decl_sin, decl_cos
-
 
 
 def calc_astronomic_daylength(float latitude, int julian_day):
@@ -111,7 +122,6 @@ def calc_astronomic_daylength(float latitude, int julian_day):
   return astronomic_daylength
 
 
-
 def calc_effective_daylength(float latitude, int julian_day):
   cdef float declination
   cdef float decl_sin
@@ -128,7 +138,6 @@ def calc_effective_daylength(float latitude, int julian_day):
   return effective_daylength
 
 
-
 def calc_photoperiodic_daylength(float latitude, int julian_day):
   cdef float declination
   cdef float decl_sin
@@ -143,4 +152,5 @@ def calc_photoperiodic_daylength(float latitude, int julian_day):
   photoperiodic_daylength = 12.0 * (pi + 2.0 * asin(photo_daylength)) / pi
 
   return photoperiodic_daylength
+
 

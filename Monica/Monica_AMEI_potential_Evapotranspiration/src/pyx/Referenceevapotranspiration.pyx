@@ -29,10 +29,10 @@ def model_referenceevapotranspiration(float height_nn,
     # Calculation of atmospheric pressure //[kPA]
     cdef float atmospheric_pressure
     atmospheric_pressure = 101.3 * pow(((293.0 - (0.0065 * height_nn)) / 293.0), 5.26)
-    # Calculation of psychrometer constant [kPA Â°C-1] - air humidity
+    # Calculation of psychrometer constant [kPA °C-1] - air humidity
     cdef float psycrometer_constant
     psycrometer_constant = 0.000665 * atmospheric_pressure
-    # Slope of saturation water vapor pressure-to-temperature relation [kPA Â°C-1]
+    # Slope of saturation water vapor pressure-to-temperature relation [kPA °C-1]
     cdef float saturated_vapour_pressure_slope
     saturated_vapour_pressure_slope = (4098.0 * (0.6108 * exp((17.27 * mean_air_temperature) / (
             mean_air_temperature + 237.3)))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))

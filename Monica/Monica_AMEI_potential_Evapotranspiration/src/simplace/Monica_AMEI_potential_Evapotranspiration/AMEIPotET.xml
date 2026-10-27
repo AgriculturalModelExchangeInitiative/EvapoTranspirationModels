@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//SIMPLACE/DTD GRP 1.0//EN" "http://simplace.net/dtd/GroupComponent.dtd">
+<configuration class="net.simplace.sim.components.Monica_AMEI_potential_Evapotranspiration.AMEIPotET">
+    <simgroup>
+        <simcomponent id="SaturationVaporPressureDeficit" class="net.simplace.sim.components.Monica_AMEI_potential_Evapotranspiration.SaturationVaporPressureDeficit">
+            <input id="vapor_pressure" source="AMEIPotET.vapor_pressure"/>
+            <input id="saturated_vapor_pressure" source="AMEIPotET.saturated_vapor_pressure"/></simcomponent>
+        <simcomponent id="ReferenceEvapotranspiration" class="net.simplace.sim.components.Monica_AMEI_potential_Evapotranspiration.ReferenceEvapotranspiration">
+            <input id="height_nn" source="AMEIPotET.height_nn"/>
+            <input id="mean_air_temperature" source="AMEIPotET.mean_air_temperature"/>
+            <input id="wind_speed" source="AMEIPotET.wind_speed"/>
+            <input id="wind_speed_height" source="AMEIPotET.wind_speed_height"/>
+            <input id="stomata_resistance" source="AMEIPotET.stomata_resistance"/>
+            <input id="net_radiation" source="AMEIPotET.net_radiation"/>
+            <input id="saturation_vapor_pressure_deficit" source="SaturationVaporPressureDeficit.saturation_vapor_pressure_deficit"/>
+            <output id="reference_evapotranspiration" destination="AMEIPotET.reference_evapotranspiration"/></simcomponent>
+        <simcomponent id="PotentialEvapotranspiration" class="net.simplace.sim.components.Monica_AMEI_potential_Evapotranspiration.PotentialEvapotranspiration">
+            <input id="kc_factor" source="AMEIPotET.kc_factor"/>
+            <input id="developmental_stage" source="AMEIPotET.developmental_stage"/>
+            <input id="crop_remaining_evapotranspiration" source="AMEIPotET.crop_remaining_evapotranspiration"/>
+            <input id="reference_evapotranspiration" source="ReferenceEvapotranspiration.reference_evapotranspiration"/>
+            <output id="potential_evapotranspiration" destination="AMEIPotET.potential_evapotranspiration"/></simcomponent></simgroup></configuration>
