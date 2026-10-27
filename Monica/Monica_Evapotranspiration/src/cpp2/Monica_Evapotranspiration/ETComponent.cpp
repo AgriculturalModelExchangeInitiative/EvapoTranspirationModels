@@ -135,5 +135,5 @@ ETComponent::ETComponent(ETComponent& toCopy)
 
 void ETComponent::Init(ETState &s, ETState &s1, ETRate &r, ETAuxiliary &a, ETExogenous &ex)
 {
-    _Evapotranspiration.Init(s, s1, r, a, ex);
+    _Evapotranspiration.Init(s,s1, r, a, ex);
 }
