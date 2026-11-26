@@ -72,6 +72,7 @@ CONTAINS
     !                          ** datatype : DOUBLE
     !                          ** max : 
     !                          ** min : 0
+    !                          ** default : 0
     !                          ** unit : kPa
     !            * name: gross_photosynthesis_reference_mol
     !                          ** description : gross_photosynthesis_reference_mol (-1 = not supplied = no crop)

@@ -26,6 +26,9 @@ def model_referenceevapotranspiration(float height_nn,
     """
 
     cdef float reference_evapotranspiration
+    # This Source Code Form is subject to the terms of the Mozilla Public
+    # License, v. 2.0. If a copy of the MPL was not distributed with this
+    # file, You can obtain one at https://mozilla.org/MPL/2.0/.
     # Calculation of atmospheric pressure //[kPA]
     cdef float atmospheric_pressure
     atmospheric_pressure = 101.3 * pow(((293.0 - (0.0065 * height_nn)) / 293.0), 5.26)

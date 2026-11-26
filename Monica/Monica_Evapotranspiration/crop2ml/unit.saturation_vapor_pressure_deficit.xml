@@ -19,7 +19,7 @@
         <!-- auxiliary -->
         <Input name="saturated_vapor_pressure" description="saturated vapor pressure"
                 inputtype="variable" variablecategory="auxiliary"
-                datatype="DOUBLE" max="" min="0" unit="kPa"/>
+                datatype="DOUBLE" max="" min="0" default="0" unit="kPa"/>
         <Input name="vapor_pressure" description="vapor pressure"
                inputtype="variable" variablecategory="auxiliary"
                datatype="DOUBLE" max="" min="0" default="0" unit="kPa"/>

@@ -246,7 +246,7 @@ namespace ET.DomainClass
                                             _net_radiation.Description = "net radiation";
                                             _net_radiation.MaxValue = -1D;
                                             _net_radiation.MinValue = 0;
-                                            _net_radiation.DefaultValue = -1D;
+                                            _net_radiation.DefaultValue = 0;
                                             _net_radiation.Units = "MJ/m2";
                                             _net_radiation.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
 

@@ -87,7 +87,7 @@ namespace SiriusQualityAMEIPotET.DomainClass
                                             _wind_speed_height.Name = "wind_speed_height";
                                             _wind_speed_height.Description = "height at which the wind speed has been measured";
                                             _wind_speed_height.MaxValue = 9999;
-                                            _wind_speed_height.MinValue = -9999;
+                                            _wind_speed_height.MinValue = 0.1;
                                             _wind_speed_height.DefaultValue = 2;
                                             _wind_speed_height.Units = "m";
                                             _wind_speed_height.ValueType = VarInfoValueTypes.GetInstanceForName("Double");

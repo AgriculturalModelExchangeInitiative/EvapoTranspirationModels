@@ -208,6 +208,7 @@ namespace SiriusQualityAMEIPotET.Strategies
     //                          ** datatype : DOUBLE
     //                          ** max : 
     //                          ** min : 0
+    //                          ** default : 0
     //                          ** unit : kPa
     //            * name: vapor_pressure
     //                          ** description : vapor pressure

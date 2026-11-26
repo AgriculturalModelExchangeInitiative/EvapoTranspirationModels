@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ModelComposition PUBLIC " "
+    "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/ModelComposition.dtd">
+<ModelComposition
+    id="Monica_Evapotranspiration.AMEIRefET"
+    name="AMEIRefET"
+    version="1"
+    timestep="1"
+>
+    <Description>
+        <Title>AMEI ET MONICA reference evapotranspiration model</Title>
+        <Authors
+        >Claas Nendel (transcription into Crop2ML by Michael Berg-Mohnicke)</Authors>
+        <Institution>ZALF e.V.</Institution>
+        <Reference />
+        <ExtendedDescription />
+        <ShortDescription
+        >Calculates the MONICA reference evapotranspiration for AMEI ET exercise</ShortDescription>
+    </Description>
+    <Composition>
+        <Model
+            id="Monica_Evapotranspiration.ReferenceEvapotranspiration"
+            name="ReferenceEvapotranspiration"
+            filename="unit.reference_evapotranspiration.xml"
+        />
+        <Links>
+            <!-- into ReferenceEvapotranspiration -->
+            <InputLink
+                source="height_nn"
+                target="ReferenceEvapotranspiration.height_nn"
+            />
+            <InputLink
+                source="mean_air_temperature"
+                target="ReferenceEvapotranspiration.mean_air_temperature"
+            />
+            <InputLink
+                source="wind_speed"
+                target="ReferenceEvapotranspiration.wind_speed"
+            />
+            <InputLink
+                source="wind_speed_height"
+                target="ReferenceEvapotranspiration.wind_speed_height"
+            />
+            <InputLink
+                source="stomata_resistance"
+                target="ReferenceEvapotranspiration.stomata_resistance"
+            />
+            <InputLink
+                source="net_radiation"
+                target="ReferenceEvapotranspiration.net_radiation"
+            />
+            <InputLink
+                source="saturation_vapor_pressure_deficit"
+                target="ReferenceEvapotranspiration.saturation_vapor_pressure_deficit"
+            />
+
+            <!-- from ReferenceEvapotranspiration -->
+            <OutputLink
+                source="ReferenceEvapotranspiration.reference_evapotranspiration"
+                target="reference_evapotranspiration"
+            />
+        </Links>
+    </Composition>
+</ModelComposition>

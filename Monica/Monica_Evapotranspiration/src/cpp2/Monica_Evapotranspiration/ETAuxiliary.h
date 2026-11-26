@@ -14,7 +14,7 @@ struct ETAuxiliary
     double fixed_stomata_resistance{100};
     double gross_photosynthesis_reference_mol{-1};
     double stomata_resistance{100};
-    double net_radiation{0.0};
+    double net_radiation{0};
     bool use_external_et0{false};
     double external_et0{0};
     double declination{0.0};

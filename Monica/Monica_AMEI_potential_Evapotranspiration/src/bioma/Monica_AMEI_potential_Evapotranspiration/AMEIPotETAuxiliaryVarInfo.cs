@@ -86,7 +86,7 @@ namespace AMEIPotET.DomainClass
                                             _saturated_vapor_pressure.Description = "saturated vapor pressure";
                                             _saturated_vapor_pressure.MaxValue = -1D;
                                             _saturated_vapor_pressure.MinValue = 0;
-                                            _saturated_vapor_pressure.DefaultValue = -1D;
+                                            _saturated_vapor_pressure.DefaultValue = 0;
                                             _saturated_vapor_pressure.Units = "kPa";
                                             _saturated_vapor_pressure.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
 
@@ -102,7 +102,7 @@ namespace AMEIPotET.DomainClass
                                             _net_radiation.Description = "net radiation";
                                             _net_radiation.MaxValue = -1D;
                                             _net_radiation.MinValue = 0;
-                                            _net_radiation.DefaultValue = -1D;
+                                            _net_radiation.DefaultValue = 0;
                                             _net_radiation.Units = "MJ/m2";
                                             _net_radiation.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
 

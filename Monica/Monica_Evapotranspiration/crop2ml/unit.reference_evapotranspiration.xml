@@ -36,12 +36,12 @@
                datatype="DOUBLE" max="9999" min="0" default="0" unit="m/s"/>
         <Input name="wind_speed_height" description="height at which the wind speed has been measured"
                inputtype="variable" variablecategory="exogenous"
-               datatype="DOUBLE" max="9999" min="-9999" default="2" unit="m"/>
+               datatype="DOUBLE" max="9999" min="0.1" default="2" unit="m"/>
 
         <!-- auxiliary -->
         <Input name="net_radiation" description="net radiation"
                 inputtype="variable" variablecategory="auxiliary"
-                datatype="DOUBLE" max="" min="0" unit="MJ/m2"/>
+                datatype="DOUBLE" max="" min="0" default="0" unit="MJ/m2"/>
         <Input name="stomata_resistance" description="stomata resistance (FAO default value is 100)"
                inputtype="variable" variablecategory="auxiliary"
                datatype="DOUBLE" max="10000" min="0" default="100" unit="s/m"/>

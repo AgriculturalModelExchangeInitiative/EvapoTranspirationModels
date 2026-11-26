@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE vle_project PUBLIC "-//VLE TEAM//DTD Strict//EN" "https://raw.githubusercontent.com/vle-forge/vle/master/share/dtd/vle-2.1.dtd">
+<vle_project version="0.5" date="Mon, 27 Dec 2010" author="Gauthier Quesnel">
+    <structures>
+        <model name="top" type="coupled" width="">
+            <in>
+                <port name="mean_air_temperature"/>
+                <port name="wind_speed"/>
+                <port name="wind_speed_height"/>
+                <port name="stomata_resistance"/>
+                <port name="net_radiation"/>
+                <port name="saturation_vapor_pressure_deficit"/></in>
+            <out>
+                <port name="reference_evapotranspiration"/></out>
+            <submodels>
+                <model width=" " height=" " x=" " y=" " dynamics="Reference_evapotranspiration" name="ReferenceEvapotranspiration" type="atomic">
+                    <in>
+                        <port name="mean_air_temperature"/>
+                        <port name="wind_speed"/>
+                        <port name="wind_speed_height"/>
+                        <port name="net_radiation"/>
+                        <port name="stomata_resistance"/>
+                        <port name="saturation_vapor_pressure_deficit"/></in>
+                    <out>
+                        <port name="reference_evapotranspiration"/></out></model></submodels>
+            <connections>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="mean_air_temperature"/>
+                    <destination model="ReferenceEvapotranspiration" port="mean_air_temperature"/></connection>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="wind_speed"/>
+                    <destination model="ReferenceEvapotranspiration" port="wind_speed"/></connection>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="wind_speed_height"/>
+                    <destination model="ReferenceEvapotranspiration" port="wind_speed_height"/></connection>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="stomata_resistance"/>
+                    <destination model="ReferenceEvapotranspiration" port="stomata_resistance"/></connection>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="net_radiation"/>
+                    <destination model="ReferenceEvapotranspiration" port="net_radiation"/></connection>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="saturation_vapor_pressure_deficit"/>
+                    <destination model="ReferenceEvapotranspiration" port="saturation_vapor_pressure_deficit"/></connection></connections></model></structures>
+    <dynamics>
+        <dynamic library="Referenceevapotranspiration" package="AMEIRefET" name="Referenceevapotranspiration"/></dynamics>
+    <experiment name=""/></vle_project>

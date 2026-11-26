@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Package PUBLIC " " "https://raw.githubusercontent.com/AgriculturalModelExchangeInitiative/crop2ml/master/package.dtd">
 <!-- crop2mlversion : used to specify which version of crop2ml DTD models are conformed to-->
-<Package name="Monica_Evapotranspiration.Evapotranspiration" version="1.0" license="MIT" crop2mlVersion="1.0.0">
+<Package name="Monica_Evapotranspiration.Evapotranspiration" version="1.0" license="MPL-2.0" crop2mlVersion="1.0.0">
     <Authors>
         <FirstAndLastName>Michael Berg-Mohnicke</FirstAndLastName>
         <Institution>ZALF e.V.</Institution>

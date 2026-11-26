@@ -19,7 +19,7 @@ import "core:math"
 //
 //             * ShortDescription: Calculates the MONICA reference evapotranspiration
 Reference_Evapotranspiration :: struct {
-	height_nn: f64, // height above sea level [m]
+	height_nn: f64 `unit:"m"`, // height above sea level
 }
 
 make_reference_evapotranspiration :: proc(allocator := context.allocator) -> (m: Reference_Evapotranspiration) {
@@ -65,7 +65,7 @@ destroy_reference_evapotranspiration :: proc(m: ^Reference_Evapotranspiration) {
 //                           ** variablecategory : exogenous
 //                           ** datatype : DOUBLE
 //                           ** max : 9999
-//                           ** min : -9999
+//                           ** min : 0.1
 //                           ** default : 2
 //                           ** unit : m
 //             * name: net_radiation
@@ -75,6 +75,7 @@ destroy_reference_evapotranspiration :: proc(m: ^Reference_Evapotranspiration) {
 //                           ** datatype : DOUBLE
 //                           ** max :
 //                           ** min : 0
+//                           ** default : 0
 //                           ** unit : MJ/m2
 //             * name: stomata_resistance
 //                           ** description : stomata resistance (FAO default value is 100)

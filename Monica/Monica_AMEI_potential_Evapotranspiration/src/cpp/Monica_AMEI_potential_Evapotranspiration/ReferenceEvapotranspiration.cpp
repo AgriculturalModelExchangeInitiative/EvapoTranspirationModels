@@ -66,7 +66,7 @@ void ReferenceEvapotranspiration::Calculate_Model(AMEIPotETState &s, AMEIPotETSt
     //                          ** variablecategory : exogenous
     //                          ** datatype : DOUBLE
     //                          ** max : 9999
-    //                          ** min : -9999
+    //                          ** min : 0.1
     //                          ** default : 2
     //                          ** unit : m
     //            * name: net_radiation
@@ -76,6 +76,7 @@ void ReferenceEvapotranspiration::Calculate_Model(AMEIPotETState &s, AMEIPotETSt
     //                          ** datatype : DOUBLE
     //                          ** max : 
     //                          ** min : 0
+    //                          ** default : 0
     //                          ** unit : MJ/m2
     //            * name: stomata_resistance
     //                          ** description : stomata resistance (FAO default value is 100)

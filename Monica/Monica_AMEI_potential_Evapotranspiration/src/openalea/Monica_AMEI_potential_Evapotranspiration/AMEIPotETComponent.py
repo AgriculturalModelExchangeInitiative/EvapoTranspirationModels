@@ -47,6 +47,7 @@ def model_ameipotet(vapor_pressure:float,
                                ** datatype : DOUBLE
                                ** max : 
                                ** min : 0
+                               ** default : 0
                                ** unit : kPa
                  * name: height_nn
                                ** description : height above sea level
@@ -81,7 +82,7 @@ def model_ameipotet(vapor_pressure:float,
                                ** variablecategory : exogenous
                                ** datatype : DOUBLE
                                ** max : 9999
-                               ** min : -9999
+                               ** min : 0.1
                                ** default : 2
                                ** unit : m
                  * name: stomata_resistance
@@ -100,6 +101,7 @@ def model_ameipotet(vapor_pressure:float,
                                ** datatype : DOUBLE
                                ** max : 
                                ** min : 0
+                               ** default : 0
                                ** unit : MJ/m2
                  * name: kc_factor
                                ** description : crop coefficient ETc/ET0

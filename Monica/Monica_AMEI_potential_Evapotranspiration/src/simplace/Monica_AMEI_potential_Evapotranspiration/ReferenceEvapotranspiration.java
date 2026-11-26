@@ -38,7 +38,7 @@ public class ReferenceEvapotranspiration extends FWSimComponent
         addVariable(FWSimVariable.createSimVariable("height_nn", "height above sea level", DATA_TYPE.DOUBLE, CONTENT_TYPE.constant,"m", -9999.0, 9999.0, 0.0, this));
         addVariable(FWSimVariable.createSimVariable("mean_air_temperature", "daily average air temperature", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"°C", -100.0, 100.0, 0.0, this));
         addVariable(FWSimVariable.createSimVariable("wind_speed", "wind speed measured at wind speed height", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"m/s", 0.0, 9999.0, 0.0, this));
-        addVariable(FWSimVariable.createSimVariable("wind_speed_height", "height at which the wind speed has been measured", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"m", -9999.0, 9999.0, 2.0, this));
+        addVariable(FWSimVariable.createSimVariable("wind_speed_height", "height at which the wind speed has been measured", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"m", 0.1, 9999.0, 2.0, this));
         addVariable(FWSimVariable.createSimVariable("net_radiation", "net radiation", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"MJ/m2", 0.0, 0.0, 0.0, this));
         addVariable(FWSimVariable.createSimVariable("stomata_resistance", "stomata resistance (FAO default value is 100)", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"s/m", 0.0, 10000.0, 100.0, this));
         addVariable(FWSimVariable.createSimVariable("saturation_vapor_pressure_deficit", "saturation_vapor_pressure_deficit", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"kPa", 0.0, 0.0, 0.0, this));

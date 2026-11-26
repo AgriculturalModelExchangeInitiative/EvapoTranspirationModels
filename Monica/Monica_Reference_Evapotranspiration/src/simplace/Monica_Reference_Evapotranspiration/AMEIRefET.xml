@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//SIMPLACE/DTD GRP 1.0//EN" "http://simplace.net/dtd/GroupComponent.dtd">
+<configuration class="net.simplace.sim.components.Monica_Reference_Evapotranspiration.AMEIRefET">
+    <simgroup>
+        <simcomponent id="ReferenceEvapotranspiration" class="net.simplace.sim.components.Monica_Reference_Evapotranspiration.ReferenceEvapotranspiration">
+            <input id="height_nn" source="AMEIRefET.height_nn"/>
+            <input id="mean_air_temperature" source="AMEIRefET.mean_air_temperature"/>
+            <input id="wind_speed" source="AMEIRefET.wind_speed"/>
+            <input id="wind_speed_height" source="AMEIRefET.wind_speed_height"/>
+            <input id="stomata_resistance" source="AMEIRefET.stomata_resistance"/>
+            <input id="net_radiation" source="AMEIRefET.net_radiation"/>
+            <input id="saturation_vapor_pressure_deficit" source="AMEIRefET.saturation_vapor_pressure_deficit"/>
+            <output id="reference_evapotranspiration" destination="AMEIRefET.reference_evapotranspiration"/></simcomponent></simgroup></configuration>
