@@ -55,6 +55,9 @@
                 target="ReferenceEvapotranspiration.saturation_vapor_pressure_deficit"
             />
 
+            <InputLink source="saturated_vapor_pressure_slope" target="ReferenceEvapotranspiration.saturated_vapor_pressure_slope"/>
+            <InputLink source="psychrometric_constant" target="ReferenceEvapotranspiration.psychrometric_constant"/>
+
             <!-- from ReferenceEvapotranspiration -->
             <OutputLink
                 source="ReferenceEvapotranspiration.reference_evapotranspiration"

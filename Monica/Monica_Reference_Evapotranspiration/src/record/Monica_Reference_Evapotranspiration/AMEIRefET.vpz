@@ -9,7 +9,9 @@
                 <port name="wind_speed_height"/>
                 <port name="stomata_resistance"/>
                 <port name="net_radiation"/>
-                <port name="saturation_vapor_pressure_deficit"/></in>
+                <port name="saturation_vapor_pressure_deficit"/>
+                <port name="saturated_vapor_pressure_slope"/>
+                <port name="psychrometric_constant"/></in>
             <out>
                 <port name="reference_evapotranspiration"/></out>
             <submodels>
@@ -20,7 +22,9 @@
                         <port name="wind_speed_height"/>
                         <port name="net_radiation"/>
                         <port name="stomata_resistance"/>
-                        <port name="saturation_vapor_pressure_deficit"/></in>
+                        <port name="saturation_vapor_pressure_deficit"/>
+                        <port name="saturated_vapor_pressure_slope"/>
+                        <port name="psychrometric_constant"/></in>
                     <out>
                         <port name="reference_evapotranspiration"/></out></model></submodels>
             <connections>
@@ -41,7 +45,13 @@
                     <destination model="ReferenceEvapotranspiration" port="net_radiation"/></connection>
                 <connection type="input">
                     <origin model="AMEIRefET" port="saturation_vapor_pressure_deficit"/>
-                    <destination model="ReferenceEvapotranspiration" port="saturation_vapor_pressure_deficit"/></connection></connections></model></structures>
+                    <destination model="ReferenceEvapotranspiration" port="saturation_vapor_pressure_deficit"/></connection>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="saturated_vapor_pressure_slope"/>
+                    <destination model="ReferenceEvapotranspiration" port="saturated_vapor_pressure_slope"/></connection>
+                <connection type="input">
+                    <origin model="AMEIRefET" port="psychrometric_constant"/>
+                    <destination model="ReferenceEvapotranspiration" port="psychrometric_constant"/></connection></connections></model></structures>
     <dynamics>
         <dynamic library="Referenceevapotranspiration" package="AMEIRefET" name="Referenceevapotranspiration"/></dynamics>
     <experiment name=""/></vle_project>

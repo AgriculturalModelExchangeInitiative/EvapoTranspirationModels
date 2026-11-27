@@ -51,6 +51,12 @@
         <Input name="saturation_vapor_pressure_deficit" description="saturation_vapor_pressure_deficit"
                inputtype="variable" variablecategory="auxiliary"
                datatype="DOUBLE" max="" min="0" default="0" unit="kPa"/>
+        <Input name="saturated_vapor_pressure_slope" description="slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)"
+               inputtype="variable" variablecategory="auxiliary"
+               datatype="DOUBLE" max="" min="-1" default="-1" unit="kPa/°C"/>
+        <Input name="psychrometric_constant" description="psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)"
+               inputtype="variable" variablecategory="auxiliary"
+               datatype="DOUBLE" max="" min="-1" default="-1" unit="kPa/°C"/>
 
         <!-- states -->
     </Inputs>

@@ -11,6 +11,8 @@ CONTAINS
         stomata_resistance, &
         net_radiation, &
         saturation_vapor_pressure_deficit, &
+        saturated_vapor_pressure_slope, &
+        psychrometric_constant, &
         reference_evapotranspiration)
         IMPLICIT NONE
         INTEGER:: i_cyml_r
@@ -22,6 +24,8 @@ CONTAINS
         REAL, INTENT(IN) :: stomata_resistance
         REAL, INTENT(IN) :: net_radiation
         REAL, INTENT(IN) :: saturation_vapor_pressure_deficit
+        REAL, INTENT(IN) :: saturated_vapor_pressure_slope
+        REAL, INTENT(IN) :: psychrometric_constant
         REAL, INTENT(OUT) :: reference_evapotranspiration
         !- Name: AMEIRefET -Version: 1, -Time step: 1
         !- Description:
@@ -104,6 +108,24 @@ CONTAINS
     !                          ** min : 0
     !                          ** default : 0
     !                          ** unit : kPa
+    !            * name: saturated_vapor_pressure_slope
+    !                          ** description : slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+    !                          ** inputtype : variable
+    !                          ** variablecategory : auxiliary
+    !                          ** datatype : DOUBLE
+    !                          ** max : 
+    !                          ** min : -1
+    !                          ** default : -1
+    !                          ** unit : kPa/°C
+    !            * name: psychrometric_constant
+    !                          ** description : psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+    !                          ** inputtype : variable
+    !                          ** variablecategory : auxiliary
+    !                          ** datatype : DOUBLE
+    !                          ** max : 
+    !                          ** min : -1
+    !                          ** default : -1
+    !                          ** unit : kPa/°C
         !- outputs:
     !            * name: reference_evapotranspiration
     !                          ** description : reference evapotranspiration (ET0)
@@ -115,7 +137,8 @@ CONTAINS
         call model_referenceevapotranspiration(height_nn,  &
                 latent_heat_of_vaporization, mean_air_temperature, wind_speed,  &
                 wind_speed_height, net_radiation, stomata_resistance,  &
-                saturation_vapor_pressure_deficit,reference_evapotranspiration)
+                saturation_vapor_pressure_deficit, saturated_vapor_pressure_slope,  &
+                psychrometric_constant,reference_evapotranspiration)
     END SUBROUTINE model_ameirefet
 
 END MODULE

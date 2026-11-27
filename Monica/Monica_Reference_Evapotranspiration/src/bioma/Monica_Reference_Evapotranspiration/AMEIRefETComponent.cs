@@ -62,14 +62,26 @@ namespace AMEIRefET.Strategies
             pd6.PropertyType = (AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit).ValueType.TypeForCurrentValue;
             pd6.PropertyVarInfo =(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit);
             _inputs0_0.Add(pd6);
-            mo0_0.Inputs=_inputs0_0;
-            List<PropertyDescription> _outputs0_0 = new List<PropertyDescription>();
             PropertyDescription pd7 = new PropertyDescription();
             pd7.DomainClassType = typeof(AMEIRefET.DomainClass.AMEIRefETAuxiliary);
-            pd7.PropertyName = "reference_evapotranspiration";
-            pd7.PropertyType = (AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration).ValueType.TypeForCurrentValue;
-            pd7.PropertyVarInfo =(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
-            _outputs0_0.Add(pd7);
+            pd7.PropertyName = "saturated_vapor_pressure_slope";
+            pd7.PropertyType = (AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope).ValueType.TypeForCurrentValue;
+            pd7.PropertyVarInfo =(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope);
+            _inputs0_0.Add(pd7);
+            PropertyDescription pd8 = new PropertyDescription();
+            pd8.DomainClassType = typeof(AMEIRefET.DomainClass.AMEIRefETAuxiliary);
+            pd8.PropertyName = "psychrometric_constant";
+            pd8.PropertyType = (AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant).ValueType.TypeForCurrentValue;
+            pd8.PropertyVarInfo =(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant);
+            _inputs0_0.Add(pd8);
+            mo0_0.Inputs=_inputs0_0;
+            List<PropertyDescription> _outputs0_0 = new List<PropertyDescription>();
+            PropertyDescription pd9 = new PropertyDescription();
+            pd9.DomainClassType = typeof(AMEIRefET.DomainClass.AMEIRefETAuxiliary);
+            pd9.PropertyName = "reference_evapotranspiration";
+            pd9.PropertyType = (AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration).ValueType.TypeForCurrentValue;
+            pd9.PropertyVarInfo =(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
+            _outputs0_0.Add(pd9);
             mo0_0.Outputs=_outputs0_0;
             List<string> lAssStrat0_0 = new List<string>();
             lAssStrat0_0.Add(typeof(AMEIRefET.Strategies.ReferenceEvapotranspiration).FullName);
@@ -207,8 +219,8 @@ namespace AMEIRefET.Strategies
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
 
-                RangeBasedCondition r9 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
-                if(r9.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r9);}
+                RangeBasedCondition r11 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
+                if(r11.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r11);}
 
                 string ret = "";
                 ret += _ReferenceEvapotranspiration.TestPostConditions(s, s1, r, a, ex, " strategy AMEIRefET.Strategies.AMEIRefET");
@@ -234,6 +246,8 @@ namespace AMEIRefET.Strategies
                 AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.stomata_resistance.CurrentValue=a.stomata_resistance;
                 AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.net_radiation.CurrentValue=a.net_radiation;
                 AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit.CurrentValue=a.saturation_vapor_pressure_deficit;
+                AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope.CurrentValue=a.saturated_vapor_pressure_slope;
+                AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant.CurrentValue=a.psychrometric_constant;
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
                 RangeBasedCondition r1 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETExogenousVarInfo.mean_air_temperature);
@@ -248,6 +262,10 @@ namespace AMEIRefET.Strategies
                 if(r5.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.net_radiation.ValueType)){prc.AddCondition(r5);}
                 RangeBasedCondition r6 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit);
                 if(r6.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit.ValueType)){prc.AddCondition(r6);}
+                RangeBasedCondition r7 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope);
+                if(r7.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope.ValueType)){prc.AddCondition(r7);}
+                RangeBasedCondition r8 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant);
+                if(r8.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant.ValueType)){prc.AddCondition(r8);}
 
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("height_nn")));
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization")));

@@ -11,6 +11,8 @@ public class AMEIRefETAuxiliary
     private double _stomata_resistance;
     private double _net_radiation;
     private double _saturation_vapor_pressure_deficit;
+    private double _saturated_vapor_pressure_slope;
+    private double _psychrometric_constant;
     private double _reference_evapotranspiration;
 
     /// <summary>
@@ -30,6 +32,8 @@ public class AMEIRefETAuxiliary
             stomata_resistance = toCopy.stomata_resistance;
             net_radiation = toCopy.net_radiation;
             saturation_vapor_pressure_deficit = toCopy.saturation_vapor_pressure_deficit;
+            saturated_vapor_pressure_slope = toCopy.saturated_vapor_pressure_slope;
+            psychrometric_constant = toCopy.psychrometric_constant;
             reference_evapotranspiration = toCopy.reference_evapotranspiration;
         }
     }
@@ -65,6 +69,28 @@ public class AMEIRefETAuxiliary
     {
         get { return this._saturation_vapor_pressure_deficit; }
         set { this._saturation_vapor_pressure_deficit= value; } 
+    }
+
+    /// <summary>
+    /// Gets and sets the slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+    /// </summary>
+    [Description("slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)")] 
+    [Units("kPa/°C")] 
+    public double saturated_vapor_pressure_slope
+    {
+        get { return this._saturated_vapor_pressure_slope; }
+        set { this._saturated_vapor_pressure_slope= value; } 
+    }
+
+    /// <summary>
+    /// Gets and sets the psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+    /// </summary>
+    [Description("psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)")] 
+    [Units("kPa/°C")] 
+    public double psychrometric_constant
+    {
+        get { return this._psychrometric_constant; }
+        set { this._psychrometric_constant= value; } 
     }
 
     /// <summary>

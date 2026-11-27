@@ -52,11 +52,13 @@ namespace SiriusModel.Model.AMEIRefET
             ameirefetComponent.latent_heat_of_vaporization = 0; 
         }
 
-        public void EstimateAMEIRefET(double stomata_resistance, double net_radiation, double saturation_vapor_pressure_deficit, double mean_air_temperature, double wind_speed, double wind_speed_height)
+        public void EstimateAMEIRefET(double stomata_resistance, double net_radiation, double saturation_vapor_pressure_deficit, double saturated_vapor_pressure_slope, double psychrometric_constant, double mean_air_temperature, double wind_speed, double wind_speed_height)
         {
             a.stomata_resistance = stomata_resistance;
             a.net_radiation = net_radiation;
             a.saturation_vapor_pressure_deficit = saturation_vapor_pressure_deficit;
+            a.saturated_vapor_pressure_slope = saturated_vapor_pressure_slope;
+            a.psychrometric_constant = psychrometric_constant;
             ex.mean_air_temperature = mean_air_temperature;
             ex.wind_speed = wind_speed;
             ex.wind_speed_height = wind_speed_height;

@@ -11,6 +11,8 @@ struct AMEIRefETAuxiliary
     double stomata_resistance{100};
     double net_radiation{0};
     double saturation_vapor_pressure_deficit{0};
+    double saturated_vapor_pressure_slope{-1};
+    double psychrometric_constant{-1};
     double reference_evapotranspiration{0.0};
 };
 }

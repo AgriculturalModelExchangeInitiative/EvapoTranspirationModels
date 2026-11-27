@@ -106,6 +106,24 @@ void ReferenceEvapotranspiration::Calculate_Model(AMEIRefETState &s, AMEIRefETSt
     //                          ** min : 0
     //                          ** default : 0
     //                          ** unit : kPa
+    //            * name: saturated_vapor_pressure_slope
+    //                          ** description : slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+    //                          ** inputtype : variable
+    //                          ** variablecategory : auxiliary
+    //                          ** datatype : DOUBLE
+    //                          ** max : 
+    //                          ** min : -1
+    //                          ** default : -1
+    //                          ** unit : kPa/°C
+    //            * name: psychrometric_constant
+    //                          ** description : psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+    //                          ** inputtype : variable
+    //                          ** variablecategory : auxiliary
+    //                          ** datatype : DOUBLE
+    //                          ** max : 
+    //                          ** min : -1
+    //                          ** default : -1
+    //                          ** unit : kPa/°C
     //- outputs:
     //            * name: reference_evapotranspiration
     //                          ** description : reference evapotranspiration (ET0)
@@ -117,14 +135,22 @@ void ReferenceEvapotranspiration::Calculate_Model(AMEIRefETState &s, AMEIRefETSt
     double atmospheric_pressure;
     atmospheric_pressure = 101.3 * std::pow((293.0 - (0.0065 * height_nn)) / 293.0, 5.26);
     double psycrometer_constant;
-    if (latent_heat_of_vaporization > 0.0) {
+    if (a.psychrometric_constant >= 0.0) {
+        psycrometer_constant = a.psychrometric_constant;
+    }
+    else if (latent_heat_of_vaporization > 0.0) {
         psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization);
     }
     else {
         psycrometer_constant = 0.000665 * atmospheric_pressure;
     }
     double saturated_vapour_pressure_slope;
-    saturated_vapour_pressure_slope = 4098.0 * (0.6108 * std::exp(17.27 * ex.mean_air_temperature / (ex.mean_air_temperature + 237.3))) / ((ex.mean_air_temperature + 237.3) * (ex.mean_air_temperature + 237.3));
+    if (a.saturated_vapor_pressure_slope >= 0.0) {
+        saturated_vapour_pressure_slope = a.saturated_vapor_pressure_slope;
+    }
+    else {
+        saturated_vapour_pressure_slope = 4098.0 * (0.6108 * std::exp(17.27 * ex.mean_air_temperature / (ex.mean_air_temperature + 237.3))) / ((ex.mean_air_temperature + 237.3) * (ex.mean_air_temperature + 237.3));
+    }
     double inverse_lambda;
     if (latent_heat_of_vaporization > 0.0) {
         inverse_lambda = 1.0 / latent_heat_of_vaporization;

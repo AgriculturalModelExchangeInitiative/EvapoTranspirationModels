@@ -11,6 +11,8 @@ library(gsubfn)
 #' @param net_radiation (MJ/m2) net radiation auxiliary (0, 0-) 
 #' @param stomata_resistance (s/m) stomata resistance (FAO default value is 100) auxiliary (100, 0-10000) 
 #' @param saturation_vapor_pressure_deficit (kPa) saturation_vapor_pressure_deficit auxiliary (0, 0-) 
+#' @param saturated_vapor_pressure_slope (kPa/°C) slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature) auxiliary (-1, -1-) 
+#' @param psychrometric_constant (kPa/°C) psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization) auxiliary (-1, -1-) 
 #'
 #' @return
 #' \describe{
@@ -24,12 +26,18 @@ model_referenceevapotranspiration <- function (height_nn,
          wind_speed_height,
          net_radiation,
          stomata_resistance,
-         saturation_vapor_pressure_deficit){
+         saturation_vapor_pressure_deficit,
+         saturated_vapor_pressure_slope,
+         psychrometric_constant){
     reference_evapotranspiration <- 0.0
     atmospheric_pressure <- 0.0
     atmospheric_pressure <- 101.3 * ((293.0 - (0.0065 * height_nn)) / 293.0) ^ 5.26
     psycrometer_constant <- 0.0
-    if (latent_heat_of_vaporization > 0.0)
+    if (psychrometric_constant >= 0.0)
+    {
+        psycrometer_constant <- psychrometric_constant
+    }
+    else if ( latent_heat_of_vaporization > 0.0)
     {
         psycrometer_constant <- 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization)
     }
@@ -38,7 +46,14 @@ model_referenceevapotranspiration <- function (height_nn,
         psycrometer_constant <- 0.000665 * atmospheric_pressure
     }
     saturated_vapour_pressure_slope <- 0.0
-    saturated_vapour_pressure_slope <- 4098.0 * (0.6108 * exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))
+    if (saturated_vapor_pressure_slope >= 0.0)
+    {
+        saturated_vapour_pressure_slope <- saturated_vapor_pressure_slope
+    }
+    else
+    {
+        saturated_vapour_pressure_slope <- 4098.0 * (0.6108 * exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))
+    }
     inverse_lambda <- 0.0
     if (latent_heat_of_vaporization > 0.0)
     {

@@ -86,16 +86,28 @@ namespace SiriusQualityAMEIRefET.Strategies
             pd6.PropertyType = (SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit).ValueType.TypeForCurrentValue;
             pd6.PropertyVarInfo =(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit);
             _inputs0_0.Add(pd6);
+            PropertyDescription pd7 = new PropertyDescription();
+            pd7.DomainClassType = typeof(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliary);
+            pd7.PropertyName = "saturated_vapor_pressure_slope";
+            pd7.PropertyType = (SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope).ValueType.TypeForCurrentValue;
+            pd7.PropertyVarInfo =(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope);
+            _inputs0_0.Add(pd7);
+            PropertyDescription pd8 = new PropertyDescription();
+            pd8.DomainClassType = typeof(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliary);
+            pd8.PropertyName = "psychrometric_constant";
+            pd8.PropertyType = (SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant).ValueType.TypeForCurrentValue;
+            pd8.PropertyVarInfo =(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant);
+            _inputs0_0.Add(pd8);
             mo0_0.Inputs=_inputs0_0;
 
             //Outputs
             List<PropertyDescription> _outputs0_0 = new List<PropertyDescription>();
-            PropertyDescription pd7 = new PropertyDescription();
-            pd7.DomainClassType = typeof(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliary);
-            pd7.PropertyName = "reference_evapotranspiration";
-            pd7.PropertyType = (SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration).ValueType.TypeForCurrentValue;
-            pd7.PropertyVarInfo =(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
-            _outputs0_0.Add(pd7);
+            PropertyDescription pd9 = new PropertyDescription();
+            pd9.DomainClassType = typeof(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliary);
+            pd9.PropertyName = "reference_evapotranspiration";
+            pd9.PropertyType = (SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration).ValueType.TypeForCurrentValue;
+            pd9.PropertyVarInfo =(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
+            _outputs0_0.Add(pd9);
             mo0_0.Outputs=_outputs0_0;
             //Associated strategies
             List<string> lAssStrat0_0 = new List<string>();
@@ -238,8 +250,8 @@ namespace SiriusQualityAMEIRefET.Strategies
                 SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.CurrentValue=a.reference_evapotranspiration;
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
-                RangeBasedCondition r9 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
-                if(r9.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r9);}
+                RangeBasedCondition r11 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
+                if(r11.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r11);}
                 string postConditionsResult = pre.VerifyPostconditions(prc, callID); if (!string.IsNullOrEmpty(postConditionsResult)) { pre.TestsOut(postConditionsResult, true, "PostConditions errors in strategy " + this.GetType().Name); } return postConditionsResult;
             }
             catch (Exception exception)
@@ -260,6 +272,8 @@ namespace SiriusQualityAMEIRefET.Strategies
                 SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.net_radiation.CurrentValue=a.net_radiation;
                 SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.stomata_resistance.CurrentValue=a.stomata_resistance;
                 SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit.CurrentValue=a.saturation_vapor_pressure_deficit;
+                SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope.CurrentValue=a.saturated_vapor_pressure_slope;
+                SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant.CurrentValue=a.psychrometric_constant;
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
                 RangeBasedCondition r1 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETExogenousVarInfo.mean_air_temperature);
@@ -274,6 +288,10 @@ namespace SiriusQualityAMEIRefET.Strategies
                 if(r5.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.stomata_resistance.ValueType)){prc.AddCondition(r5);}
                 RangeBasedCondition r6 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit);
                 if(r6.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit.ValueType)){prc.AddCondition(r6);}
+                RangeBasedCondition r7 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope);
+                if(r7.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturated_vapor_pressure_slope.ValueType)){prc.AddCondition(r7);}
+                RangeBasedCondition r8 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant);
+                if(r8.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.psychrometric_constant.ValueType)){prc.AddCondition(r8);}
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("height_nn")));
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization")));
                 string preConditionsResult = pre.VerifyPreconditions(prc, callID); if (!string.IsNullOrEmpty(preConditionsResult)) { pre.TestsOut(preConditionsResult, true, "PreConditions errors in strategy " + this.GetType().Name); } return preConditionsResult;
@@ -406,6 +424,24 @@ namespace SiriusQualityAMEIRefET.Strategies
     //                          ** min : 0
     //                          ** default : 0
     //                          ** unit : kPa
+    //            * name: saturated_vapor_pressure_slope
+    //                          ** description : slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+    //                          ** inputtype : variable
+    //                          ** variablecategory : auxiliary
+    //                          ** datatype : DOUBLE
+    //                          ** max : 
+    //                          ** min : -1
+    //                          ** default : -1
+    //                          ** unit : kPa/°C
+    //            * name: psychrometric_constant
+    //                          ** description : psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+    //                          ** inputtype : variable
+    //                          ** variablecategory : auxiliary
+    //                          ** datatype : DOUBLE
+    //                          ** max : 
+    //                          ** min : -1
+    //                          ** default : -1
+    //                          ** unit : kPa/°C
             //- outputs:
     //            * name: reference_evapotranspiration
     //                          ** description : reference evapotranspiration (ET0)
@@ -420,11 +456,17 @@ namespace SiriusQualityAMEIRefET.Strategies
             double net_radiation = a.net_radiation;
             double stomata_resistance = a.stomata_resistance;
             double saturation_vapor_pressure_deficit = a.saturation_vapor_pressure_deficit;
+            double saturated_vapor_pressure_slope = a.saturated_vapor_pressure_slope;
+            double psychrometric_constant = a.psychrometric_constant;
             double reference_evapotranspiration;
             double atmospheric_pressure;
             atmospheric_pressure = 101.3 * Math.Pow((293.0 - (0.0065 * height_nn)) / 293.0, 5.26);
             double psycrometer_constant;
-            if (latent_heat_of_vaporization > 0.0)
+            if (psychrometric_constant >= 0.0)
+            {
+                psycrometer_constant = psychrometric_constant;
+            }
+            else if ( latent_heat_of_vaporization > 0.0)
             {
                 psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization);
             }
@@ -433,7 +475,14 @@ namespace SiriusQualityAMEIRefET.Strategies
                 psycrometer_constant = 0.000665 * atmospheric_pressure;
             }
             double saturated_vapour_pressure_slope;
-            saturated_vapour_pressure_slope = 4098.0 * (0.6108 * Math.Exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3));
+            if (saturated_vapor_pressure_slope >= 0.0)
+            {
+                saturated_vapour_pressure_slope = saturated_vapor_pressure_slope;
+            }
+            else
+            {
+                saturated_vapour_pressure_slope = 4098.0 * (0.6108 * Math.Exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3));
+            }
             double inverse_lambda;
             if (latent_heat_of_vaporization > 0.0)
             {

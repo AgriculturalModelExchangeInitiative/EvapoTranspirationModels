@@ -11,6 +11,8 @@ class AMEIRefETAuxiliary
         double stomata_resistance ;
         double net_radiation ;
         double saturation_vapor_pressure_deficit ;
+        double saturated_vapor_pressure_slope ;
+        double psychrometric_constant ;
         double reference_evapotranspiration ;
     public:
         AMEIRefETAuxiliary();
@@ -20,6 +22,10 @@ class AMEIRefETAuxiliary
         void setnet_radiation(double _net_radiation);
         double getsaturation_vapor_pressure_deficit();
         void setsaturation_vapor_pressure_deficit(double _saturation_vapor_pressure_deficit);
+        double getsaturated_vapor_pressure_slope();
+        void setsaturated_vapor_pressure_slope(double _saturated_vapor_pressure_slope);
+        double getpsychrometric_constant();
+        void setpsychrometric_constant(double _psychrometric_constant);
         double getreference_evapotranspiration();
         void setreference_evapotranspiration(double _reference_evapotranspiration);
 

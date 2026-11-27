@@ -15,7 +15,9 @@ def model_ameirefet(height_nn:float,
          wind_speed_height:float,
          stomata_resistance:float,
          net_radiation:float,
-         saturation_vapor_pressure_deficit:float):
+         saturation_vapor_pressure_deficit:float,
+         saturated_vapor_pressure_slope:float,
+         psychrometric_constant:float):
     """
      - Name: AMEIRefET -Version: 1, -Time step: 1
      - Description:
@@ -98,6 +100,24 @@ def model_ameirefet(height_nn:float,
                                ** min : 0
                                ** default : 0
                                ** unit : kPa
+                 * name: saturated_vapor_pressure_slope
+                               ** description : slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+                               ** inputtype : variable
+                               ** variablecategory : auxiliary
+                               ** datatype : DOUBLE
+                               ** max : 
+                               ** min : -1
+                               ** default : -1
+                               ** unit : kPa/°C
+                 * name: psychrometric_constant
+                               ** description : psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+                               ** inputtype : variable
+                               ** variablecategory : auxiliary
+                               ** datatype : DOUBLE
+                               ** max : 
+                               ** min : -1
+                               ** default : -1
+                               ** unit : kPa/°C
      - outputs:
                  * name: reference_evapotranspiration
                                ** description : reference evapotranspiration (ET0)
@@ -109,6 +129,6 @@ def model_ameirefet(height_nn:float,
     """
 
     reference_evapotranspiration:float
-    reference_evapotranspiration = model_referenceevapotranspiration(height_nn, latent_heat_of_vaporization, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit)
+    reference_evapotranspiration = model_referenceevapotranspiration(height_nn, latent_heat_of_vaporization, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit, saturated_vapor_pressure_slope, psychrometric_constant)
     return reference_evapotranspiration
 #%%CyML Model End%%

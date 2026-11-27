@@ -8,7 +8,9 @@ def model_referenceevapotranspiration(float height_nn,
                                       float wind_speed_height,
                                       float net_radiation,
                                       float stomata_resistance,
-                                      float saturation_vapor_pressure_deficit):
+                                      float saturation_vapor_pressure_deficit,
+                                      float saturated_vapor_pressure_slope,
+                                      float psychrometric_constant):
     """
     MONICA reference evapotranspiration
     Author: Claas Nendel (transcription into Crop2ML by Michael Berg-Mohnicke)
@@ -34,16 +36,24 @@ def model_referenceevapotranspiration(float height_nn,
     cdef float atmospheric_pressure
     atmospheric_pressure = 101.3 * pow(((293.0 - (0.0065 * height_nn)) / 293.0), 5.26)
     # Calculation of psychrometer constant [kPA °C-1] - air humidity
-    # with a latent heat of vaporization (lambda) > 0 FAO-56 eq. 8 (cp P / (eps lambda)), without one
-    # MONICA's 0.000665 * P (FAO-56's simplification for lambda = 2.45 MJ kg-1)
+    # psychrometric_constant >= 0: given (AMEI ET exercise, standardized inputs); else with a latent
+    # heat of vaporization (lambda) > 0 FAO-56 eq. 8 (cp P / (eps lambda)), without one MONICA's
+    # 0.000665 * P (FAO-56's simplification for lambda = 2.45 MJ kg-1)
     cdef float psycrometer_constant
-    if latent_heat_of_vaporization > 0.0:
+    if psychrometric_constant >= 0.0:
+        psycrometer_constant = psychrometric_constant
+    elif latent_heat_of_vaporization > 0.0:
         psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization)
     else:
         psycrometer_constant = 0.000665 * atmospheric_pressure
     # Slope of saturation water vapor pressure-to-temperature relation [kPA °C-1]
+    # saturated_vapor_pressure_slope >= 0: given (AMEI ET exercise, standardized inputs; 0 is a value,
+    # the rounded slope of very cold days); < 0: calculated
     cdef float saturated_vapour_pressure_slope
-    saturated_vapour_pressure_slope = (4098.0 * (0.6108 * exp((17.27 * mean_air_temperature) / (
+    if saturated_vapor_pressure_slope >= 0.0:
+        saturated_vapour_pressure_slope = saturated_vapor_pressure_slope
+    else:
+        saturated_vapour_pressure_slope = (4098.0 * (0.6108 * exp((17.27 * mean_air_temperature) / (
             mean_air_temperature + 237.3)))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))
     # 1 / lambda [kg MJ-1], the conversion of MJ m-2 to mm: MONICA's 0.408 (= 1/2.45) without lambda
     cdef float inverse_lambda

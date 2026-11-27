@@ -10,6 +10,8 @@ CONTAINS
         net_radiation, &
         stomata_resistance, &
         saturation_vapor_pressure_deficit, &
+        saturated_vapor_pressure_slope, &
+        psychrometric_constant, &
         reference_evapotranspiration)
         IMPLICIT NONE
         INTEGER:: i_cyml_r
@@ -21,6 +23,8 @@ CONTAINS
         REAL, INTENT(IN) :: net_radiation
         REAL, INTENT(IN) :: stomata_resistance
         REAL, INTENT(IN) :: saturation_vapor_pressure_deficit
+        REAL, INTENT(IN) :: saturated_vapor_pressure_slope
+        REAL, INTENT(IN) :: psychrometric_constant
         REAL, INTENT(OUT) :: reference_evapotranspiration
         REAL:: atmospheric_pressure
         REAL:: psycrometer_constant
@@ -118,6 +122,24 @@ CONTAINS
     !                          ** min : 0
     !                          ** default : 0
     !                          ** unit : kPa
+    !            * name: saturated_vapor_pressure_slope
+    !                          ** description : slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+    !                          ** inputtype : variable
+    !                          ** variablecategory : auxiliary
+    !                          ** datatype : DOUBLE
+    !                          ** max : 
+    !                          ** min : -1
+    !                          ** default : -1
+    !                          ** unit : kPa/°C
+    !            * name: psychrometric_constant
+    !                          ** description : psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+    !                          ** inputtype : variable
+    !                          ** variablecategory : auxiliary
+    !                          ** datatype : DOUBLE
+    !                          ** max : 
+    !                          ** min : -1
+    !                          ** default : -1
+    !                          ** unit : kPa/°C
         !- outputs:
     !            * name: reference_evapotranspiration
     !                          ** description : reference evapotranspiration (ET0)
@@ -128,15 +150,21 @@ CONTAINS
     !                          ** unit : mm
         atmospheric_pressure = 101.3 *  (((293.0 - (0.0065 * height_nn)) /  &
                 293.0) ** 5.26)
-        IF(latent_heat_of_vaporization .GT. 0.0) THEN
+        IF(psychrometric_constant .GE. 0.0) THEN
+            psycrometer_constant = psychrometric_constant
+        ELSE IF ( latent_heat_of_vaporization .GT. 0.0) THEN
             psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 *  &
                     latent_heat_of_vaporization)
         ELSE
             psycrometer_constant = 0.000665 * atmospheric_pressure
         END IF
-        saturated_vapour_pressure_slope = 4098.0 * (0.6108 * EXP(17.27 *  &
-                mean_air_temperature / (mean_air_temperature + 237.3))) /  &
-                ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))
+        IF(saturated_vapor_pressure_slope .GE. 0.0) THEN
+            saturated_vapour_pressure_slope = saturated_vapor_pressure_slope
+        ELSE
+            saturated_vapour_pressure_slope = 4098.0 * (0.6108 * EXP(17.27 *  &
+                    mean_air_temperature / (mean_air_temperature + 237.3))) /  &
+                    ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))
+        END IF
         IF(latent_heat_of_vaporization .GT. 0.0) THEN
             inverse_lambda = 1.0 / latent_heat_of_vaporization
         ELSE

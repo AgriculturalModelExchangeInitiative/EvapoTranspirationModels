@@ -11,4 +11,6 @@
             <input id="stomata_resistance" source="AMEIRefET.stomata_resistance"/>
             <input id="net_radiation" source="AMEIRefET.net_radiation"/>
             <input id="saturation_vapor_pressure_deficit" source="AMEIRefET.saturation_vapor_pressure_deficit"/>
+            <input id="saturated_vapor_pressure_slope" source="AMEIRefET.saturated_vapor_pressure_slope"/>
+            <input id="psychrometric_constant" source="AMEIRefET.psychrometric_constant"/>
             <output id="reference_evapotranspiration" destination="AMEIRefET.reference_evapotranspiration"/></simcomponent></simgroup></configuration>

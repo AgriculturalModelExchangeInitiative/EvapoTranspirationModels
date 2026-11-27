@@ -94,6 +94,24 @@ namespace Models.Crop2ML;
 ///                          ** min : 0
 ///                          ** default : 0
 ///                          ** unit : kPa
+///            * name: saturated_vapor_pressure_slope
+///                          ** description : slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+///                          ** inputtype : variable
+///                          ** variablecategory : auxiliary
+///                          ** datatype : DOUBLE
+///                          ** max : 
+///                          ** min : -1
+///                          ** default : -1
+///                          ** unit : kPa/°C
+///            * name: psychrometric_constant
+///                          ** description : psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+///                          ** inputtype : variable
+///                          ** variablecategory : auxiliary
+///                          ** datatype : DOUBLE
+///                          ** max : 
+///                          ** min : -1
+///                          ** default : -1
+///                          ** unit : kPa/°C
 ///- outputs:
 ///            * name: reference_evapotranspiration
 ///                          ** description : reference evapotranspiration (ET0)
@@ -149,11 +167,17 @@ public class ReferenceEvapotranspiration
         double net_radiation = a.net_radiation;
         double stomata_resistance = a.stomata_resistance;
         double saturation_vapor_pressure_deficit = a.saturation_vapor_pressure_deficit;
+        double saturated_vapor_pressure_slope = a.saturated_vapor_pressure_slope;
+        double psychrometric_constant = a.psychrometric_constant;
         double reference_evapotranspiration;
         double atmospheric_pressure;
         atmospheric_pressure = 101.3 * Math.Pow((293.0 - (0.0065 * height_nn)) / 293.0, 5.26);
         double psycrometer_constant;
-        if (latent_heat_of_vaporization > 0.0)
+        if (psychrometric_constant >= 0.0)
+        {
+            psycrometer_constant = psychrometric_constant;
+        }
+        else if ( latent_heat_of_vaporization > 0.0)
         {
             psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization);
         }
@@ -162,7 +186,14 @@ public class ReferenceEvapotranspiration
             psycrometer_constant = 0.000665 * atmospheric_pressure;
         }
         double saturated_vapour_pressure_slope;
-        saturated_vapour_pressure_slope = 4098.0 * (0.6108 * Math.Exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3));
+        if (saturated_vapor_pressure_slope >= 0.0)
+        {
+            saturated_vapour_pressure_slope = saturated_vapor_pressure_slope;
+        }
+        else
+        {
+            saturated_vapour_pressure_slope = 4098.0 * (0.6108 * Math.Exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3));
+        }
         double inverse_lambda;
         if (latent_heat_of_vaporization > 0.0)
         {

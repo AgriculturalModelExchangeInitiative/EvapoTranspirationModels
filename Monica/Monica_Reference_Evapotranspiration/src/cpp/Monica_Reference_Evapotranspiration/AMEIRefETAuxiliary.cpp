@@ -7,9 +7,13 @@ AMEIRefETAuxiliary::AMEIRefETAuxiliary() {}
 double AMEIRefETAuxiliary::getstomata_resistance() { return this->stomata_resistance; }
 double AMEIRefETAuxiliary::getnet_radiation() { return this->net_radiation; }
 double AMEIRefETAuxiliary::getsaturation_vapor_pressure_deficit() { return this->saturation_vapor_pressure_deficit; }
+double AMEIRefETAuxiliary::getsaturated_vapor_pressure_slope() { return this->saturated_vapor_pressure_slope; }
+double AMEIRefETAuxiliary::getpsychrometric_constant() { return this->psychrometric_constant; }
 double AMEIRefETAuxiliary::getreference_evapotranspiration() { return this->reference_evapotranspiration; }
 
 void AMEIRefETAuxiliary::setstomata_resistance(double _stomata_resistance) { this->stomata_resistance = _stomata_resistance; }
 void AMEIRefETAuxiliary::setnet_radiation(double _net_radiation) { this->net_radiation = _net_radiation; }
 void AMEIRefETAuxiliary::setsaturation_vapor_pressure_deficit(double _saturation_vapor_pressure_deficit) { this->saturation_vapor_pressure_deficit = _saturation_vapor_pressure_deficit; }
+void AMEIRefETAuxiliary::setsaturated_vapor_pressure_slope(double _saturated_vapor_pressure_slope) { this->saturated_vapor_pressure_slope = _saturated_vapor_pressure_slope; }
+void AMEIRefETAuxiliary::setpsychrometric_constant(double _psychrometric_constant) { this->psychrometric_constant = _psychrometric_constant; }
 void AMEIRefETAuxiliary::setreference_evapotranspiration(double _reference_evapotranspiration) { this->reference_evapotranspiration = _reference_evapotranspiration; }

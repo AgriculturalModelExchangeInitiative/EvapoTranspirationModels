@@ -22,6 +22,8 @@ public:
         net_radiation.init(this,"net_radiation", events);
         stomata_resistance.init(this,"stomata_resistance", events);
         saturation_vapor_pressure_deficit.init(this,"saturation_vapor_pressure_deficit", events);
+        saturated_vapor_pressure_slope.init(this,"saturated_vapor_pressure_slope", events);
+        psychrometric_constant.init(this,"psychrometric_constant", events);
         mean_air_temperature.init(this,"mean_air_temperature", events);
         wind_speed.init(this,"wind_speed", events);
         wind_speed_height.init(this,"wind_speed_height", events);
@@ -39,7 +41,11 @@ public:
         double atmospheric_pressure;
         atmospheric_pressure = 101.3 * std::pow((293.0 - (0.0065 * height_nn)) / 293.0, 5.26);
         double psycrometer_constant;
-        if (latent_heat_of_vaporization > 0.0)
+        if (psychrometric_constant() >= 0.0)
+        {
+            psycrometer_constant = psychrometric_constant();
+        }
+        else if ( latent_heat_of_vaporization > 0.0)
         {
             psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization);
         }
@@ -48,7 +54,14 @@ public:
             psycrometer_constant = 0.000665 * atmospheric_pressure;
         }
         double saturated_vapour_pressure_slope;
-        saturated_vapour_pressure_slope = 4098.0 * (0.6108 * std::exp(17.27 * mean_air_temperature() / (mean_air_temperature() + 237.3))) / ((mean_air_temperature() + 237.3) * (mean_air_temperature() + 237.3));
+        if (saturated_vapor_pressure_slope() >= 0.0)
+        {
+            saturated_vapour_pressure_slope = saturated_vapor_pressure_slope();
+        }
+        else
+        {
+            saturated_vapour_pressure_slope = 4098.0 * (0.6108 * std::exp(17.27 * mean_air_temperature() / (mean_air_temperature() + 237.3))) / ((mean_air_temperature() + 237.3) * (mean_air_temperature() + 237.3));
+        }
         double inverse_lambda;
         if (latent_heat_of_vaporization > 0.0)
         {
@@ -88,6 +101,12 @@ private:
         * @brief saturation_vapor_pressure_deficit (kPa)
         */
     Var saturation_vapor_pressure_deficit;/**
+        * @brief slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature) (kPa/°C)
+        */
+    Var saturated_vapor_pressure_slope;/**
+        * @brief psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization) (kPa/°C)
+        */
+    Var psychrometric_constant;/**
         * @brief daily average air temperature (°C)
         */
     Var mean_air_temperature;/**

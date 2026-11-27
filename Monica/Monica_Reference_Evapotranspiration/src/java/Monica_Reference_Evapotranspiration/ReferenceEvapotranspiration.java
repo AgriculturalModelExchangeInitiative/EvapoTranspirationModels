@@ -111,6 +111,24 @@ public class ReferenceEvapotranspiration
     //                          ** min : 0
     //                          ** default : 0
     //                          ** unit : kPa
+    //            * name: saturated_vapor_pressure_slope
+    //                          ** description : slope of the saturation vapour pressure curve (negative: calculated from the mean air temperature)
+    //                          ** inputtype : variable
+    //                          ** variablecategory : auxiliary
+    //                          ** datatype : DOUBLE
+    //                          ** max : 
+    //                          ** min : -1
+    //                          ** default : -1
+    //                          ** unit : kPa/°C
+    //            * name: psychrometric_constant
+    //                          ** description : psychrometric constant (negative: calculated from height_nn and latent_heat_of_vaporization)
+    //                          ** inputtype : variable
+    //                          ** variablecategory : auxiliary
+    //                          ** datatype : DOUBLE
+    //                          ** max : 
+    //                          ** min : -1
+    //                          ** default : -1
+    //                          ** unit : kPa/°C
         //- outputs:
     //            * name: reference_evapotranspiration
     //                          ** description : reference evapotranspiration (ET0)
@@ -125,11 +143,17 @@ public class ReferenceEvapotranspiration
         double net_radiation = a.getnet_radiation();
         double stomata_resistance = a.getstomata_resistance();
         double saturation_vapor_pressure_deficit = a.getsaturation_vapor_pressure_deficit();
+        double saturated_vapor_pressure_slope = a.getsaturated_vapor_pressure_slope();
+        double psychrometric_constant = a.getpsychrometric_constant();
         double reference_evapotranspiration;
         double atmospheric_pressure;
         atmospheric_pressure = 101.3d * Math.pow((293.0d - (0.0065d * height_nn)) / 293.0d, 5.26d);
         double psycrometer_constant;
-        if (latent_heat_of_vaporization > 0.0d)
+        if (psychrometric_constant >= 0.0d)
+        {
+            psycrometer_constant = psychrometric_constant;
+        }
+        else if ( latent_heat_of_vaporization > 0.0d)
         {
             psycrometer_constant = 1.013e-3d * atmospheric_pressure / (0.622d * latent_heat_of_vaporization);
         }
@@ -138,7 +162,14 @@ public class ReferenceEvapotranspiration
             psycrometer_constant = 0.000665d * atmospheric_pressure;
         }
         double saturated_vapour_pressure_slope;
-        saturated_vapour_pressure_slope = 4098.0d * (0.6108d * Math.exp(17.27d * mean_air_temperature / (mean_air_temperature + 237.3d))) / ((mean_air_temperature + 237.3d) * (mean_air_temperature + 237.3d));
+        if (saturated_vapor_pressure_slope >= 0.0d)
+        {
+            saturated_vapour_pressure_slope = saturated_vapor_pressure_slope;
+        }
+        else
+        {
+            saturated_vapour_pressure_slope = 4098.0d * (0.6108d * Math.exp(17.27d * mean_air_temperature / (mean_air_temperature + 237.3d))) / ((mean_air_temperature + 237.3d) * (mean_air_temperature + 237.3d));
+        }
         double inverse_lambda;
         if (latent_heat_of_vaporization > 0.0d)
         {
