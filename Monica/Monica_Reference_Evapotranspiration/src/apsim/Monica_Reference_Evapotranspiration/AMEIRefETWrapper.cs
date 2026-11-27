@@ -82,6 +82,7 @@ class AMEIRefETWrapper :  Model
     private void loadParameters()
     {
         ameirefetComponent.height_nn = 0; 
+        ameirefetComponent.latent_heat_of_vaporization = 0; 
     }
 
     /// <summary>

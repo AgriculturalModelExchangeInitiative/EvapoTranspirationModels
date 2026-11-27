@@ -1,6 +1,7 @@
 package monica_evapotranspiration
 
 import "core:math"
+import cr_math "../../support/cr_math"
 
 // - Name: Radiation -Version: 1, -Time step: 1
 // - Description:
@@ -141,19 +142,19 @@ radiation_calculate_model :: proc(m: ^Radiation, s: ^Et_State, s1: ^Et_State, r:
 	arg_phot_act = min(1.0, decl_sin / decl_cos * (decl_sin / decl_cos))
 	a.phot_act_radiation_mean = 3600.0 * (decl_sin * a.astronomic_daylength + 24.0 / math.PI * decl_cos * math.sqrt(1.0 - arg_phot_act))
 	if a.phot_act_radiation_mean > 0.0 && a.astronomic_daylength > 0.0 {
-		a.clear_day_radiation = 0.5 * 1300.0 * a.phot_act_radiation_mean * math.exp(-0.14 / (a.phot_act_radiation_mean / (a.astronomic_daylength * 3600.0)))
+		a.clear_day_radiation = 0.5 * 1300.0 * a.phot_act_radiation_mean * cr_math.exp(-0.14 / (a.phot_act_radiation_mean / (a.astronomic_daylength * 3600.0)))
 	}
 	a.overcast_day_radiation = 0.2 * a.clear_day_radiation
 	solar_constant: f64
 	solar_constant = 0.082
 	sc: f64
-	sc = 24.0 * 60.0 / math.PI * solar_constant * (1.0 + 0.033 * math.cos(2.0 * math.PI * f64(ex.julian_day) / 365.0))
+	sc = 24.0 * 60.0 / math.PI * solar_constant * (1.0 + 0.033 * cr_math.cos(2.0 * math.PI * f64(ex.julian_day) / 365.0))
 	solar_angle: f64
-	solar_angle = -math.tan(m.latitude * math.PI / 180.0) * math.tan(a.declination * math.PI / 180.0)
+	solar_angle = -cr_math.tan(m.latitude * math.PI / 180.0) * cr_math.tan(a.declination * math.PI / 180.0)
 	solar_angle = bound(-1.0, solar_angle, 1.0)
 	sunset_solar_angle: f64
-	sunset_solar_angle = math.acos(solar_angle)
-	a.extraterrestrial_radiation = sc * (sunset_solar_angle * decl_sin + decl_cos * math.sin(sunset_solar_angle))
+	sunset_solar_angle = cr_math.acos(solar_angle)
+	a.extraterrestrial_radiation = sc * (sunset_solar_angle * decl_sin + decl_cos * cr_math.sin(sunset_solar_angle))
 	if ex.sunshine_hours > 0.0 {
 		if ex.global_radiation <= 0.0 && a.astronomic_daylength > 0.0 {
 			a.sunshine_hours_global_radiation = a.extraterrestrial_radiation * (0.19 + 0.55 * ex.sunshine_hours / a.astronomic_daylength)
@@ -177,11 +178,11 @@ bound :: proc(lower: f64, value: f64, upper: f64) -> f64 {
 @(private="file")
 calc_declinations :: proc(latitude: f64, julian_day: int) -> (f64, f64, f64) {
 	declination: f64
-	declination = -23.4 * math.cos(2.0 * math.PI * ((f64(julian_day) + 10.0) / 365.0))
+	declination = -23.4 * cr_math.cos(2.0 * math.PI * ((f64(julian_day) + 10.0) / 365.0))
 	decl_sin: f64
-	decl_sin = math.sin(declination * math.PI / 180.0) * math.sin(latitude * math.PI / 180.0)
+	decl_sin = cr_math.sin(declination * math.PI / 180.0) * cr_math.sin(latitude * math.PI / 180.0)
 	decl_cos: f64
-	decl_cos = math.cos(declination * math.PI / 180.0) * math.cos(latitude * math.PI / 180.0)
+	decl_cos = cr_math.cos(declination * math.PI / 180.0) * cr_math.cos(latitude * math.PI / 180.0)
 	return declination, decl_sin, decl_cos
 }
 
@@ -195,7 +196,7 @@ calc_astronomic_daylength :: proc(latitude: f64, julian_day: int) -> f64 {
 	astro_daylength = decl_sin / decl_cos
 	astro_daylength = bound(-1.0, astro_daylength, 1.0)
 	astronomic_daylength: f64
-	astronomic_daylength = 12.0 * (math.PI + 2.0 * math.asin(astro_daylength)) / math.PI
+	astronomic_daylength = 12.0 * (math.PI + 2.0 * cr_math.asin(astro_daylength)) / math.PI
 	return astronomic_daylength
 }
 
@@ -206,10 +207,10 @@ calc_effective_daylength :: proc(latitude: f64, julian_day: int) -> f64 {
 	decl_cos: f64
 	declination, decl_sin, decl_cos = calc_declinations(latitude, julian_day)
 	eff_daylength: f64
-	eff_daylength = (-math.sin(f64(8.0 * math.PI / 180.0)) + decl_sin) / decl_cos
+	eff_daylength = (-cr_math.sin(f64(8.0 * math.PI / 180.0)) + decl_sin) / decl_cos
 	eff_daylength = bound(-1.0, eff_daylength, 1.0)
 	effective_daylength: f64
-	effective_daylength = 12.0 * (math.PI + 2.0 * math.asin(eff_daylength)) / math.PI
+	effective_daylength = 12.0 * (math.PI + 2.0 * cr_math.asin(eff_daylength)) / math.PI
 	return effective_daylength
 }
 
@@ -220,9 +221,9 @@ calc_photoperiodic_daylength :: proc(latitude: f64, julian_day: int) -> f64 {
 	decl_cos: f64
 	declination, decl_sin, decl_cos = calc_declinations(latitude, julian_day)
 	photo_daylength: f64
-	photo_daylength = (-math.sin(f64(-6.0 * math.PI / 180.0)) + decl_sin) / decl_cos
+	photo_daylength = (-cr_math.sin(f64(-6.0 * math.PI / 180.0)) + decl_sin) / decl_cos
 	photo_daylength = bound(-1.0, photo_daylength, 1.0)
 	photoperiodic_daylength: f64
-	photoperiodic_daylength = 12.0 * (math.PI + 2.0 * math.asin(photo_daylength)) / math.PI
+	photoperiodic_daylength = 12.0 * (math.PI + 2.0 * cr_math.asin(photo_daylength)) / math.PI
 	return photoperiodic_daylength
 }

@@ -29,6 +29,7 @@
 
             <!-- into ReferenceEvapotranspiration -->
             <InputLink source="height_nn" target="ReferenceEvapotranspiration.height_nn"/>
+            <InputLink source="latent_heat_of_vaporization" target="ReferenceEvapotranspiration.latent_heat_of_vaporization"/>
             <InputLink source="mean_air_temperature" target="ReferenceEvapotranspiration.mean_air_temperature"/>
             <InputLink source="wind_speed" target="ReferenceEvapotranspiration.wind_speed"/>
             <InputLink source="wind_speed_height" target="ReferenceEvapotranspiration.wind_speed_height"/>

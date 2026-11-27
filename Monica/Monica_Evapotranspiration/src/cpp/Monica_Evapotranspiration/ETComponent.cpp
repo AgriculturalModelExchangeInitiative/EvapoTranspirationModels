@@ -12,6 +12,7 @@ double ETComponent::getheight_nn(){ return this->height_nn; }
 double ETComponent::getsaturation_beta(){ return this->saturation_beta; }
 double ETComponent::getstomata_conductance_alpha(){ return this->stomata_conductance_alpha; }
 int ETComponent::getcarboxylation_pathway(){ return this->carboxylation_pathway; }
+double ETComponent::getlatent_heat_of_vaporization(){ return this->latent_heat_of_vaporization; }
 double ETComponent::getevaporation_zeta(){ return this->evaporation_zeta; }
 double ETComponent::getmaximum_evaporation_impact_depth(){ return this->maximum_evaporation_impact_depth; }
 int ETComponent::getevaporation_reduction_method(){ return this->evaporation_reduction_method; }
@@ -46,6 +47,10 @@ void ETComponent::setstomata_conductance_alpha(double _stomata_conductance_alpha
 void ETComponent::setcarboxylation_pathway(int _carboxylation_pathway)
 {
     _StomataResistance.setcarboxylation_pathway(_carboxylation_pathway);
+}
+void ETComponent::setlatent_heat_of_vaporization(double _latent_heat_of_vaporization)
+{
+    _ReferenceEvapotranspiration.setlatent_heat_of_vaporization(_latent_heat_of_vaporization);
 }
 void ETComponent::setevaporation_zeta(double _evaporation_zeta)
 {
@@ -109,6 +114,7 @@ ETComponent::ETComponent(ETComponent& toCopy)
     saturation_beta = toCopy.getsaturation_beta();
     stomata_conductance_alpha = toCopy.getstomata_conductance_alpha();
     carboxylation_pathway = toCopy.getcarboxylation_pathway();
+    latent_heat_of_vaporization = toCopy.getlatent_heat_of_vaporization();
     evaporation_zeta = toCopy.getevaporation_zeta();
     maximum_evaporation_impact_depth = toCopy.getmaximum_evaporation_impact_depth();
     evaporation_reduction_method = toCopy.getevaporation_reduction_method();

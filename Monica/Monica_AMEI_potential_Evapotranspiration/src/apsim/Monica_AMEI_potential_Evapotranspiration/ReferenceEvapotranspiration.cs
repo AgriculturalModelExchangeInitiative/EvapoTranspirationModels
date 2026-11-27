@@ -31,6 +31,15 @@ namespace Models.Crop2ML;
 ///                          ** min : -9999
 ///                          ** default : 0
 ///                          ** unit : m
+///            * name: latent_heat_of_vaporization
+///                          ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+///                          ** inputtype : parameter
+///                          ** parametercategory : constant
+///                          ** datatype : DOUBLE
+///                          ** max : 10
+///                          ** min : 0
+///                          ** default : 0
+///                          ** unit : MJ/kg
 ///            * name: mean_air_temperature
 ///                          ** description : daily average air temperature
 ///                          ** inputtype : variable
@@ -110,6 +119,19 @@ public class ReferenceEvapotranspiration
         set { this._height_nn= value; } 
     }
 
+    private double _latent_heat_of_vaporization;
+    /// <summary>
+    /// Gets and sets the latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    /// </summary>
+    [Description("latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)")] 
+    [Units("MJ/kg")] 
+    //[Crop2ML(datatype="DOUBLE", min=0, max=10, default=0, parametercategory=constant, inputtype="parameter")] 
+    public double latent_heat_of_vaporization
+    {
+        get { return this._latent_heat_of_vaporization; }
+        set { this._latent_heat_of_vaporization= value; } 
+    }
+
     
     /// <summary>
     /// Constructor of the ReferenceEvapotranspiration component")
@@ -131,16 +153,32 @@ public class ReferenceEvapotranspiration
         double atmospheric_pressure;
         atmospheric_pressure = 101.3 * Math.Pow((293.0 - (0.0065 * height_nn)) / 293.0, 5.26);
         double psycrometer_constant;
-        psycrometer_constant = 0.000665 * atmospheric_pressure;
+        if (latent_heat_of_vaporization > 0.0)
+        {
+            psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization);
+        }
+        else
+        {
+            psycrometer_constant = 0.000665 * atmospheric_pressure;
+        }
         double saturated_vapour_pressure_slope;
         saturated_vapour_pressure_slope = 4098.0 * (0.6108 * Math.Exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3));
+        double inverse_lambda;
+        if (latent_heat_of_vaporization > 0.0)
+        {
+            inverse_lambda = 1.0 / latent_heat_of_vaporization;
+        }
+        else
+        {
+            inverse_lambda = 0.408;
+        }
         double wind_speed_2m;
         wind_speed_2m = Math.Max(0.5, wind_speed * (4.87 / Math.Log((67.8 * wind_speed_height - 5.42))));
         double aerodynamic_resistance;
         aerodynamic_resistance = 208.0 / wind_speed_2m;
         double surface_resistance;
         surface_resistance = stomata_resistance / 1.44;
-        reference_evapotranspiration = (0.408 * saturated_vapour_pressure_slope * net_radiation + (psycrometer_constant * (900.0 / (mean_air_temperature + 273.0)) * wind_speed_2m * saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0 + (surface_resistance / aerodynamic_resistance))));
+        reference_evapotranspiration = (inverse_lambda * saturated_vapour_pressure_slope * net_radiation + (psycrometer_constant * (900.0 / (mean_air_temperature + 273.0)) * wind_speed_2m * saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0 + (surface_resistance / aerodynamic_resistance))));
         if (reference_evapotranspiration < 0.0)
         {
             reference_evapotranspiration = 0.0;

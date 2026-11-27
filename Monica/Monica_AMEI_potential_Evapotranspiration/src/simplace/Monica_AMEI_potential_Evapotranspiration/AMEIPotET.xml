@@ -7,6 +7,7 @@
             <input id="saturated_vapor_pressure" source="AMEIPotET.saturated_vapor_pressure"/></simcomponent>
         <simcomponent id="ReferenceEvapotranspiration" class="net.simplace.sim.components.Monica_AMEI_potential_Evapotranspiration.ReferenceEvapotranspiration">
             <input id="height_nn" source="AMEIPotET.height_nn"/>
+            <input id="latent_heat_of_vaporization" source="AMEIPotET.latent_heat_of_vaporization"/>
             <input id="mean_air_temperature" source="AMEIPotET.mean_air_temperature"/>
             <input id="wind_speed" source="AMEIPotET.wind_speed"/>
             <input id="wind_speed_height" source="AMEIPotET.wind_speed_height"/>

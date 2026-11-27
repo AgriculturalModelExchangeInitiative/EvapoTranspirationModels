@@ -21,6 +21,7 @@ library(gsubfn)
 #' @param carboxylation_pathway (dimensionless) Is it a C3 (=1) or C4 (=2) crop. (0 = no crop) constant (0, 0-2) 
 #' @param gross_photosynthesis_reference_mol ([mol m-2 s-1] or [cm3 cm-2 s-1]) gross_photosynthesis_reference_mol (-1 = not supplied = no crop) auxiliary (-1, 0-) 
 #' @param atmospheric_co2_concentration (ppm) CO2 concentration in the atmosphere. Optional if no crop. exogenous (430, 0-) 
+#' @param latent_heat_of_vaporization (MJ/kg) latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure) constant (0, 0-10) 
 #' @param mean_air_temperature (°C) daily average air temperature exogenous (0, -100-100) 
 #' @param wind_speed (m/s) wind speed measured at wind speed height exogenous (0, 0-9999) 
 #' @param wind_speed_height (m) height at which the wind speed has been measured exogenous (2, 0.1-9999) 
@@ -87,6 +88,7 @@ model_et <- function (latitude,
          carboxylation_pathway,
          gross_photosynthesis_reference_mol,
          atmospheric_co2_concentration,
+         latent_heat_of_vaporization,
          mean_air_temperature,
          wind_speed,
          wind_speed_height,
@@ -158,7 +160,7 @@ model_et <- function (latitude,
     stomata_resistance <- model_stomataresistance(saturation_beta, stomata_conductance_alpha, carboxylation_pathway, atmospheric_co2_concentration, saturation_vapor_pressure_deficit, gross_photosynthesis_reference_mol)
     calculated_stomata_resistance <- stomata_resistance
     stomata_resistance <- model_calcstomataresistance(calc_stomata_resistance, calculated_stomata_resistance, fixed_stomata_resistance)
-    reference_evapotranspiration <- model_referenceevapotranspiration(height_nn, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit)
+    reference_evapotranspiration <- model_referenceevapotranspiration(height_nn, latent_heat_of_vaporization, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit)
     internal_et0 <- reference_evapotranspiration
     et0 <- model_useextet0(use_external_et0, external_et0, internal_et0)
     reference_evapotranspiration <- et0
@@ -189,6 +191,7 @@ model_et <- function (latitude,
 #' @param carboxylation_pathway (dimensionless) Is it a C3 (=1) or C4 (=2) crop. (0 = no crop) constant (0, 0-2) 
 #' @param atmospheric_co2_concentration (ppm) CO2 concentration in the atmosphere. Optional if no crop. exogenous (430, 0-) 
 #' @param relative_humidity (fraction) relative humidity exogenous (0, 0-1) 
+#' @param latent_heat_of_vaporization (MJ/kg) latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure) constant (0, 0-10) 
 #' @param mean_air_temperature (°C) daily average air temperature exogenous (0, -100-100) 
 #' @param wind_speed (m/s) wind speed measured at wind speed height exogenous (0, 0-9999) 
 #' @param wind_speed_height (m) height at which the wind speed has been measured exogenous (2, 0.1-9999) 
@@ -226,6 +229,7 @@ init_et <- function (latitude,
          carboxylation_pathway,
          atmospheric_co2_concentration,
          relative_humidity,
+         latent_heat_of_vaporization,
          mean_air_temperature,
          wind_speed,
          wind_speed_height,

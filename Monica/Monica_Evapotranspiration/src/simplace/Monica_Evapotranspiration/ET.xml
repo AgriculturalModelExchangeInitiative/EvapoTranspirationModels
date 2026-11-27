@@ -48,6 +48,7 @@
             <input id="calculated_stomata_resistance" source="StomataResistance.stomata_resistance"/></simcomponent>
         <simcomponent id="ReferenceEvapotranspiration" class="net.simplace.sim.components.Monica_Evapotranspiration.ReferenceEvapotranspiration">
             <input id="height_nn" source="ET.height_nn"/>
+            <input id="latent_heat_of_vaporization" source="ET.latent_heat_of_vaporization"/>
             <input id="mean_air_temperature" source="ET.mean_air_temperature"/>
             <input id="wind_speed" source="ET.wind_speed"/>
             <input id="wind_speed_height" source="ET.wind_speed_height"/>

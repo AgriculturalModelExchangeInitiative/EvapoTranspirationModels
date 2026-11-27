@@ -1,6 +1,6 @@
 package monica_evapotranspiration
 
-import "core:math"
+import cr_math "../../support/cr_math"
 
 // - Name: SaturatedVaporPressure -Version: 1, -Time step: 1
 // - Description:
@@ -69,9 +69,9 @@ destroy_saturated_vapor_pressure :: proc(m: ^Saturated_Vapor_Pressure) {
 saturated_vapor_pressure_calculate_model :: proc(m: ^Saturated_Vapor_Pressure, s: ^Et_State, s1: ^Et_State, r: ^Et_Rate, a: ^Et_Auxiliary, ex: ^Et_Exogenous, allocator := context.allocator) {
 	context.allocator = allocator
 	saturated_vapor_pressure_max: f64
-	saturated_vapor_pressure_max = 0.6108 * math.exp(17.27 * ex.max_air_temperature / (237.3 + ex.max_air_temperature))
+	saturated_vapor_pressure_max = 0.6108 * cr_math.exp(17.27 * ex.max_air_temperature / (237.3 + ex.max_air_temperature))
 	saturated_vapor_pressure_min: f64
-	saturated_vapor_pressure_min = 0.6108 * math.exp(17.27 * ex.min_air_temperature / (237.3 + ex.min_air_temperature))
+	saturated_vapor_pressure_min = 0.6108 * cr_math.exp(17.27 * ex.min_air_temperature / (237.3 + ex.min_air_temperature))
 	a.saturated_vapor_pressure = (saturated_vapor_pressure_max + saturated_vapor_pressure_min) / 2.0
 	if ex.relative_humidity <= 0.0 {
 		a.vapor_pressure = saturated_vapor_pressure_min

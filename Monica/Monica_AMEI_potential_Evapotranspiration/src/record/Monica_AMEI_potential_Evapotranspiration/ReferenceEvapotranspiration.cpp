@@ -15,6 +15,7 @@ public:
     {
         // Ces parametres ont une valeur par defaut utilise si la condition n'est pas definie
         height_nn = (events.exist("height_nn")) ? vv::toDouble(events.get("height_nn")) : 0;
+        latent_heat_of_vaporization = (events.exist("latent_heat_of_vaporization")) ? vv::toDouble(events.get("latent_heat_of_vaporization")) : 0;
         //  Variables gérées par ce composant
         reference_evapotranspiration.init(this,"reference_evapotranspiration", events);
         //  Variables gérées par un autre composant
@@ -38,16 +39,32 @@ public:
         double atmospheric_pressure;
         atmospheric_pressure = 101.3 * std::pow((293.0 - (0.0065 * height_nn)) / 293.0, 5.26);
         double psycrometer_constant;
-        psycrometer_constant = 0.000665 * atmospheric_pressure;
+        if (latent_heat_of_vaporization > 0.0)
+        {
+            psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization);
+        }
+        else
+        {
+            psycrometer_constant = 0.000665 * atmospheric_pressure;
+        }
         double saturated_vapour_pressure_slope;
         saturated_vapour_pressure_slope = 4098.0 * (0.6108 * std::exp(17.27 * mean_air_temperature() / (mean_air_temperature() + 237.3))) / ((mean_air_temperature() + 237.3) * (mean_air_temperature() + 237.3));
+        double inverse_lambda;
+        if (latent_heat_of_vaporization > 0.0)
+        {
+            inverse_lambda = 1.0 / latent_heat_of_vaporization;
+        }
+        else
+        {
+            inverse_lambda = 0.408;
+        }
         double wind_speed_2m;
         wind_speed_2m = std::max(0.5, wind_speed() * (4.87 / std::log((67.8 * wind_speed_height() - 5.42))));
         double aerodynamic_resistance;
         aerodynamic_resistance = 208.0 / wind_speed_2m;
         double surface_resistance;
         surface_resistance = stomata_resistance() / 1.44;
-        reference_evapotranspiration = (0.408 * saturated_vapour_pressure_slope * net_radiation() + (psycrometer_constant * (900.0 / (mean_air_temperature() + 273.0)) * wind_speed_2m * saturation_vapor_pressure_deficit())) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0 + (surface_resistance / aerodynamic_resistance))));
+        reference_evapotranspiration = (inverse_lambda * saturated_vapour_pressure_slope * net_radiation() + (psycrometer_constant * (900.0 / (mean_air_temperature() + 273.0)) * wind_speed_2m * saturation_vapor_pressure_deficit())) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0 + (surface_resistance / aerodynamic_resistance))));
         if (reference_evapotranspiration() < 0.0)
         {
             reference_evapotranspiration = 0.0;
@@ -86,6 +103,10 @@ private:
     * @brief height above sea level (m)
     */
     double height_nn;
+    /**
+    * @brief latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure) (MJ/kg)
+    */
+    double latent_heat_of_vaporization;
 };
 }
 }

@@ -4,6 +4,7 @@ MODULE Ameirefetmod
 CONTAINS
 
     SUBROUTINE model_ameirefet(height_nn, &
+        latent_heat_of_vaporization, &
         mean_air_temperature, &
         wind_speed, &
         wind_speed_height, &
@@ -14,6 +15,7 @@ CONTAINS
         IMPLICIT NONE
         INTEGER:: i_cyml_r
         REAL, INTENT(IN) :: height_nn
+        REAL, INTENT(IN) :: latent_heat_of_vaporization
         REAL, INTENT(IN) :: mean_air_temperature
         REAL, INTENT(IN) :: wind_speed
         REAL, INTENT(IN) :: wind_speed_height
@@ -39,6 +41,15 @@ CONTAINS
     !                          ** min : -9999
     !                          ** default : 0
     !                          ** unit : m
+    !            * name: latent_heat_of_vaporization
+    !                          ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    !                          ** inputtype : parameter
+    !                          ** parametercategory : constant
+    !                          ** datatype : DOUBLE
+    !                          ** max : 10
+    !                          ** min : 0
+    !                          ** default : 0
+    !                          ** unit : MJ/kg
     !            * name: mean_air_temperature
     !                          ** description : daily average air temperature
     !                          ** inputtype : variable
@@ -102,8 +113,8 @@ CONTAINS
     !                          ** min : 0
     !                          ** unit : mm
         call model_referenceevapotranspiration(height_nn,  &
-                mean_air_temperature, wind_speed, wind_speed_height, net_radiation,  &
-                stomata_resistance,  &
+                latent_heat_of_vaporization, mean_air_temperature, wind_speed,  &
+                wind_speed_height, net_radiation, stomata_resistance,  &
                 saturation_vapor_pressure_deficit,reference_evapotranspiration)
     END SUBROUTINE model_ameirefet
 

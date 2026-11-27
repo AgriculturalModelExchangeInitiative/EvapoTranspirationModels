@@ -15,6 +15,7 @@ import org.jdom2.Element;
 public class ReferenceEvapotranspiration extends FWSimComponent
 {
     private FWSimVariable<Double> height_nn;
+    private FWSimVariable<Double> latent_heat_of_vaporization;
     private FWSimVariable<Double> mean_air_temperature;
     private FWSimVariable<Double> wind_speed;
     private FWSimVariable<Double> wind_speed_height;
@@ -36,6 +37,7 @@ public class ReferenceEvapotranspiration extends FWSimComponent
     public HashMap<String, FWSimVariable<?>> createVariables()
     {
         addVariable(FWSimVariable.createSimVariable("height_nn", "height above sea level", DATA_TYPE.DOUBLE, CONTENT_TYPE.constant,"m", -9999.0, 9999.0, 0.0, this));
+        addVariable(FWSimVariable.createSimVariable("latent_heat_of_vaporization", "latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)", DATA_TYPE.DOUBLE, CONTENT_TYPE.constant,"MJ/kg", 0.0, 10.0, 0.0, this));
         addVariable(FWSimVariable.createSimVariable("mean_air_temperature", "daily average air temperature", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"°C", -100.0, 100.0, 0.0, this));
         addVariable(FWSimVariable.createSimVariable("wind_speed", "wind speed measured at wind speed height", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"m/s", 0.0, 9999.0, 0.0, this));
         addVariable(FWSimVariable.createSimVariable("wind_speed_height", "height at which the wind speed has been measured", DATA_TYPE.DOUBLE, CONTENT_TYPE.input,"m", 0.1, 9999.0, 2.0, this));
@@ -50,6 +52,7 @@ public class ReferenceEvapotranspiration extends FWSimComponent
     protected void process()
     {
         double t_height_nn = height_nn.getValue();
+        double t_latent_heat_of_vaporization = latent_heat_of_vaporization.getValue();
         double t_mean_air_temperature = mean_air_temperature.getValue();
         double t_wind_speed = wind_speed.getValue();
         double t_wind_speed_height = wind_speed_height.getValue();
@@ -60,16 +63,32 @@ public class ReferenceEvapotranspiration extends FWSimComponent
         double atmospheric_pressure;
         atmospheric_pressure = 101.3d * Math.pow((293.0d - (0.0065d * t_height_nn)) / 293.0d, 5.26d);
         double psycrometer_constant;
-        psycrometer_constant = 0.000665d * atmospheric_pressure;
+        if (t_latent_heat_of_vaporization > 0.0d)
+        {
+            psycrometer_constant = 1.013e-3d * atmospheric_pressure / (0.622d * t_latent_heat_of_vaporization);
+        }
+        else
+        {
+            psycrometer_constant = 0.000665d * atmospheric_pressure;
+        }
         double saturated_vapour_pressure_slope;
         saturated_vapour_pressure_slope = 4098.0d * (0.6108d * Math.exp(17.27d * t_mean_air_temperature / (t_mean_air_temperature + 237.3d))) / ((t_mean_air_temperature + 237.3d) * (t_mean_air_temperature + 237.3d));
+        double inverse_lambda;
+        if (t_latent_heat_of_vaporization > 0.0d)
+        {
+            inverse_lambda = 1.0d / t_latent_heat_of_vaporization;
+        }
+        else
+        {
+            inverse_lambda = 0.408d;
+        }
         double wind_speed_2m;
         wind_speed_2m = Math.max(0.5d, t_wind_speed * (4.87d / Math.log((67.8d * t_wind_speed_height - 5.42d))));
         double aerodynamic_resistance;
         aerodynamic_resistance = 208.0d / wind_speed_2m;
         double surface_resistance;
         surface_resistance = t_stomata_resistance / 1.44d;
-        t_reference_evapotranspiration = (0.408d * saturated_vapour_pressure_slope * t_net_radiation + (psycrometer_constant * (900.0d / (t_mean_air_temperature + 273.0d)) * wind_speed_2m * t_saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0d + (surface_resistance / aerodynamic_resistance))));
+        t_reference_evapotranspiration = (inverse_lambda * saturated_vapour_pressure_slope * t_net_radiation + (psycrometer_constant * (900.0d / (t_mean_air_temperature + 273.0d)) * wind_speed_2m * t_saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0d + (surface_resistance / aerodynamic_resistance))));
         if (t_reference_evapotranspiration < 0.0d)
         {
             t_reference_evapotranspiration = 0.0d;

@@ -52,6 +52,12 @@ public class ETComponent
     _StomataResistance.setcarboxylation_pathway(_carboxylation_pathway);
     }
 
+    public double getlatent_heat_of_vaporization()
+    { return _ReferenceEvapotranspiration.getlatent_heat_of_vaporization(); }
+    public void setlatent_heat_of_vaporization(double _latent_heat_of_vaporization){
+    _ReferenceEvapotranspiration.setlatent_heat_of_vaporization(_latent_heat_of_vaporization);
+    }
+
     public double getevaporation_zeta()
     { return _Evapotranspiration.getevaporation_zeta(); }
     public void setevaporation_zeta(double _evaporation_zeta){
@@ -129,6 +135,7 @@ public class ETComponent
     private double saturation_beta;
     private double stomata_conductance_alpha;
     private Integer carboxylation_pathway;
+    private double latent_heat_of_vaporization;
     private double evaporation_zeta;
     private double maximum_evaporation_impact_depth;
     private Integer evaporation_reduction_method;
@@ -146,6 +153,7 @@ public class ETComponent
         this.saturation_beta = toCopy.getsaturation_beta();
         this.stomata_conductance_alpha = toCopy.getstomata_conductance_alpha();
         this.carboxylation_pathway = toCopy.getcarboxylation_pathway();
+        this.latent_heat_of_vaporization = toCopy.getlatent_heat_of_vaporization();
         this.evaporation_zeta = toCopy.getevaporation_zeta();
         this.maximum_evaporation_impact_depth = toCopy.getmaximum_evaporation_impact_depth();
         this.evaporation_reduction_method = toCopy.getevaporation_reduction_method();

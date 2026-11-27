@@ -36,6 +36,7 @@ def model_et(latitude:float,
          carboxylation_pathway:int,
          gross_photosynthesis_reference_mol:float,
          atmospheric_co2_concentration:float,
+         latent_heat_of_vaporization:float,
          mean_air_temperature:float,
          wind_speed:float,
          wind_speed_height:float,
@@ -236,6 +237,15 @@ def model_et(latitude:float,
                                ** min : 0
                                ** default : 430
                                ** unit : ppm
+                 * name: latent_heat_of_vaporization
+                               ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+                               ** inputtype : parameter
+                               ** parametercategory : constant
+                               ** datatype : DOUBLE
+                               ** max : 10
+                               ** min : 0
+                               ** default : 0
+                               ** unit : MJ/kg
                  * name: mean_air_temperature
                                ** description : daily average air temperature
                                ** inputtype : variable
@@ -636,7 +646,7 @@ def model_et(latitude:float,
     stomata_resistance = model_stomataresistance(saturation_beta, stomata_conductance_alpha, carboxylation_pathway, atmospheric_co2_concentration, saturation_vapor_pressure_deficit, gross_photosynthesis_reference_mol)
     calculated_stomata_resistance = stomata_resistance
     stomata_resistance = model_calcstomataresistance(calc_stomata_resistance, calculated_stomata_resistance, fixed_stomata_resistance)
-    reference_evapotranspiration = model_referenceevapotranspiration(height_nn, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit)
+    reference_evapotranspiration = model_referenceevapotranspiration(height_nn, latent_heat_of_vaporization, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit)
     internal_et0 = reference_evapotranspiration
     et0 = model_useextet0(use_external_et0, external_et0, internal_et0)
     reference_evapotranspiration = et0
@@ -659,6 +669,7 @@ def init_et(latitude:float,
          carboxylation_pathway:int,
          atmospheric_co2_concentration:float,
          relative_humidity:float,
+         latent_heat_of_vaporization:float,
          mean_air_temperature:float,
          wind_speed:float,
          wind_speed_height:float,

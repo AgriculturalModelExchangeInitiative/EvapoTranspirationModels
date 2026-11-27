@@ -38,6 +38,23 @@ public class AMEIPotETComponent
     }
 
     /// <summary>
+    /// Gets and sets the latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    /// </summary>
+    [Description("latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)")] 
+    [Units("MJ/kg")] 
+    public double latent_heat_of_vaporization
+    {
+        get
+        {
+             return _ReferenceEvapotranspiration.latent_heat_of_vaporization; 
+        }
+        set
+        {
+            _ReferenceEvapotranspiration.latent_heat_of_vaporization = value;
+        }
+    }
+
+    /// <summary>
     /// Algorithm of AMEIPotET component
     /// </summary>
     public void CalculateModel(AMEIPotETState s,AMEIPotETState s1,AMEIPotETRate r,AMEIPotETAuxiliary a,AMEIPotETExogenous ex)
@@ -61,5 +78,6 @@ public class AMEIPotETComponent
     public AMEIPotETComponent(AMEIPotETComponent toCopy): this() // copy constructor 
     {
         height_nn = toCopy.height_nn;
+        latent_heat_of_vaporization = toCopy.latent_heat_of_vaporization;
 }
 }

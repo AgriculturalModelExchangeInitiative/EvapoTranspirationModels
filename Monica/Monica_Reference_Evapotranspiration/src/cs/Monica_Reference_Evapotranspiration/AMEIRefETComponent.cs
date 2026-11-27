@@ -21,6 +21,17 @@ public class AMEIRefETComponent
             _ReferenceEvapotranspiration.height_nn = value;
         }
     }
+    public double latent_heat_of_vaporization
+    {
+        get
+        {
+             return _ReferenceEvapotranspiration.latent_heat_of_vaporization; 
+        }
+        set
+        {
+            _ReferenceEvapotranspiration.latent_heat_of_vaporization = value;
+        }
+    }
 
     public void  CalculateModel(AMEIRefETState s, AMEIRefETState s1, AMEIRefETRate r, AMEIRefETAuxiliary a, AMEIRefETExogenous ex)
     {
@@ -31,5 +42,6 @@ public class AMEIRefETComponent
     {
 
         height_nn = toCopy.height_nn;
+        latent_heat_of_vaporization = toCopy.latent_heat_of_vaporization;
     }
 }

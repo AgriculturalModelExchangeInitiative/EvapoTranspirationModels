@@ -7,6 +7,7 @@ class AMEIPotETComponent
 {
 private:
     double height_nn{0};
+    double latent_heat_of_vaporization{0};
 public:
     AMEIPotETComponent();
 
@@ -18,6 +19,9 @@ public:
 
     double getheight_nn();
     void setheight_nn(double _height_nn);
+
+    double getlatent_heat_of_vaporization();
+    void setlatent_heat_of_vaporization(double _latent_heat_of_vaporization);
 
     SaturationVaporPressureDeficit _SaturationVaporPressureDeficit;
     ReferenceEvapotranspiration _ReferenceEvapotranspiration;

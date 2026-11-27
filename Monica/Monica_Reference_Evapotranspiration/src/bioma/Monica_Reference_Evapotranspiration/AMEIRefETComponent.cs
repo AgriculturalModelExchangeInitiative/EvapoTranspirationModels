@@ -23,6 +23,8 @@ namespace AMEIRefET.Strategies
             List<VarInfo> _parameters0_0 = new List<VarInfo>();
             VarInfo v1 = new CompositeStrategyVarInfo(_ReferenceEvapotranspiration, "height_nn");
             _parameters0_0.Add(v1);
+            VarInfo v2 = new CompositeStrategyVarInfo(_ReferenceEvapotranspiration, "latent_heat_of_vaporization");
+            _parameters0_0.Add(v2);
             List<PropertyDescription> _inputs0_0 = new List<PropertyDescription>();
             PropertyDescription pd1 = new PropertyDescription();
             pd1.DomainClassType = typeof(AMEIRefET.DomainClass.AMEIRefETExogenous);
@@ -147,6 +149,17 @@ namespace AMEIRefET.Strategies
                 _ReferenceEvapotranspiration.height_nn = value;
             }
         }
+        public double latent_heat_of_vaporization
+        {
+            get
+            {
+                 return _ReferenceEvapotranspiration.latent_heat_of_vaporization; 
+            }
+            set
+            {
+                _ReferenceEvapotranspiration.latent_heat_of_vaporization = value;
+            }
+        }
 
         public void SetParametersDefaultValue()
         {
@@ -164,11 +177,24 @@ namespace AMEIRefET.Strategies
             height_nnVarInfo.DefaultValue = 0;
             height_nnVarInfo.Units = "m";
             height_nnVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
+
+            latent_heat_of_vaporizationVarInfo.Name = "latent_heat_of_vaporization";
+            latent_heat_of_vaporizationVarInfo.Description = "latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)";
+            latent_heat_of_vaporizationVarInfo.MaxValue = 10;
+            latent_heat_of_vaporizationVarInfo.MinValue = 0;
+            latent_heat_of_vaporizationVarInfo.DefaultValue = 0;
+            latent_heat_of_vaporizationVarInfo.Units = "MJ/kg";
+            latent_heat_of_vaporizationVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
         }
 
         public static VarInfo height_nnVarInfo
         {
             get { return AMEIRefET.Strategies.ReferenceEvapotranspiration.height_nnVarInfo;} 
+        }
+
+        public static VarInfo latent_heat_of_vaporizationVarInfo
+        {
+            get { return AMEIRefET.Strategies.ReferenceEvapotranspiration.latent_heat_of_vaporizationVarInfo;} 
         }
 
         public string TestPostConditions(AMEIRefET.DomainClass.AMEIRefETState s,AMEIRefET.DomainClass.AMEIRefETState s1,AMEIRefET.DomainClass.AMEIRefETRate r,AMEIRefET.DomainClass.AMEIRefETAuxiliary a,AMEIRefET.DomainClass.AMEIRefETExogenous ex,string callID)
@@ -181,8 +207,8 @@ namespace AMEIRefET.Strategies
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
 
-                RangeBasedCondition r8 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
-                if(r8.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r8);}
+                RangeBasedCondition r9 = new RangeBasedCondition(AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
+                if(r9.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r9);}
 
                 string ret = "";
                 ret += _ReferenceEvapotranspiration.TestPostConditions(s, s1, r, a, ex, " strategy AMEIRefET.Strategies.AMEIRefET");
@@ -224,6 +250,7 @@ namespace AMEIRefET.Strategies
                 if(r6.ApplicableVarInfoValueTypes.Contains( AMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit.ValueType)){prc.AddCondition(r6);}
 
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("height_nn")));
+                prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization")));
                 string ret = "";
                 ret += _ReferenceEvapotranspiration.TestPreConditions(s, s1, r, a, ex, " strategy AMEIRefET.Strategies.AMEIRefET");
                 if (ret != "") { pre.TestsOut(ret, true, "   preconditions tests of associated classes"); }
@@ -266,6 +293,7 @@ namespace AMEIRefET.Strategies
         public AMEIRefETComponent(AMEIRefETComponent toCopy): this() // copy constructor 
         {
                 height_nn = toCopy.height_nn;
+                latent_heat_of_vaporization = toCopy.latent_heat_of_vaporization;
             }
         }
     }

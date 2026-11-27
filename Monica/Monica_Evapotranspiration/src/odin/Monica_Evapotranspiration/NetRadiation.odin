@@ -1,6 +1,7 @@
 package monica_evapotranspiration
 
 import "core:math"
+import cr_math "../../support/cr_math"
 
 // - Name: NetRadiation -Version: 1, -Time step: 1
 // - Description:
@@ -109,6 +110,6 @@ net_radiation_calculate_model :: proc(m: ^Net_Radiation, s: ^Et_State, s1: ^Et_S
 	shortwave_radiation: f64
 	shortwave_radiation = (1.0 - m.reference_albedo) * ex.global_radiation
 	longwave_radiation: f64
-	longwave_radiation = bolzmann_constant * ((math.pow(ex.min_air_temperature + 273.16, f64(4.0)) + math.pow(ex.max_air_temperature + 273.16, f64(4.0))) / 2.0) * (1.35 * relative_shortwave_radiation - 0.35) * (0.34 - 0.14 * math.sqrt(a.vapor_pressure))
+	longwave_radiation = bolzmann_constant * ((cr_math.pow(ex.min_air_temperature + 273.16, f64(4.0)) + cr_math.pow(ex.max_air_temperature + 273.16, f64(4.0))) / 2.0) * (1.35 * relative_shortwave_radiation - 0.35) * (0.34 - 0.14 * math.sqrt(a.vapor_pressure))
 	a.net_radiation = shortwave_radiation - longwave_radiation
 }

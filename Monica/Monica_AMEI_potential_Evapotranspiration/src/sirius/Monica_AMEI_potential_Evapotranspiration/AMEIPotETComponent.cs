@@ -23,6 +23,8 @@ namespace SiriusQualityAMEIPotET.Strategies
             List<VarInfo> _parameters0_0 = new List<VarInfo>();
             VarInfo v1 = new CompositeStrategyVarInfo(_ReferenceEvapotranspiration, "height_nn");
             _parameters0_0.Add(v1);
+            VarInfo v2 = new CompositeStrategyVarInfo(_ReferenceEvapotranspiration, "latent_heat_of_vaporization");
+            _parameters0_0.Add(v2);
             List<PropertyDescription> _inputs0_0 = new List<PropertyDescription>();
             PropertyDescription pd1 = new PropertyDescription();
             pd1.DomainClassType = typeof(SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliary);
@@ -179,6 +181,17 @@ namespace SiriusQualityAMEIPotET.Strategies
                 _ReferenceEvapotranspiration.height_nn = value;
             }
         }
+        public double latent_heat_of_vaporization
+        {
+            get
+            {
+                 return _ReferenceEvapotranspiration.latent_heat_of_vaporization; 
+            }
+            set
+            {
+                _ReferenceEvapotranspiration.latent_heat_of_vaporization = value;
+            }
+        }
 
         public void SetParametersDefaultValue()
         {
@@ -198,11 +211,24 @@ namespace SiriusQualityAMEIPotET.Strategies
             height_nnVarInfo.DefaultValue = 0;
             height_nnVarInfo.Units = "m";
             height_nnVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
+
+            latent_heat_of_vaporizationVarInfo.Name = "latent_heat_of_vaporization";
+            latent_heat_of_vaporizationVarInfo.Description = "latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)";
+            latent_heat_of_vaporizationVarInfo.MaxValue = 10;
+            latent_heat_of_vaporizationVarInfo.MinValue = 0;
+            latent_heat_of_vaporizationVarInfo.DefaultValue = 0;
+            latent_heat_of_vaporizationVarInfo.Units = "MJ/kg";
+            latent_heat_of_vaporizationVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
         }
 
         public static VarInfo height_nnVarInfo
         {
             get { return SiriusQualityAMEIPotET.Strategies.ReferenceEvapotranspiration.height_nnVarInfo;} 
+        }
+
+        public static VarInfo latent_heat_of_vaporizationVarInfo
+        {
+            get { return SiriusQualityAMEIPotET.Strategies.ReferenceEvapotranspiration.latent_heat_of_vaporizationVarInfo;} 
         }
 
         public string TestPostConditions(SiriusQualityAMEIPotET.DomainClass.AMEIPotETState s,SiriusQualityAMEIPotET.DomainClass.AMEIPotETState s1,SiriusQualityAMEIPotET.DomainClass.AMEIPotETRate r,SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliary a,SiriusQualityAMEIPotET.DomainClass.AMEIPotETExogenous ex,string callID)
@@ -216,10 +242,10 @@ namespace SiriusQualityAMEIPotET.Strategies
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
 
-                RangeBasedCondition r12 = new RangeBasedCondition(SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.reference_evapotranspiration);
-                if(r12.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r12);}
-                RangeBasedCondition r13 = new RangeBasedCondition(SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.potential_evapotranspiration);
-                if(r13.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.potential_evapotranspiration.ValueType)){prc.AddCondition(r13);}
+                RangeBasedCondition r13 = new RangeBasedCondition(SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.reference_evapotranspiration);
+                if(r13.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r13);}
+                RangeBasedCondition r14 = new RangeBasedCondition(SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.potential_evapotranspiration);
+                if(r14.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIPotET.DomainClass.AMEIPotETAuxiliaryVarInfo.potential_evapotranspiration.ValueType)){prc.AddCondition(r14);}
 
                 string ret = "";
                 ret += _SaturationVaporPressureDeficit.TestPostConditions(s, s1, r, a, ex, " strategy SiriusQualityAMEIPotET.Strategies.AMEIPotET");
@@ -275,6 +301,7 @@ namespace SiriusQualityAMEIPotET.Strategies
                 if(r10.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIPotET.DomainClass.AMEIPotETExogenousVarInfo.crop_remaining_evapotranspiration.ValueType)){prc.AddCondition(r10);}
 
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("height_nn")));
+                prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization")));
                 string ret = "";
                 ret += _SaturationVaporPressureDeficit.TestPreConditions(s, s1, r, a, ex, " strategy SiriusQualityAMEIPotET.Strategies.AMEIPotET");
                 ret += _ReferenceEvapotranspiration.TestPreConditions(s, s1, r, a, ex, " strategy SiriusQualityAMEIPotET.Strategies.AMEIPotET");
@@ -323,6 +350,7 @@ namespace SiriusQualityAMEIPotET.Strategies
         public AMEIPotETComponent(AMEIPotETComponent toCopy): this() // copy constructor 
         {
                 height_nn = toCopy.height_nn;
+                latent_heat_of_vaporization = toCopy.latent_heat_of_vaporization;
             }
         }
     }

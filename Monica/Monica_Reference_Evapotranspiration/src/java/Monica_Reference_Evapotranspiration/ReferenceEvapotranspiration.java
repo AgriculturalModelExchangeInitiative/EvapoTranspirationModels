@@ -12,6 +12,13 @@ public class ReferenceEvapotranspiration
     public void setheight_nn(double _height_nn)
     { this.height_nn= _height_nn; } 
     
+    private double latent_heat_of_vaporization;
+    public double getlatent_heat_of_vaporization()
+    { return latent_heat_of_vaporization; }
+
+    public void setlatent_heat_of_vaporization(double _latent_heat_of_vaporization)
+    { this.latent_heat_of_vaporization= _latent_heat_of_vaporization; } 
+    
     public ReferenceEvapotranspiration() { }
     public void  Calculate_Model(AMEIRefETState s, AMEIRefETState s1, AMEIRefETRate r, AMEIRefETAuxiliary a,  AMEIRefETExogenous ex)
     {
@@ -41,6 +48,15 @@ public class ReferenceEvapotranspiration
     //                          ** min : -9999
     //                          ** default : 0
     //                          ** unit : m
+    //            * name: latent_heat_of_vaporization
+    //                          ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    //                          ** inputtype : parameter
+    //                          ** parametercategory : constant
+    //                          ** datatype : DOUBLE
+    //                          ** max : 10
+    //                          ** min : 0
+    //                          ** default : 0
+    //                          ** unit : MJ/kg
     //            * name: mean_air_temperature
     //                          ** description : daily average air temperature
     //                          ** inputtype : variable
@@ -113,16 +129,32 @@ public class ReferenceEvapotranspiration
         double atmospheric_pressure;
         atmospheric_pressure = 101.3d * Math.pow((293.0d - (0.0065d * height_nn)) / 293.0d, 5.26d);
         double psycrometer_constant;
-        psycrometer_constant = 0.000665d * atmospheric_pressure;
+        if (latent_heat_of_vaporization > 0.0d)
+        {
+            psycrometer_constant = 1.013e-3d * atmospheric_pressure / (0.622d * latent_heat_of_vaporization);
+        }
+        else
+        {
+            psycrometer_constant = 0.000665d * atmospheric_pressure;
+        }
         double saturated_vapour_pressure_slope;
         saturated_vapour_pressure_slope = 4098.0d * (0.6108d * Math.exp(17.27d * mean_air_temperature / (mean_air_temperature + 237.3d))) / ((mean_air_temperature + 237.3d) * (mean_air_temperature + 237.3d));
+        double inverse_lambda;
+        if (latent_heat_of_vaporization > 0.0d)
+        {
+            inverse_lambda = 1.0d / latent_heat_of_vaporization;
+        }
+        else
+        {
+            inverse_lambda = 0.408d;
+        }
         double wind_speed_2m;
         wind_speed_2m = Math.max(0.5d, wind_speed * (4.87d / Math.log((67.8d * wind_speed_height - 5.42d))));
         double aerodynamic_resistance;
         aerodynamic_resistance = 208.0d / wind_speed_2m;
         double surface_resistance;
         surface_resistance = stomata_resistance / 1.44d;
-        reference_evapotranspiration = (0.408d * saturated_vapour_pressure_slope * net_radiation + (psycrometer_constant * (900.0d / (mean_air_temperature + 273.0d)) * wind_speed_2m * saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0d + (surface_resistance / aerodynamic_resistance))));
+        reference_evapotranspiration = (inverse_lambda * saturated_vapour_pressure_slope * net_radiation + (psycrometer_constant * (900.0d / (mean_air_temperature + 273.0d)) * wind_speed_2m * saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0d + (surface_resistance / aerodynamic_resistance))));
         if (reference_evapotranspiration < 0.0d)
         {
             reference_evapotranspiration = 0.0d;

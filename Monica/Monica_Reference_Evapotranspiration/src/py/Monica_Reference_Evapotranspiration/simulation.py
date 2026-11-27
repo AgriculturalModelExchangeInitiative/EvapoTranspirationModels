@@ -17,6 +17,7 @@ def simulation(datafile, vardata, params, init):
 
     #parameters
     height_nn = params.loc[params["name"]=="height_nn", "value"].iloc[0]
+    latent_heat_of_vaporization = params.loc[params["name"]=="latent_heat_of_vaporization", "value"].iloc[0]
 
     #initialization
 
@@ -31,7 +32,7 @@ def simulation(datafile, vardata, params, init):
         stomata_resistance = t_stomata_resistance[i]
         net_radiation = t_net_radiation[i]
         saturation_vapor_pressure_deficit = t_saturation_vapor_pressure_deficit[i]
-        reference_evapotranspiration= AMEIRefETComponent.model_ameirefet(height_nn,mean_air_temperature,wind_speed,wind_speed_height,stomata_resistance,net_radiation,saturation_vapor_pressure_deficit)
+        reference_evapotranspiration= AMEIRefETComponent.model_ameirefet(height_nn,latent_heat_of_vaporization,mean_air_temperature,wind_speed,wind_speed_height,stomata_resistance,net_radiation,saturation_vapor_pressure_deficit)
 
         df_out.loc[i] = [reference_evapotranspiration]
     df_out.insert(0, 'date', pd.to_datetime(df.year*10000 + df.month*100 + df.day, format='%Y%m%d'), True)

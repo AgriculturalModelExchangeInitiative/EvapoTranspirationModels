@@ -1,7 +1,7 @@
 package monica_evapotranspiration
 
-import "core:math"
 import "core:slice"
+import cr_math "../../support/cr_math"
 
 // - Name: Evapotranspiration -Version: 1, -Time step: 1
 // - Description:
@@ -443,9 +443,9 @@ get_deprivation_factor :: proc(layer_no: int, deprivation_depth: f64, zeta: f64,
 	if abs(zeta) < 0.0003 {
 		deprivation_factor = 2.0 / ltf - 1.0 / (ltf * ltf) * f64(2 * layer_no - 1)
 	} else {
-		c2 = math.ln((ltf + zeta * f64(layer_no)) / (ltf + zeta * f64(layer_no - 1)))
+		c2 = cr_math.log((ltf + zeta * f64(layer_no)) / (ltf + zeta * f64(layer_no - 1)))
 		c3 = zeta / (ltf * (zeta + 1.0))
-		deprivation_factor = (c2 - c3) / (math.ln(zeta + 1.0) - zeta / (zeta + 1.0))
+		deprivation_factor = (c2 - c3) / (cr_math.log(zeta + 1.0) - zeta / (zeta + 1.0))
 	}
 	return deprivation_factor
 }

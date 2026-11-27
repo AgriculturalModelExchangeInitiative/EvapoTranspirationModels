@@ -20,6 +20,7 @@ private:
     double saturation_beta{2.5};
     double stomata_conductance_alpha{40};
     int carboxylation_pathway{0};
+    double latent_heat_of_vaporization{0};
     double evaporation_zeta{40};
     double maximum_evaporation_impact_depth{5};
     int evaporation_reduction_method{1};
@@ -55,6 +56,9 @@ public:
 
     int getcarboxylation_pathway();
     void setcarboxylation_pathway(int _carboxylation_pathway);
+
+    double getlatent_heat_of_vaporization();
+    void setlatent_heat_of_vaporization(double _latent_heat_of_vaporization);
 
     double getevaporation_zeta();
     void setevaporation_zeta(double _evaporation_zeta);

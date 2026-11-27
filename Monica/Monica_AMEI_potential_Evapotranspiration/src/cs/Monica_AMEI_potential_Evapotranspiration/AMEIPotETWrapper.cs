@@ -21,6 +21,7 @@ class AMEIPotETWrapper
     }
 
         double height_nn;
+    double latent_heat_of_vaporization;
 
     public double reference_evapotranspiration{ get { return a.reference_evapotranspiration;}} 
      
@@ -48,6 +49,7 @@ class AMEIPotETWrapper
     private void loadParameters()
     {
         ameipotetComponent.height_nn = 0; 
+        ameipotetComponent.latent_heat_of_vaporization = 0; 
     }
 
     private void setExogenous()

@@ -35,24 +35,26 @@ namespace SiriusQualityET.Strategies
             _parameters0_0.Add(v6);
             VarInfo v7 = new CompositeStrategyVarInfo(_StomataResistance, "carboxylation_pathway");
             _parameters0_0.Add(v7);
-            VarInfo v8 = new CompositeStrategyVarInfo(_Evapotranspiration, "evaporation_zeta");
+            VarInfo v8 = new CompositeStrategyVarInfo(_ReferenceEvapotranspiration, "latent_heat_of_vaporization");
             _parameters0_0.Add(v8);
-            VarInfo v9 = new CompositeStrategyVarInfo(_Evapotranspiration, "maximum_evaporation_impact_depth");
+            VarInfo v9 = new CompositeStrategyVarInfo(_Evapotranspiration, "evaporation_zeta");
             _parameters0_0.Add(v9);
-            VarInfo v10 = new CompositeStrategyVarInfo(_Evapotranspiration, "evaporation_reduction_method");
+            VarInfo v10 = new CompositeStrategyVarInfo(_Evapotranspiration, "maximum_evaporation_impact_depth");
             _parameters0_0.Add(v10);
-            VarInfo v11 = new CompositeStrategyVarInfo(_Evapotranspiration, "xsa_critical_soil_moisture");
+            VarInfo v11 = new CompositeStrategyVarInfo(_Evapotranspiration, "evaporation_reduction_method");
             _parameters0_0.Add(v11);
-            VarInfo v12 = new CompositeStrategyVarInfo(_Evapotranspiration, "no_of_soil_layers");
+            VarInfo v12 = new CompositeStrategyVarInfo(_Evapotranspiration, "xsa_critical_soil_moisture");
             _parameters0_0.Add(v12);
-            VarInfo v13 = new CompositeStrategyVarInfo(_Evapotranspiration, "no_of_soil_moisture_layers");
+            VarInfo v13 = new CompositeStrategyVarInfo(_Evapotranspiration, "no_of_soil_layers");
             _parameters0_0.Add(v13);
-            VarInfo v14 = new CompositeStrategyVarInfo(_Evapotranspiration, "layer_thickness");
+            VarInfo v14 = new CompositeStrategyVarInfo(_Evapotranspiration, "no_of_soil_moisture_layers");
             _parameters0_0.Add(v14);
-            VarInfo v15 = new CompositeStrategyVarInfo(_Evapotranspiration, "permanent_wilting_point");
+            VarInfo v15 = new CompositeStrategyVarInfo(_Evapotranspiration, "layer_thickness");
             _parameters0_0.Add(v15);
-            VarInfo v16 = new CompositeStrategyVarInfo(_Evapotranspiration, "field_capacity");
+            VarInfo v16 = new CompositeStrategyVarInfo(_Evapotranspiration, "permanent_wilting_point");
             _parameters0_0.Add(v16);
+            VarInfo v17 = new CompositeStrategyVarInfo(_Evapotranspiration, "field_capacity");
+            _parameters0_0.Add(v17);
             List<PropertyDescription> _inputs0_0 = new List<PropertyDescription>();
             PropertyDescription pd1 = new PropertyDescription();
             pd1.DomainClassType = typeof(SiriusQualityET.DomainClass.ETExogenous);
@@ -477,6 +479,17 @@ namespace SiriusQualityET.Strategies
                 _StomataResistance.carboxylation_pathway = value;
             }
         }
+        public double latent_heat_of_vaporization
+        {
+            get
+            {
+                 return _ReferenceEvapotranspiration.latent_heat_of_vaporization; 
+            }
+            set
+            {
+                _ReferenceEvapotranspiration.latent_heat_of_vaporization = value;
+            }
+        }
         public double evaporation_zeta
         {
             get
@@ -644,6 +657,14 @@ namespace SiriusQualityET.Strategies
             carboxylation_pathwayVarInfo.Units = "dimensionless";
             carboxylation_pathwayVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Integer");
 
+            latent_heat_of_vaporizationVarInfo.Name = "latent_heat_of_vaporization";
+            latent_heat_of_vaporizationVarInfo.Description = "latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)";
+            latent_heat_of_vaporizationVarInfo.MaxValue = 10;
+            latent_heat_of_vaporizationVarInfo.MinValue = 0;
+            latent_heat_of_vaporizationVarInfo.DefaultValue = 0;
+            latent_heat_of_vaporizationVarInfo.Units = "MJ/kg";
+            latent_heat_of_vaporizationVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
+
             evaporation_zetaVarInfo.Name = "evaporation_zeta";
             evaporation_zetaVarInfo.Description = "shape factor";
             evaporation_zetaVarInfo.MaxValue = 40;
@@ -747,6 +768,11 @@ namespace SiriusQualityET.Strategies
             get { return SiriusQualityET.Strategies.StomataResistance.carboxylation_pathwayVarInfo;} 
         }
 
+        public static VarInfo latent_heat_of_vaporizationVarInfo
+        {
+            get { return SiriusQualityET.Strategies.ReferenceEvapotranspiration.latent_heat_of_vaporizationVarInfo;} 
+        }
+
         public static VarInfo evaporation_zetaVarInfo
         {
             get { return SiriusQualityET.Strategies.Evapotranspiration.evaporation_zetaVarInfo;} 
@@ -812,28 +838,28 @@ namespace SiriusQualityET.Strategies
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
 
-                RangeBasedCondition r51 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.declination);
-                if(r51.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.declination.ValueType)){prc.AddCondition(r51);}
-                RangeBasedCondition r52 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.astronomic_daylength);
-                if(r52.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.astronomic_daylength.ValueType)){prc.AddCondition(r52);}
-                RangeBasedCondition r53 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.effective_daylength);
-                if(r53.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.effective_daylength.ValueType)){prc.AddCondition(r53);}
-                RangeBasedCondition r54 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.photoperiodic_daylength);
-                if(r54.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.photoperiodic_daylength.ValueType)){prc.AddCondition(r54);}
-                RangeBasedCondition r55 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.sunshine_hours_global_radiation);
-                if(r55.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.sunshine_hours_global_radiation.ValueType)){prc.AddCondition(r55);}
-                RangeBasedCondition r56 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.extraterrestrial_radiation);
-                if(r56.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.extraterrestrial_radiation.ValueType)){prc.AddCondition(r56);}
-                RangeBasedCondition r57 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.clear_day_radiation);
-                if(r57.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.clear_day_radiation.ValueType)){prc.AddCondition(r57);}
-                RangeBasedCondition r58 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.overcast_day_radiation);
-                if(r58.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.overcast_day_radiation.ValueType)){prc.AddCondition(r58);}
-                RangeBasedCondition r59 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.phot_act_radiation_mean);
-                if(r59.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.phot_act_radiation_mean.ValueType)){prc.AddCondition(r59);}
-                RangeBasedCondition r60 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.reference_evapotranspiration);
-                if(r60.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r60);}
-                RangeBasedCondition r61 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.potential_evapotranspiration);
-                if(r61.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.potential_evapotranspiration.ValueType)){prc.AddCondition(r61);}
+                RangeBasedCondition r52 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.declination);
+                if(r52.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.declination.ValueType)){prc.AddCondition(r52);}
+                RangeBasedCondition r53 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.astronomic_daylength);
+                if(r53.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.astronomic_daylength.ValueType)){prc.AddCondition(r53);}
+                RangeBasedCondition r54 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.effective_daylength);
+                if(r54.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.effective_daylength.ValueType)){prc.AddCondition(r54);}
+                RangeBasedCondition r55 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.photoperiodic_daylength);
+                if(r55.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.photoperiodic_daylength.ValueType)){prc.AddCondition(r55);}
+                RangeBasedCondition r56 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.sunshine_hours_global_radiation);
+                if(r56.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.sunshine_hours_global_radiation.ValueType)){prc.AddCondition(r56);}
+                RangeBasedCondition r57 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.extraterrestrial_radiation);
+                if(r57.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.extraterrestrial_radiation.ValueType)){prc.AddCondition(r57);}
+                RangeBasedCondition r58 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.clear_day_radiation);
+                if(r58.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.clear_day_radiation.ValueType)){prc.AddCondition(r58);}
+                RangeBasedCondition r59 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.overcast_day_radiation);
+                if(r59.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.overcast_day_radiation.ValueType)){prc.AddCondition(r59);}
+                RangeBasedCondition r60 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.phot_act_radiation_mean);
+                if(r60.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.phot_act_radiation_mean.ValueType)){prc.AddCondition(r60);}
+                RangeBasedCondition r61 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.reference_evapotranspiration);
+                if(r61.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r61);}
+                RangeBasedCondition r62 = new RangeBasedCondition(SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.potential_evapotranspiration);
+                if(r62.ApplicableVarInfoValueTypes.Contains( SiriusQualityET.DomainClass.ETAuxiliaryVarInfo.potential_evapotranspiration.ValueType)){prc.AddCondition(r62);}
 
                 string ret = "";
                 ret += _Radiation.TestPostConditions(s, s1, r, a, ex, " strategy SiriusQualityET.Strategies.ET");
@@ -977,6 +1003,7 @@ namespace SiriusQualityET.Strategies
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("saturation_beta")));
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("stomata_conductance_alpha")));
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("carboxylation_pathway")));
+                prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization")));
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("evaporation_zeta")));
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("maximum_evaporation_impact_depth")));
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("evaporation_reduction_method")));
@@ -1072,6 +1099,7 @@ namespace SiriusQualityET.Strategies
                 saturation_beta = toCopy.saturation_beta;
                 stomata_conductance_alpha = toCopy.stomata_conductance_alpha;
                 carboxylation_pathway = toCopy.carboxylation_pathway;
+                latent_heat_of_vaporization = toCopy.latent_heat_of_vaporization;
                 evaporation_zeta = toCopy.evaporation_zeta;
                 maximum_evaporation_impact_depth = toCopy.maximum_evaporation_impact_depth;
                 evaporation_reduction_method = toCopy.evaporation_reduction_method;

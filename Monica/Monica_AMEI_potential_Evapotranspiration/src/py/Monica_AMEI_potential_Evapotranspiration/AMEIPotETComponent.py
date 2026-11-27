@@ -13,6 +13,7 @@ from Monica_AMEI_potential_Evapotranspiration.potentialevapotranspiration import
 def model_ameipotet(vapor_pressure:float,
          saturated_vapor_pressure:float,
          height_nn:float,
+         latent_heat_of_vaporization:float,
          mean_air_temperature:float,
          wind_speed:float,
          wind_speed_height:float,
@@ -58,6 +59,15 @@ def model_ameipotet(vapor_pressure:float,
                                ** min : -9999
                                ** default : 0
                                ** unit : m
+                 * name: latent_heat_of_vaporization
+                               ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+                               ** inputtype : parameter
+                               ** parametercategory : constant
+                               ** datatype : DOUBLE
+                               ** max : 10
+                               ** min : 0
+                               ** default : 0
+                               ** unit : MJ/kg
                  * name: mean_air_temperature
                                ** description : daily average air temperature
                                ** inputtype : variable
@@ -152,7 +162,7 @@ def model_ameipotet(vapor_pressure:float,
     potential_evapotranspiration_cap:float
     potential_evapotranspiration:float
     saturation_vapor_pressure_deficit = model_saturationvaporpressuredeficit(saturated_vapor_pressure, vapor_pressure)
-    reference_evapotranspiration = model_referenceevapotranspiration(height_nn, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit)
+    reference_evapotranspiration = model_referenceevapotranspiration(height_nn, latent_heat_of_vaporization, mean_air_temperature, wind_speed, wind_speed_height, net_radiation, stomata_resistance, saturation_vapor_pressure_deficit)
     potential_evapotranspiration = model_potentialevapotranspiration(potential_evapotranspiration_cap, kc_factor, developmental_stage, crop_remaining_evapotranspiration, reference_evapotranspiration)
     return (reference_evapotranspiration, potential_evapotranspiration)
 #%%CyML Model End%%

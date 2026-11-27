@@ -26,6 +26,7 @@ class ETWrapper
     double saturation_beta;
     double stomata_conductance_alpha;
     int carboxylation_pathway;
+    double latent_heat_of_vaporization;
     double evaporation_zeta;
     double maximum_evaporation_impact_depth;
     int evaporation_reduction_method;
@@ -85,6 +86,7 @@ class ETWrapper
         etComponent.saturation_beta = 2.5; 
         etComponent.stomata_conductance_alpha = 40; 
         etComponent.carboxylation_pathway = 0; 
+        etComponent.latent_heat_of_vaporization = 0; 
         etComponent.evaporation_zeta = 40; 
         etComponent.maximum_evaporation_impact_depth = 5; 
         etComponent.evaporation_reduction_method = 1; 

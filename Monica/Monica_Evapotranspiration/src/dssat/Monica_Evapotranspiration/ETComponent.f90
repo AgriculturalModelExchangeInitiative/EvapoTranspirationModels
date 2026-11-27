@@ -31,6 +31,7 @@ CONTAINS
         carboxylation_pathway, &
         gross_photosynthesis_reference_mol, &
         atmospheric_co2_concentration, &
+        latent_heat_of_vaporization, &
         mean_air_temperature, &
         wind_speed, &
         wind_speed_height, &
@@ -94,6 +95,7 @@ CONTAINS
         INTEGER, INTENT(IN) :: carboxylation_pathway
         REAL, INTENT(IN) :: gross_photosynthesis_reference_mol
         REAL, INTENT(IN) :: atmospheric_co2_concentration
+        REAL, INTENT(IN) :: latent_heat_of_vaporization
         REAL, INTENT(IN) :: mean_air_temperature
         REAL, INTENT(IN) :: wind_speed
         REAL, INTENT(IN) :: wind_speed_height
@@ -320,6 +322,15 @@ CONTAINS
     !                          ** min : 0
     !                          ** default : 430
     !                          ** unit : ppm
+    !            * name: latent_heat_of_vaporization
+    !                          ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    !                          ** inputtype : parameter
+    !                          ** parametercategory : constant
+    !                          ** datatype : DOUBLE
+    !                          ** max : 10
+    !                          ** min : 0
+    !                          ** default : 0
+    !                          ** unit : MJ/kg
     !            * name: mean_air_temperature
     !                          ** description : daily average air temperature
     !                          ** inputtype : variable
@@ -712,8 +723,8 @@ CONTAINS
                 calculated_stomata_resistance,  &
                 fixed_stomata_resistance,stomata_resistance)
         call model_referenceevapotranspiration(height_nn,  &
-                mean_air_temperature, wind_speed, wind_speed_height, net_radiation,  &
-                stomata_resistance,  &
+                latent_heat_of_vaporization, mean_air_temperature, wind_speed,  &
+                wind_speed_height, net_radiation, stomata_resistance,  &
                 saturation_vapor_pressure_deficit,reference_evapotranspiration)
         internal_et0 = reference_evapotranspiration
         call model_useextet0(use_external_et0, external_et0, internal_et0,et0)
@@ -747,6 +758,7 @@ CONTAINS
         carboxylation_pathway, &
         atmospheric_co2_concentration, &
         relative_humidity, &
+        latent_heat_of_vaporization, &
         mean_air_temperature, &
         wind_speed, &
         wind_speed_height, &
@@ -791,6 +803,7 @@ CONTAINS
         INTEGER, INTENT(IN) :: carboxylation_pathway
         REAL, INTENT(IN) :: atmospheric_co2_concentration
         REAL, INTENT(IN) :: relative_humidity
+        REAL, INTENT(IN) :: latent_heat_of_vaporization
         REAL, INTENT(IN) :: mean_air_temperature
         REAL, INTENT(IN) :: wind_speed
         REAL, INTENT(IN) :: wind_speed_height

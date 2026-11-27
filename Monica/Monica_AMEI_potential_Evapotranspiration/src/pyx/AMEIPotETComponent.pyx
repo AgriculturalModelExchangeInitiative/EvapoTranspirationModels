@@ -6,6 +6,7 @@ from Monica_AMEI_potential_Evapotranspiration.potentialevapotranspiration import
 def model_ameipotet(float vapor_pressure,
       float saturated_vapor_pressure,
       float height_nn,
+      float latent_heat_of_vaporization,
       float mean_air_temperature,
       float wind_speed,
       float wind_speed_height,
@@ -19,7 +20,7 @@ def model_ameipotet(float vapor_pressure,
     cdef float potential_evapotranspiration_cap
     cdef float potential_evapotranspiration
     saturation_vapor_pressure_deficit = model_saturationvaporpressuredeficit(saturated_vapor_pressure,vapor_pressure)
-    reference_evapotranspiration = model_referenceevapotranspiration(height_nn,mean_air_temperature,wind_speed,wind_speed_height,net_radiation,stomata_resistance,saturation_vapor_pressure_deficit)
+    reference_evapotranspiration = model_referenceevapotranspiration(height_nn,latent_heat_of_vaporization,mean_air_temperature,wind_speed,wind_speed_height,net_radiation,stomata_resistance,saturation_vapor_pressure_deficit)
     potential_evapotranspiration = model_potentialevapotranspiration(potential_evapotranspiration_cap,kc_factor,developmental_stage,crop_remaining_evapotranspiration,reference_evapotranspiration)
 
     return (reference_evapotranspiration, potential_evapotranspiration)

@@ -20,6 +20,7 @@ class ETComponent
         double saturation_beta ;
         double stomata_conductance_alpha ;
         int carboxylation_pathway ;
+        double latent_heat_of_vaporization ;
         double evaporation_zeta ;
         double maximum_evaporation_impact_depth ;
         int evaporation_reduction_method ;
@@ -46,6 +47,8 @@ class ETComponent
         void setstomata_conductance_alpha(double _stomata_conductance_alpha);
         int getcarboxylation_pathway();
         void setcarboxylation_pathway(int _carboxylation_pathway);
+        double getlatent_heat_of_vaporization();
+        void setlatent_heat_of_vaporization(double _latent_heat_of_vaporization);
         double getevaporation_zeta();
         void setevaporation_zeta(double _evaporation_zeta);
         double getmaximum_evaporation_impact_depth();

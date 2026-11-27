@@ -3,6 +3,7 @@ MODULE Referenceevapotranspirationmod
 CONTAINS
 
     SUBROUTINE model_referenceevapotranspiration(height_nn, &
+        latent_heat_of_vaporization, &
         mean_air_temperature, &
         wind_speed, &
         wind_speed_height, &
@@ -13,6 +14,7 @@ CONTAINS
         IMPLICIT NONE
         INTEGER:: i_cyml_r
         REAL, INTENT(IN) :: height_nn
+        REAL, INTENT(IN) :: latent_heat_of_vaporization
         REAL, INTENT(IN) :: mean_air_temperature
         REAL, INTENT(IN) :: wind_speed
         REAL, INTENT(IN) :: wind_speed_height
@@ -23,6 +25,7 @@ CONTAINS
         REAL:: atmospheric_pressure
         REAL:: psycrometer_constant
         REAL:: saturated_vapour_pressure_slope
+        REAL:: inverse_lambda
         REAL:: wind_speed_2m
         REAL:: aerodynamic_resistance
         REAL:: surface_resistance
@@ -52,6 +55,15 @@ CONTAINS
     !                          ** min : -9999
     !                          ** default : 0
     !                          ** unit : m
+    !            * name: latent_heat_of_vaporization
+    !                          ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    !                          ** inputtype : parameter
+    !                          ** parametercategory : constant
+    !                          ** datatype : DOUBLE
+    !                          ** max : 10
+    !                          ** min : 0
+    !                          ** default : 0
+    !                          ** unit : MJ/kg
     !            * name: mean_air_temperature
     !                          ** description : daily average air temperature
     !                          ** inputtype : variable
@@ -116,15 +128,25 @@ CONTAINS
     !                          ** unit : mm
         atmospheric_pressure = 101.3 *  (((293.0 - (0.0065 * height_nn)) /  &
                 293.0) ** 5.26)
-        psycrometer_constant = 0.000665 * atmospheric_pressure
+        IF(latent_heat_of_vaporization .GT. 0.0) THEN
+            psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 *  &
+                    latent_heat_of_vaporization)
+        ELSE
+            psycrometer_constant = 0.000665 * atmospheric_pressure
+        END IF
         saturated_vapour_pressure_slope = 4098.0 * (0.6108 * EXP(17.27 *  &
                 mean_air_temperature / (mean_air_temperature + 237.3))) /  &
                 ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))
+        IF(latent_heat_of_vaporization .GT. 0.0) THEN
+            inverse_lambda = 1.0 / latent_heat_of_vaporization
+        ELSE
+            inverse_lambda = 0.408
+        END IF
         wind_speed_2m = MAX(0.5, wind_speed * (4.87 / LOG((67.8 *  &
                 wind_speed_height - 5.42))))
         aerodynamic_resistance = 208.0 / wind_speed_2m
         surface_resistance = stomata_resistance / 1.44
-        reference_evapotranspiration = (0.408 *  &
+        reference_evapotranspiration = (inverse_lambda *  &
                 saturated_vapour_pressure_slope * net_radiation +  &
                 (psycrometer_constant * (900.0 / (mean_air_temperature + 273.0)) *  &
                 wind_speed_2m * saturation_vapor_pressure_deficit)) /  &

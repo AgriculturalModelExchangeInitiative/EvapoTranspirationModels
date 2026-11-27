@@ -2,6 +2,7 @@ import numpy
 from math import *
 
 def model_referenceevapotranspiration(float height_nn,
+                                      float latent_heat_of_vaporization,
                                       float mean_air_temperature,
                                       float wind_speed,
                                       float wind_speed_height,
@@ -33,12 +34,23 @@ def model_referenceevapotranspiration(float height_nn,
     cdef float atmospheric_pressure
     atmospheric_pressure = 101.3 * pow(((293.0 - (0.0065 * height_nn)) / 293.0), 5.26)
     # Calculation of psychrometer constant [kPA °C-1] - air humidity
+    # with a latent heat of vaporization (lambda) > 0 FAO-56 eq. 8 (cp P / (eps lambda)), without one
+    # MONICA's 0.000665 * P (FAO-56's simplification for lambda = 2.45 MJ kg-1)
     cdef float psycrometer_constant
-    psycrometer_constant = 0.000665 * atmospheric_pressure
+    if latent_heat_of_vaporization > 0.0:
+        psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization)
+    else:
+        psycrometer_constant = 0.000665 * atmospheric_pressure
     # Slope of saturation water vapor pressure-to-temperature relation [kPA °C-1]
     cdef float saturated_vapour_pressure_slope
     saturated_vapour_pressure_slope = (4098.0 * (0.6108 * exp((17.27 * mean_air_temperature) / (
             mean_air_temperature + 237.3)))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3))
+    # 1 / lambda [kg MJ-1], the conversion of MJ m-2 to mm: MONICA's 0.408 (= 1/2.45) without lambda
+    cdef float inverse_lambda
+    if latent_heat_of_vaporization > 0.0:
+        inverse_lambda = 1.0 / latent_heat_of_vaporization
+    else:
+        inverse_lambda = 0.408
     # Calculation of wind speed in 2m height //[m s-1]
     cdef float wind_speed_2m
     wind_speed_2m = max(0.5, wind_speed * (4.87 / (log(67.8 * wind_speed_height - 5.42))))
@@ -51,7 +63,7 @@ def model_referenceevapotranspiration(float height_nn,
     # Calculation of the reference evapotranspiration
     # Penman-Monteith-Methode FAO
     # [mm]
-    reference_evapotranspiration = ((0.408 * saturated_vapour_pressure_slope * net_radiation)
+    reference_evapotranspiration = ((inverse_lambda * saturated_vapour_pressure_slope * net_radiation)
                                            + (psycrometer_constant * (900.0 / (mean_air_temperature + 273.0))
                                               * wind_speed_2m * saturation_vapor_pressure_deficit)) \
                                               / (saturated_vapour_pressure_slope + psycrometer_constant

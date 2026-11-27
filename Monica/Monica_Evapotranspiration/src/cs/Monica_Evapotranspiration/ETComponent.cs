@@ -87,6 +87,17 @@ public class ETComponent
             _StomataResistance.carboxylation_pathway = value;
         }
     }
+    public double latent_heat_of_vaporization
+    {
+        get
+        {
+             return _ReferenceEvapotranspiration.latent_heat_of_vaporization; 
+        }
+        set
+        {
+            _ReferenceEvapotranspiration.latent_heat_of_vaporization = value;
+        }
+    }
     public double evaporation_zeta
     {
         get
@@ -215,6 +226,7 @@ public class ETComponent
         saturation_beta = toCopy.saturation_beta;
         stomata_conductance_alpha = toCopy.stomata_conductance_alpha;
         carboxylation_pathway = toCopy.carboxylation_pathway;
+        latent_heat_of_vaporization = toCopy.latent_heat_of_vaporization;
         evaporation_zeta = toCopy.evaporation_zeta;
         maximum_evaporation_impact_depth = toCopy.maximum_evaporation_impact_depth;
         evaporation_reduction_method = toCopy.evaporation_reduction_method;

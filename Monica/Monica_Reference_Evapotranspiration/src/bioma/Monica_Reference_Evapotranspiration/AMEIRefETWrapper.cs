@@ -49,6 +49,7 @@ namespace Model.Model.AMEIRefET
         private void loadParameters()
         {
             ameirefetComponent.height_nn = 0; 
+            ameirefetComponent.latent_heat_of_vaporization = 0; 
         }
 
         public void EstimateAMEIRefET(double stomata_resistance, double net_radiation, double saturation_vapor_pressure_deficit, double mean_air_temperature, double wind_speed, double wind_speed_height)

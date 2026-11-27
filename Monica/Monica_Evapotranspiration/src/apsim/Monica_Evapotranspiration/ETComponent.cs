@@ -132,6 +132,23 @@ public class ETComponent
     }
 
     /// <summary>
+    /// Gets and sets the latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    /// </summary>
+    [Description("latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)")] 
+    [Units("MJ/kg")] 
+    public double latent_heat_of_vaporization
+    {
+        get
+        {
+             return _ReferenceEvapotranspiration.latent_heat_of_vaporization; 
+        }
+        set
+        {
+            _ReferenceEvapotranspiration.latent_heat_of_vaporization = value;
+        }
+    }
+
+    /// <summary>
     /// Gets and sets the shape factor
     /// </summary>
     [Description("shape factor")] 
@@ -334,6 +351,7 @@ public class ETComponent
         saturation_beta = toCopy.saturation_beta;
         stomata_conductance_alpha = toCopy.stomata_conductance_alpha;
         carboxylation_pathway = toCopy.carboxylation_pathway;
+        latent_heat_of_vaporization = toCopy.latent_heat_of_vaporization;
         evaporation_zeta = toCopy.evaporation_zeta;
         maximum_evaporation_impact_depth = toCopy.maximum_evaporation_impact_depth;
         evaporation_reduction_method = toCopy.evaporation_reduction_method;

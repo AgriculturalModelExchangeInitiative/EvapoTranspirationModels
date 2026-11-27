@@ -90,6 +90,7 @@ class AMEIPotETWrapper :  Model
     private void loadParameters()
     {
         ameipotetComponent.height_nn = 0; 
+        ameipotetComponent.latent_heat_of_vaporization = 0; 
     }
 
     /// <summary>

@@ -51,6 +51,7 @@ namespace SiriusModel.Model.AMEIPotET
         private void loadParameters()
         {
             ameipotetComponent.height_nn = 0; 
+            ameipotetComponent.latent_heat_of_vaporization = 0; 
         }
 
         public void EstimateAMEIPotET(double vapor_pressure, double saturated_vapor_pressure, double stomata_resistance, double net_radiation, double mean_air_temperature, double wind_speed, double wind_speed_height, double kc_factor, int developmental_stage, double crop_remaining_evapotranspiration)

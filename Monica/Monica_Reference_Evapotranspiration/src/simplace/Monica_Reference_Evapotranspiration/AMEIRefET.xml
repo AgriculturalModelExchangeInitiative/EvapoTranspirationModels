@@ -4,6 +4,7 @@
     <simgroup>
         <simcomponent id="ReferenceEvapotranspiration" class="net.simplace.sim.components.Monica_Reference_Evapotranspiration.ReferenceEvapotranspiration">
             <input id="height_nn" source="AMEIRefET.height_nn"/>
+            <input id="latent_heat_of_vaporization" source="AMEIRefET.latent_heat_of_vaporization"/>
             <input id="mean_air_temperature" source="AMEIRefET.mean_air_temperature"/>
             <input id="wind_speed" source="AMEIRefET.wind_speed"/>
             <input id="wind_speed_height" source="AMEIRefET.wind_speed_height"/>

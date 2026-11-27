@@ -33,6 +33,19 @@ namespace SiriusQualityAMEIRefET.Strategies
             v1.VarType = CRA.ModelLayer.Core.VarInfo.Type.PARAMETER;
             v1.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
             _parameters0_0.Add(v1);
+            VarInfo v2 = new VarInfo();
+            v2.DefaultValue = 0;
+            v2.Description = "latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)";
+            v2.Id = 0;
+            v2.MaxValue = 10;
+            v2.MinValue = 0;
+            v2.Name = "latent_heat_of_vaporization";
+            v2.Size = 1;
+            v2.Units = "MJ/kg";
+            v2.URL = "";
+            v2.VarType = CRA.ModelLayer.Core.VarInfo.Type.PARAMETER;
+            v2.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
+            _parameters0_0.Add(v2);
             mo0_0.Parameters=_parameters0_0;
 
             //Inputs
@@ -167,6 +180,18 @@ namespace SiriusQualityAMEIRefET.Strategies
                 else throw new Exception("Parameter 'height_nn' not found in strategy 'ReferenceEvapotranspiration'");
             }
         }
+        public double latent_heat_of_vaporization
+        {
+            get { 
+                VarInfo vi= _modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization");
+                if (vi != null && vi.CurrentValue!=null) return (double)vi.CurrentValue ;
+                else throw new Exception("Parameter 'latent_heat_of_vaporization' not found (or found null) in strategy 'ReferenceEvapotranspiration'");
+            } set {
+                VarInfo vi = _modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization");
+                if (vi != null)  vi.CurrentValue=value;
+                else throw new Exception("Parameter 'latent_heat_of_vaporization' not found in strategy 'ReferenceEvapotranspiration'");
+            }
+        }
 
         public void SetParametersDefaultValue()
         {
@@ -183,12 +208,26 @@ namespace SiriusQualityAMEIRefET.Strategies
             height_nnVarInfo.DefaultValue = 0;
             height_nnVarInfo.Units = "m";
             height_nnVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
+
+            latent_heat_of_vaporizationVarInfo.Name = "latent_heat_of_vaporization";
+            latent_heat_of_vaporizationVarInfo.Description = "latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)";
+            latent_heat_of_vaporizationVarInfo.MaxValue = 10;
+            latent_heat_of_vaporizationVarInfo.MinValue = 0;
+            latent_heat_of_vaporizationVarInfo.DefaultValue = 0;
+            latent_heat_of_vaporizationVarInfo.Units = "MJ/kg";
+            latent_heat_of_vaporizationVarInfo.ValueType = VarInfoValueTypes.GetInstanceForName("Double");
         }
 
         private static VarInfo _height_nnVarInfo = new VarInfo();
         public static VarInfo height_nnVarInfo
         {
             get { return _height_nnVarInfo;} 
+        }
+
+        private static VarInfo _latent_heat_of_vaporizationVarInfo = new VarInfo();
+        public static VarInfo latent_heat_of_vaporizationVarInfo
+        {
+            get { return _latent_heat_of_vaporizationVarInfo;} 
         }
 
         public string TestPostConditions(SiriusQualityAMEIRefET.DomainClass.AMEIRefETState s,SiriusQualityAMEIRefET.DomainClass.AMEIRefETState s1,SiriusQualityAMEIRefET.DomainClass.AMEIRefETRate r,SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliary a,SiriusQualityAMEIRefET.DomainClass.AMEIRefETExogenous ex,string callID)
@@ -199,8 +238,8 @@ namespace SiriusQualityAMEIRefET.Strategies
                 SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.CurrentValue=a.reference_evapotranspiration;
                 ConditionsCollection prc = new ConditionsCollection();
                 Preconditions pre = new Preconditions(); 
-                RangeBasedCondition r8 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
-                if(r8.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r8);}
+                RangeBasedCondition r9 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration);
+                if(r9.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.reference_evapotranspiration.ValueType)){prc.AddCondition(r9);}
                 string postConditionsResult = pre.VerifyPostconditions(prc, callID); if (!string.IsNullOrEmpty(postConditionsResult)) { pre.TestsOut(postConditionsResult, true, "PostConditions errors in strategy " + this.GetType().Name); } return postConditionsResult;
             }
             catch (Exception exception)
@@ -236,6 +275,7 @@ namespace SiriusQualityAMEIRefET.Strategies
                 RangeBasedCondition r6 = new RangeBasedCondition(SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit);
                 if(r6.ApplicableVarInfoValueTypes.Contains( SiriusQualityAMEIRefET.DomainClass.AMEIRefETAuxiliaryVarInfo.saturation_vapor_pressure_deficit.ValueType)){prc.AddCondition(r6);}
                 prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("height_nn")));
+                prc.AddCondition(new RangeBasedCondition(_modellingOptionsManager.GetParameterByName("latent_heat_of_vaporization")));
                 string preConditionsResult = pre.VerifyPreconditions(prc, callID); if (!string.IsNullOrEmpty(preConditionsResult)) { pre.TestsOut(preConditionsResult, true, "PreConditions errors in strategy " + this.GetType().Name); } return preConditionsResult;
             }
             catch (Exception exception)
@@ -263,6 +303,12 @@ namespace SiriusQualityAMEIRefET.Strategies
     {
         get { return this._height_nn; }
         set { this._height_nn= value; } 
+    }
+        private double _latent_heat_of_vaporization;
+        public double latent_heat_of_vaporization
+    {
+        get { return this._latent_heat_of_vaporization; }
+        set { this._latent_heat_of_vaporization= value; } 
     }
     /// <summary>
     /// Constructor of the ReferenceEvapotranspiration component")
@@ -297,6 +343,15 @@ namespace SiriusQualityAMEIRefET.Strategies
     //                          ** min : -9999
     //                          ** default : 0
     //                          ** unit : m
+    //            * name: latent_heat_of_vaporization
+    //                          ** description : latent heat of vaporization lambda (0: MONICA's constants, 0.408 = 1/2.45 and psychrometric constant 0.000665 * pressure)
+    //                          ** inputtype : parameter
+    //                          ** parametercategory : constant
+    //                          ** datatype : DOUBLE
+    //                          ** max : 10
+    //                          ** min : 0
+    //                          ** default : 0
+    //                          ** unit : MJ/kg
     //            * name: mean_air_temperature
     //                          ** description : daily average air temperature
     //                          ** inputtype : variable
@@ -369,16 +424,32 @@ namespace SiriusQualityAMEIRefET.Strategies
             double atmospheric_pressure;
             atmospheric_pressure = 101.3 * Math.Pow((293.0 - (0.0065 * height_nn)) / 293.0, 5.26);
             double psycrometer_constant;
-            psycrometer_constant = 0.000665 * atmospheric_pressure;
+            if (latent_heat_of_vaporization > 0.0)
+            {
+                psycrometer_constant = 1.013e-3 * atmospheric_pressure / (0.622 * latent_heat_of_vaporization);
+            }
+            else
+            {
+                psycrometer_constant = 0.000665 * atmospheric_pressure;
+            }
             double saturated_vapour_pressure_slope;
             saturated_vapour_pressure_slope = 4098.0 * (0.6108 * Math.Exp(17.27 * mean_air_temperature / (mean_air_temperature + 237.3))) / ((mean_air_temperature + 237.3) * (mean_air_temperature + 237.3));
+            double inverse_lambda;
+            if (latent_heat_of_vaporization > 0.0)
+            {
+                inverse_lambda = 1.0 / latent_heat_of_vaporization;
+            }
+            else
+            {
+                inverse_lambda = 0.408;
+            }
             double wind_speed_2m;
             wind_speed_2m = Math.Max(0.5, wind_speed * (4.87 / Math.Log((67.8 * wind_speed_height - 5.42))));
             double aerodynamic_resistance;
             aerodynamic_resistance = 208.0 / wind_speed_2m;
             double surface_resistance;
             surface_resistance = stomata_resistance / 1.44;
-            reference_evapotranspiration = (0.408 * saturated_vapour_pressure_slope * net_radiation + (psycrometer_constant * (900.0 / (mean_air_temperature + 273.0)) * wind_speed_2m * saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0 + (surface_resistance / aerodynamic_resistance))));
+            reference_evapotranspiration = (inverse_lambda * saturated_vapour_pressure_slope * net_radiation + (psycrometer_constant * (900.0 / (mean_air_temperature + 273.0)) * wind_speed_2m * saturation_vapor_pressure_deficit)) / (saturated_vapour_pressure_slope + (psycrometer_constant * (1.0 + (surface_resistance / aerodynamic_resistance))));
             if (reference_evapotranspiration < 0.0)
             {
                 reference_evapotranspiration = 0.0;
